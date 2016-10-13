@@ -1,0 +1,173 @@
+﻿<link href="~/Content//plugins/select2/css/select2.css" rel="stylesheet">
+<div class="row">
+    <div class="col s12">
+        <div class="page-title">@ViewBag.Titre</div>
+    </div>
+    <div class="col s12 m12 l12">
+        @using (Html.BeginForm("SendForm", "Depense", new { Mode = ViewBag.Mode, Code = ViewBag.Code }, FormMethod.Post, new { role = "form" }))
+        {
+            <div class="row">
+                <div class="card">
+                    <div class="card-content">
+                        @{
+            string Soc = Session["SOCIETE"] != null ? Session["SOCIETE"].ToString() : string.Empty;
+                        }
+                        <h3>SOCIETE : @Soc</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <label>Liste des projets</label>
+                <select class="js-states browser-default" id="Projet" name="Projet_ID" required>
+                    <option value="" disabled="" selected="">Choisir un projet</option>
+                </select>
+            </div>
+            <div class="row">
+                <label>Liste des centres de couts</label>
+                <select class="js-states browser-default" id="CentreCout" name="CentreCout_ID" required>
+                    <option value="" disabled="" selected="">Choisir un centre de cout</option>
+                </select>
+            </div>
+            <div class="row">
+                <div class="input-field  col s6">
+                    <input id="DATE" type="text" class="datepicker" value="@ViewBag.DATE" name="DATE" required>
+                    <label for="DATE" class="">DATE </label>
+                </div>
+                <div class="input-field  col s6">
+                    <input id="TYPE_DOCUMENT" type="text" class="validate" value="@Model.TYPE_DOCUMENT" name="TYPE_DOCUMENT" required>
+                    <label for="TYPE_DOCUMENT" class="">TYPE DOCUMENT</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field  col s6">
+                    <input id="NUMERO_DOCUMENT" type="text" class="validate" value="@Model.NUMERO_DOCUMENT" name="NUMERO_DOCUMENT" required>
+                    <label for="NUMERO_DOCUMENT" class="">NUMERO DOCUMENT</label>
+                </div>
+                <div class="input-field  col s6">
+                    <input id="NUMERO_PIECE_COMPTABLE" type="text" class="validate" value="@Model.NUMERO_PIECE_COMPTABLE" name="NUMERO_PIECE_COMPTABLE" required>
+                    <label for="NUMERO_PIECE_COMPTABLE" class="">NUMERO PIECE COMPTABLE</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field  col s12">
+                    <input id="LIBELLE" type="text" class="validate" value="@Model.LIBELLE" name="LIBELLE" required>
+                    <label for="LIBELLE" class="">LIBELLE</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field  col s6">
+                    <input id="MONTANT_HT" type="text" class="validate" value="@Model.MONTANT_HT" name="MONTANT_HT" required>
+                    <label for="MONTANT_HT" class="">MONTANT HT</label>
+                </div>
+                <div class="input-field  col s6">
+                    <input id="TVA" type="text" class="validate" value="@Model.TVA" name="TVA" required>
+                    <label for="TVA" class="">TVA</label>
+                </div>
+            </div>            
+            <div class="row">
+                <div class="input-field  col s6">
+                    <input id="TIMBRE" type="text" class="validate" value="@Model.TIMBRE" name="TIMBRE" required>
+                    <label for="TIMBRE" class="">TIMBRE</label>
+                </div>
+                <div class="input-field  col s6">
+                    <input id="FODEC" type="text" class="validate" value="@Model.FODEC" name="FODEC" required>
+                    <label for="FODEC" class="">FODEC</label>
+                </div>
+            </div>           
+            <div class="row">
+                <div class="input-field  col s6">
+                    <input id="RETENUE_SOURCE" type="text" class="validate" value="@Model.RETENUE_SOURCE" name="RETENUE_SOURCE" required>
+                    <label for="RETENUE_SOURCE" class="">RETENUE SOURCE (%)</label>
+                </div>
+                <div class="input-field  col s6">
+                    <input id="FOURNISSEUR" type="text" class="validate" name="FOURNISSEUR" value="@Model.FOURNISSEUR" required/>
+                    <label for="FOURNISSEUR" class="">FOURNISSEUR</label>
+                </div>
+            </div>     
+            <div class="row">
+                <div class="input-field  col s6">
+                    <input id="DATE_PAIEMENT" type="text" class="datepicker" value="@ViewBag.DATE_PAIEMENT" name="DATE_PAIEMENT">
+                    <label for="DATE_PAIEMENT" class="">DATE PAIEMENT</label>
+                </div>
+                <div class="input-field  col s6">
+                    <input id="MODALITE" type="text" class="validate" value="@Model.MODALITE" name="MODALITE">
+                    <label for="MODALITE" class="">MODALITE</label>
+                </div>
+            </div>            
+                        
+            <div class="right-align">
+                <button class="waves-effect waves-light btn green m-b-xs" type="submit">Valider</button>
+            </div>
+        }
+    </div>
+</div>
+<script src="~/Content//plugins/select2/js/select2.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#li_Depense").attr("class", "active");
+
+        var FilterProjet = "@Model.PROJET";
+        var FilterCentreCout = "@Model.CENTRE_COUT";
+        var Mode = "@ViewBag.Mode";
+        $.ajax({
+            type: 'POST',
+            url: "/Depense/GetAllProject",
+            success: function (response) {
+                $.each(response, function (i, item) {
+                    $('#Projet').append($('<option>', {
+                        value: item.ID,
+                        text: item.CODE + " - " + item.NOM_PROJET
+                    }));
+                    if (Mode == "Edit") {
+                        $("#Projet").val(FilterProjet).trigger("change");
+                    }
+                });
+            }
+        });
+        $.ajax({
+            type: 'POST',
+            url: "/Depense/GetAllCentreCout",
+            success: function (response) {
+                $.each(response, function (i, item) {
+                    $('#CentreCout').append($('<option>', {
+                        value: item.ID,
+                        text: item.CODE + " - " + item.LIBELLE
+                    }));
+                    if (Mode == "Edit") {
+                        $("#CentreCout").val(FilterCentreCout).trigger("change");
+                    }
+                });
+            }
+        });
+        $('#Projet').select2();
+        $('#CentreCout').select2();
+
+        $('.datepicker').pickadate({
+            selectMonths: true, // Creates a dropdown to control month
+            selectYears: 15, // Creates a dropdown of 15 years to control year
+            format: 'dd/mm/yyyy',
+        });
+        Calcul();
+    });
+    function Calcul() {
+        var MONTANT_HT = $("#MONTANT_HT").val();
+        var TVA = $("#TVA").val();
+        var TIMBRE = $("#TIMBRE").val();
+        var FODEC = $("#FODEC").val();
+        var RETENUE_SOURCE = $("#RETENUE_SOURCE").val();
+        var Mode = "@ViewBag.Mode";
+        MONTANT_HT = parseFloat(MONTANT_HT.replace(',', '.'));
+        TVA = parseFloat(TVA.replace(',', '.'));
+        TIMBRE = parseFloat(TIMBRE.replace(',', '.'));
+        FODEC = parseFloat(FODEC.replace(',', '.'));
+        RETENUE_SOURCE = parseFloat(RETENUE_SOURCE.replace(',', '.'));
+        if (Mode == "Edit") {
+            $("#MONTANT_HT").val(MONTANT_HT.toFixed(3));
+            $("#TVA").val(TVA.toFixed(3));
+            $("#TIMBRE").val(TIMBRE.toFixed(3));
+            $("#FODEC").val(FODEC.toFixed(3));
+            $("#RETENUE_SOURCE").val(RETENUE_SOURCE.toFixed(3));
+        }
+    }
+</script>
+

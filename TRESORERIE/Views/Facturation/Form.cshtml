@@ -1,0 +1,182 @@
+﻿<link href="~/Content//plugins/select2/css/select2.css" rel="stylesheet">
+<link href="~/Content/css/switchery.css" rel="stylesheet" />
+<div class="row">
+    <div class="col s12">
+        <div class="page-title">@ViewBag.Titre</div>
+    </div>
+    <div class="col s12 m12 l12">
+        @using (Html.BeginForm("SendForm", "Facturation", new { Mode = ViewBag.Mode, Code = ViewBag.Code }, FormMethod.Post, new { role = "form" }))
+        {
+            <div class="row">
+                <div class="card">
+                    <div class="card-content">
+                        @{
+            string Soc = Session["SOCIETE"] != null ? Session["SOCIETE"].ToString() : string.Empty;
+                        }
+                        <h3>SOCIETE : @Soc</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <label>Liste des projets</label>
+                <select class="js-states browser-default" id="Projet" name="Projet_ID" required>
+                    <option value="" disabled="" selected="">Choisir un projet</option>
+                </select>
+            </div>
+            
+            <div class="row">
+                <div class="input-field  col s6">
+                    <input id="DATE_FACTURATION" type="text" class="datepicker" value="@ViewBag.DATE_FACTURATION" name="DATE_FACTURATION" required>
+                    <label for="DATE_FACTURATION" class="">DATE FACTURATION</label>
+                </div>
+                <div class="input-field  col s6">
+                    <input id="DATE_ECHEANCE_REGLEMENT" type="text" class="datepicker" value="@ViewBag.DATE_ECHEANCE_REGLEMENT" name="DATE_ECHEANCE_REGLEMENT" required>
+                    <label for="DATE_ECHEANCE_REGLEMENT" class="">DATE ECHEANCE REGLEMENT</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field  col s6">
+                    <input id="TYPE_PIECE" type="text" class="validate" value="@Model.TYPE_PIECE" name="TYPE_PIECE" required>
+                    <label for="TYPE_PIECE" class="">TYPE PIECE</label>
+                </div>
+                <div class="input-field  col s6">
+                    <input id="NUMERO_PIECE" type="text" class="validate" value="@Model.NUMERO_PIECE" name="NUMERO_PIECE" required>
+                    <label for="NUMERO_PIECE" class="">NUMERO PIECE</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field  col s12">
+                    <input id="LIBELLE" type="text" class="validate" value="@Model.LIBELLE" name="LIBELLE" required>
+                    <label for="LIBELLE" class="">LIBELLE</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field  col s6">
+                    <input id="MONTANT_HT" type="text" class="validate" value="@Model.MONTANT_HT" name="MONTANT_HT" required>
+                    <label for="MONTANT_HT" class="">MONTANT HT</label>
+                </div>
+                <div class="input-field  col s6">
+                    <input id="TVA" type="text" class="validate" value="@Model.TVA" name="TVA" required>
+                    <label for="TVA" class="">TVA</label>
+                </div>
+            </div>            
+            <div class="row">
+                <div class="input-field  col s6">
+                    <input id="TIMBRE" type="text" class="validate" value="@Model.TIMBRE" name="TIMBRE" required>
+                    <label for="TIMBRE" class="">TIMBRE</label>
+                </div>
+                <div class="input-field  col s6">
+                    <input id="FODEC" type="text" class="validate" value="@Model.FODEC" name="FODEC" required>
+                    <label for="FODEC" class="">FODEC</label>
+                </div>
+            </div>           
+            <div class="row">
+                <div class="input-field  col s6">
+                    <input id="RETENUE_SOURCE" type="text" class="validate" value="@Model.RETENUE_SOURCE" name="RETENUE_SOURCE" required>
+                    <label for="RETENUE_SOURCE" class="">RETENUE SOURCE (%)</label>
+                </div>
+                <div class="input-field  col s6">
+                    <input id="TTC" type="text" class="validate" name="TTC" value="@Model.TTC" readonly/>
+                    <label for="TTC" class="">TTC</label>
+                </div>
+            </div>     
+            <div class="row">
+                <div class="input-field  col s6">
+                    <input id="GARANTIE" type="text" class="validate" value="@Model.GARANTIE" name="GARANTIE" required>
+                    <label for="GARANTIE" class="">GARANTIE (%)</label>
+                </div>
+                <div class="input-field  col s6">
+                    <input id="DATE_REGLEMENT_REEL" type="text" class="datepicker" value="@ViewBag.DATE_REGLEMENT_REEL" name="DATE_REGLEMENT_REEL">
+                    <label for="DATE_REGLEMENT_REEL" class="">DATE REGLEMENT REEL</label>
+                </div>
+            </div>            
+            <div class="row">
+                <div class="input-field  col s6">
+                    <label>
+                        ETAT FACTURATION
+                    </label>
+                    <br />
+                    <br />
+                    <input type="checkbox" class="js-switch" checked="@((Boolean)Model.ETAT_FACTURATION)" name="ETAT_FACTURATION" @*value="@((Boolean)Model.ETAT_FACTURATION)"*@ id="ETAT_FACTURATION"/>
+                </div>
+                <div class="input-field  col s6">
+                    <label>
+                        ETAT REGLEMENT
+                    </label>
+                    <br />
+                    <br />
+                    <input type="checkbox" class="js-switch" checked="@((Boolean)Model.ETAT_REGLEMENT)" name="ETAT_REGLEMENT" @*value="@((Boolean)Model.ETAT_REGLEMENT)"*@  id="ETAT_REGLEMENT"/>
+                </div>
+            </div>            
+            <div class="right-align">
+                <button class="waves-effect waves-light btn green m-b-xs" type="submit">Valider</button>
+            </div>
+        }
+    </div>
+</div>
+<script src="~/Content//plugins/select2/js/select2.min.js"></script>
+<script src="~/Content/js/switchery.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#li_Facturation").attr("class", "active");
+        var FilterProjet = "@Model.PROJET";
+        var Mode = "@ViewBag.Mode";
+        $.ajax({
+            type: 'POST',
+            url: "/Budget/GetAllProject",
+            success: function (response) {
+                $.each(response, function (i, item) {
+                    $('#Projet').append($('<option>', {
+                        value: item.ID,
+                        text: item.CODE + " - " + item.NOM_PROJET
+                    }));
+                    if (Mode == "Edit") {
+                        $("#Projet").val(FilterProjet).trigger("change");
+                    }
+                });
+            }
+        });
+        $('#Projet').select2();
+        $('.datepicker').pickadate({
+            selectMonths: true, // Creates a dropdown to control month
+            selectYears: 15, // Creates a dropdown of 15 years to control year
+            format: 'dd/mm/yyyy',
+        });
+        var elem1 = document.querySelector('#ETAT_FACTURATION');
+        var switchery = new Switchery(elem1, { color: '#1AB394' });
+        var elem2 = document.querySelector('#ETAT_REGLEMENT');
+        var switchery2 = new Switchery(elem2, { color: '#1AB394' });
+        $("input[type='checkbox']").on('change', function () {
+            $(this).val(this.checked ? "TRUE" : "FALSE");
+        })
+        Calcul();
+    });
+    $(document).on("keyup", ".validate", function (e) {
+        Calcul();
+    });
+    function Calcul() {
+        var MONTANT_HT = $("#MONTANT_HT").val();
+        var TVA = $("#TVA").val();
+        var TIMBRE = $("#TIMBRE").val();
+        var FODEC = $("#FODEC").val();
+        var RETENUE_SOURCE = $("#RETENUE_SOURCE").val();
+        var Mode = "@ViewBag.Mode";
+        MONTANT_HT = parseFloat(MONTANT_HT.replace(',', '.'));
+        TVA = parseFloat(TVA.replace(',', '.'));
+        TIMBRE = parseFloat(TIMBRE.replace(',', '.'));
+        FODEC = parseFloat(FODEC.replace(',', '.'));
+        RETENUE_SOURCE = parseFloat(RETENUE_SOURCE.replace(',', '.'));
+        if (Mode == "Edit") {
+            $("#MONTANT_HT").val(MONTANT_HT.toFixed(3));
+            $("#TVA").val(TVA.toFixed(3));
+            $("#TIMBRE").val(TIMBRE.toFixed(3));
+            $("#FODEC").val(FODEC.toFixed(3));
+            $("#RETENUE_SOURCE").val(RETENUE_SOURCE.toFixed(3));
+        }
+        var TTC = MONTANT_HT + TVA + TIMBRE + FODEC;
+        var MONTANT_RETENU = (TTC * RETENUE_SOURCE) / 100;
+        TTC = TTC - MONTANT_RETENU;
+        $("#TTC").val(TTC.toFixed(3));
+    }
+</script>
+

@@ -1,0 +1,73 @@
+﻿@{Layout = "~/Views/Shared/_Start.cshtml";}
+<div class="mn-inner container">
+    <div class="valign">
+        <div class="row">
+            <div class="col s12 m6 l4 offset-l4 offset-m3">
+                <div class="card">
+                    <div class="card-content center-align">
+                        <img src="~/images/VENUS.png" class="responsive-img circle" width="128px" alt="" style="border-radius: 0%;">
+                        <p class="m-t-lg flow-text"></p>
+                        <button class="chip m-t-sm blue-grey white-text" type="submit" onclick="Open(1)">ACCEDER</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col s12 m6 l4 offset-l4 offset-m3">
+                <div class="card">
+                    <div class="card-content center-align">
+                        <img src="~/images/JUPITER.png" class="responsive-img circle" width="128px" alt="" style="border-radius: 0%;">
+                        <p class="m-t-lg flow-text"></p>
+                        <button class="chip m-t-sm blue-grey white-text" type="submit" onclick="Open(2)">ACCEDER</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col s12 m6 l4 offset-l4 offset-m3">
+                <div class="card">
+                    <div class="card-content center-align">
+                        <img src="~/images/IKAR.png" class="responsive-img circle" width="128px" alt="" style="border-radius: 0%;">
+                        <p class="m-t-lg flow-text"></p>
+                        <button class="chip m-t-sm blue-grey white-text" type="submit" onclick="Open(3)">ACCEDER</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col s12 m6 l4 offset-l4 offset-m3">
+                <div class="card">
+                    <div class="card-content center-align">
+                        <p class="m-t-lg flow-text"></p>
+                        <button class="chip m-t-sm blue-grey white-text" type="submit" onclick="Open(4)">ACCEDER</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="modal1" class="modal">
+    @using (Html.BeginForm("Send", "Home", FormMethod.Post, new { role = "form" }))
+    {
+        <div class="modal-content">
+
+            <div class="input-field col s12">
+                <input id="email2" type="password" required name="Accee">
+                <label for="email2" data-error="wrong" data-success="right" class="">Code d'accès</label>
+
+            </div>
+        </div>
+        <input type="hidden" name="Filter" id="Filter" />
+        <div class="modal-footer">
+            <button href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat" type="submit">Envoyer</button>
+        </div>
+    }
+</div>
+<script src="~/Content/plugins/jquery/jquery-2.2.0.min.js"></script>
+<script src="~/Content/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+    function Open(param) {
+        $('#modal1').modal();
+        $("#Filter").val(param);
+    }
+    $(document).ready(function () {
+        var Error = "@ViewBag.Error";
+        if (Error != "") {
+            alert(Error);
+        }
+    });
+</script>

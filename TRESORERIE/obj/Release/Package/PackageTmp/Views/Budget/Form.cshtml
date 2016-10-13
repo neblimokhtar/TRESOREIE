@@ -1,0 +1,84 @@
+﻿<link href="~/Content//plugins/select2/css/select2.css" rel="stylesheet">
+<div class="row">
+    <div class="col s12">
+        <div class="page-title">@ViewBag.Titre</div>
+    </div>
+    <div class="col s12 m12 l12">
+        @using (Html.BeginForm("SendForm", "Budget", new { Mode = ViewBag.Mode, Code = ViewBag.Code }, FormMethod.Post, new { role = "form" }))
+        {
+            <div class="row">
+                <div class="card">
+                    <div class="card-content">
+                        @{
+            string Soc = Session["SOCIETE"] != null ? Session["SOCIETE"].ToString() : string.Empty;
+                        }
+                        <h3>SOCIETE : @Soc</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <label>Liste des projets</label>
+                <select class="js-states browser-default" id="Projet" name="Projet_ID">
+                    <option value="" disabled="" selected="">Choisir un projet</option>
+                </select>
+            </div>
+            <div class="row">
+                <label>Liste des centres de couts</label>
+                <select class="js-states browser-default" id="ContreCout" name="ContreCout_ID">
+                    <option value="" disabled="" selected="">Choisir un centre de cout</option>
+                </select>
+            </div>
+            <div class="row">
+                <div class="input-field">
+                    <input id="MONTANT_HT" type="text" class="validate" value="@Model.MONTANT_HT.ToString()" name="MONTANT_HT" required>
+                    <label for="MONTANT_HT" class="">MONTANT HT</label>
+                </div>
+            </div>
+            <div class="right-align">
+                <button class="waves-effect waves-light btn green m-b-xs" type="submit">Valider</button>
+            </div>
+        }
+    </div>
+</div>
+<script src="~/Content//plugins/select2/js/select2.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#li_Budget").attr("class", "active");
+        var FilterProjet = "@Model.PROJET";
+        var FilterCentre = "@Model.CENTRE_COUT";
+        var Mode = "@ViewBag.Mode";
+        $.ajax({
+            type: 'POST',
+            url: "/Budget/GetAllProject",
+            success: function (response) {
+                $.each(response, function (i, item) {
+                    $('#Projet').append($('<option>', {
+                        value: item.ID,
+                        text: item.CODE + " - " + item.NOM_PROJET
+                    }));
+                    if (Mode == "Edit") {
+                        $("#Projet").val(FilterProjet).trigger("change");
+                    }
+                });
+            }
+        });
+        $.ajax({
+            type: 'POST',
+            url: "/Budget/GetAllCentre",
+            success: function (response) {
+                $.each(response, function (i, item) {
+                    $('#ContreCout').append($('<option>', {
+                        value: item.ID,
+                        text: item.CODE + " - " + item.LIBELLE
+                    }));
+                    if (Mode == "Edit") {
+                        $("#ContreCout").val(FilterCentre).trigger("change");
+                    }
+                });
+            }
+        });
+        $('#Projet').select2();
+        $('#ContreCout').select2();
+    });
+</script>
+

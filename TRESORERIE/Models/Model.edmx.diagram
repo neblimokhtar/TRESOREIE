@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="2fd9ffe56a2e441c93c3bf3633c4e5e5" Name="Diagram1">
+        <EntityTypeShape EntityType="TRESORERIEModel.BUDGETS" Width="1.5" PointX="5.25" PointY="17.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TRESORERIEModel.CATEGORIES_CENTRES_COUTS" Width="1.5" PointX="0.75" PointY="18.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="TRESORERIEModel.CENTRES_COUTS" Width="1.5" PointX="3" PointY="17.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TRESORERIEModel.DEPENSES" Width="1.5" PointX="8.25" PointY="16.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TRESORERIEModel.FACTURATIONS" Width="1.5" PointX="5.25" PointY="11.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TRESORERIEModel.PROJETS" Width="1.5" PointX="3" PointY="23.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TRESORERIEModel.SOCIETES" Width="1.5" PointX="0.75" PointY="10.125" IsExpanded="true" />
+        <AssociationConnector Association="TRESORERIEModel.FK_BUDGETS_CENTRES_COUTS" ManuallyRouted="false" />
+        <AssociationConnector Association="TRESORERIEModel.FK_BUDGETS_PROJETS" ManuallyRouted="false" />
+        <AssociationConnector Association="TRESORERIEModel.FK_BUDGETS_SOCIETES" ManuallyRouted="false" />
+        <AssociationConnector Association="TRESORERIEModel.FK_CENTRES_COUTS_CATEGORIES_CENTRES_COUTS" ManuallyRouted="false" />
+        <AssociationConnector Association="TRESORERIEModel.FK_DEPENSES_CENTRES_COUTS" ManuallyRouted="false" />
+        <AssociationConnector Association="TRESORERIEModel.FK_DEPENSES_PROJETS" ManuallyRouted="false" />
+        <AssociationConnector Association="TRESORERIEModel.FK_DEPENSES_SOCIETES" ManuallyRouted="false" />
+        <AssociationConnector Association="TRESORERIEModel.FK_FACTURATIONS_PROJETS" ManuallyRouted="false" />
+        <AssociationConnector Association="TRESORERIEModel.FK_FACTURATIONS_SOCIETES" ManuallyRouted="false" />
+        <AssociationConnector Association="TRESORERIEModel.FK_PROJETS_SOCIETES" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

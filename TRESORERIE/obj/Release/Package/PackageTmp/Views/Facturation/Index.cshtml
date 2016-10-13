@@ -1,0 +1,187 @@
+﻿<link href="~/Content/plugins/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
+<link href="~/Content/css/select.dataTables.min.css" rel="stylesheet" />
+<link href="~/Content//plugins/select2/css/select2.css" rel="stylesheet">
+<div class="row">
+    <div class="col s12">
+        <div class="row">
+            <div class="page-title">Liste des facturations projets</div>
+        </div>
+        <div class="row">
+            @{
+                string Soc = Session["SOCIETE"] != null ? Session["SOCIETE"].ToString() : string.Empty;
+            }
+            <h4>SOCIETE : @Soc</h4>
+        </div>
+        @if (!string.IsNullOrEmpty(ViewBag.PROJET))
+        {
+            <div class="row">
+                <h4>PROJET : @ViewBag.PROJET</h4>
+            </div>
+        }
+    </div>
+    <div class="col s12 m12 l12">
+        <div class="card">
+            <div class="card-content">
+                <div class="col s4">
+                    <label>Liste des projets</label>
+                    <select class="js-states browser-default" id="basic">
+                        <option value="" disabled="" selected="">Choisir un projet</option>
+                    </select>
+                </div>
+                <div class="col s2">
+                    <a class="btn-floating btn-large waves-effect waves-light" onclick="Filtrer()" style="margin-top: 20px;"><i class="material-icons">search</i></a>
+                </div>
+                <div class="right-align">
+                    <a class="btn-floating btn-large waves-effect waves-light green" onclick="Add_Element()"><i class="material-icons">add</i></a>
+                    <a class="btn-floating btn-large waves-effect waves-light blue" onclick="Edit_Element()"><i class="material-icons">edit</i></a>
+                    <a class="btn-floating btn-large waves-effect waves-light red" onclick="Delete_Element()"><i class="material-icons">delete</i></a>
+                    <a class="btn-floating btn-large waves-effect waves-light orange" onclick=""><i class="material-icons">print</i></a>
+                </div>
+                <br>
+                <table id="example" class="display responsive-table datatable-example">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>PROJET</th>
+                            <th>DATE.FACT</th>
+                            <th>ECH.REG</th>
+                            <th>T.PIECE</th>
+                            <th>NUM.PIECE</th>
+                            <th>LIBELLE</th>
+                            <th>MONTANT HT</th>
+                            <th>TVA</th>
+                            <th>TIMBRE</th>
+                            <th>FODEC</th>
+                            <th>R.S</th>
+                            <th>TTC</th>
+                            <th>GARANTIE</th>
+                            <th>D.REG</th>
+                            <th>ETAT.FACT</th>
+                            <th>ETAT.REG</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr id="@item.ID">
+                                <td></td>
+                                <td>@item.PROJETS.CODE</td>
+
+                                <td>@item.DATE_FACTURATION.ToShortDateString()</td>
+                                <td>@item.DATE_ECHEANCE_REGLEMENT.ToShortDateString()</td>
+
+                                <td>@item.TYPE_PIECE</td>
+                                <td>@item.NUMERO_PIECE</td>
+
+                                <td>@item.LIBELLE</td>
+
+                                <td>@item.MONTANT_HT.ToString("F3")</td>
+                                <td>@item.TVA.ToString("F3")</td>
+
+                                <td>@item.TIMBRE.ToString("F3")</td>
+                                <td>@item.FODEC.ToString("F3")</td>
+
+                                <td>@item.RETENUE_SOURCE.ToString("F3")</td>
+                                <td>@item.TTC.ToString("F3")</td>
+
+                                <td>@item.GARANTIE.ToString("F3")</td>
+                                <td>
+                                @if (item.DATE_REGLEMENT_REEL != null)
+                                {
+                                   @item.DATE_REGLEMENT_REEL.ToShortDateString();
+                                }
+                                </td>
+                                <td>@if ((Boolean)item.ETAT_FACTURATION)
+                                    {
+                                    <span class="new badge blue" data-badge-caption="">OUI</span>
+                                    }
+                                    else
+                                    {
+                                    <span class="new badge red" data-badge-caption="">NON</span>
+                                    }
+                                </td>
+                                <td>@if ((Boolean)item.ETAT_REGLEMENT)
+                                    {
+                                    <span class="new badge blue" data-badge-caption="">OUI</span>
+                                    }
+                                    else
+                                    {
+                                    <span class="new badge red" data-badge-caption="">NON</span>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/Content/plugins/datatables/js/jquery.dataTables.min.js"></script>
+<script src="~/Content/js/dataTables.select.min.js"></script>
+<script src="~/Content//plugins/select2/js/select2.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#li_Facturation").attr("class", "active");
+
+        window.Table = $('#example').DataTable({
+            language: [{
+                searchPlaceholder: 'Recherche ...',
+                sSearch: '',
+                sLengthMenu: 'Show _MENU_',
+                sLength: 'dataTables_length',
+                oPaginate: {
+                    sFirst: '<i class="material-icons">chevron_left</i>',
+                    sPrevious: '<i class="material-icons">chevron_left</i>',
+                    sNext: '<i class="material-icons">chevron_right</i>',
+                    sLast: '<i class="material-icons">chevron_right</i>'
+                }
+            }],
+            columnDefs: [{
+                orderable: false,
+                className: 'select-checkbox',
+                targets: 0
+            }],
+            select: {
+                style: 'os',
+                selector: 'td:first-child'
+            }
+        });
+        $('.dataTables_length select').addClass('browser-default');
+        $.ajax({
+            type: 'POST',
+            url: "/Facturation/GetAllProject",
+            success: function (response) {
+                $.each(response, function (i, item) {
+                    $('#basic').append($('<option>', {
+                        value: item.ID,
+                        text: item.CODE + " - " + item.NOM_PROJET
+                    }));
+                });
+            }
+        });
+        $('#basic').select2();
+    });
+    function Filtrer() {
+        var Parampassed = $("#basic").val();
+        window.location.href = "/Facturation/Index?Parampassed=" + Parampassed;
+    }
+    function Add_Element() {
+        window.location.href = "/Facturation/Form?Code=-1&Mode=Create";
+    }
+    function Edit_Element() {
+        var element = $("#example tbody tr").filter(".selected").attr("id");
+        if (typeof element !== "undefined") {
+            window.location.href = "/Facturation/Form?Code=" + element + "&Mode=Edit";
+        }
+    }
+    function Delete_Element() {
+        var element = $("#example tbody tr").filter(".selected").attr("id");
+        if (typeof element !== "undefined") {
+            var r = confirm("Voulez vous vraiment supprimer cette ligne ?");
+            if (r == true) {
+                window.location.href = "/Facturation/Delete?Code=" + element;
+            }
+        }
+    }
+</script>

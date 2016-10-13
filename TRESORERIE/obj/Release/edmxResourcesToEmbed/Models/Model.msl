@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="TRESORERIEModelStoreContainer" CdmEntityContainer="TresorerieEntities">
+    <EntitySetMapping Name="BUDGETS">
+      <EntityTypeMapping TypeName="TRESORERIEModel.BUDGETS">
+        <MappingFragment StoreEntitySet="BUDGETS">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="MONTANT_HT" ColumnName="MONTANT_HT" />
+          <ScalarProperty Name="PROJET" ColumnName="PROJET" />
+          <ScalarProperty Name="CENTRE_COUT" ColumnName="CENTRE_COUT" />
+          <ScalarProperty Name="SOCIETE" ColumnName="SOCIETE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CATEGORIES_CENTRES_COUTS">
+      <EntityTypeMapping TypeName="TRESORERIEModel.CATEGORIES_CENTRES_COUTS">
+        <MappingFragment StoreEntitySet="CATEGORIES_CENTRES_COUTS">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="CODE" ColumnName="CODE" />
+          <ScalarProperty Name="LIBELLE" ColumnName="LIBELLE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CENTRES_COUTS">
+      <EntityTypeMapping TypeName="TRESORERIEModel.CENTRES_COUTS">
+        <MappingFragment StoreEntitySet="CENTRES_COUTS">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="CODE" ColumnName="CODE" />
+          <ScalarProperty Name="LIBELLE" ColumnName="LIBELLE" />
+          <ScalarProperty Name="CATEGORIE" ColumnName="CATEGORIE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DEPENSES">
+      <EntityTypeMapping TypeName="TRESORERIEModel.DEPENSES">
+        <MappingFragment StoreEntitySet="DEPENSES">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="PROJET" ColumnName="PROJET" />
+          <ScalarProperty Name="CENTRE_COUT" ColumnName="CENTRE_COUT" />
+          <ScalarProperty Name="DATE" ColumnName="DATE" />
+          <ScalarProperty Name="TYPE_DOCUMENT" ColumnName="TYPE_DOCUMENT" />
+          <ScalarProperty Name="NUMERO_DOCUMENT" ColumnName="NUMERO_DOCUMENT" />
+          <ScalarProperty Name="NUMERO_PIECE_COMPTABLE" ColumnName="NUMERO_PIECE_COMPTABLE" />
+          <ScalarProperty Name="LIBELLE" ColumnName="LIBELLE" />
+          <ScalarProperty Name="MONTANT_HT" ColumnName="MONTANT_HT" />
+          <ScalarProperty Name="TVA" ColumnName="TVA" />
+          <ScalarProperty Name="FODEC" ColumnName="FODEC" />
+          <ScalarProperty Name="TIMBRE" ColumnName="TIMBRE" />
+          <ScalarProperty Name="RETENUE_SOURCE" ColumnName="RETENUE_SOURCE" />
+          <ScalarProperty Name="DATE_PAIEMENT" ColumnName="DATE_PAIEMENT" />
+          <ScalarProperty Name="SOCIETE" ColumnName="SOCIETE" />
+          <ScalarProperty Name="FOURNISSEUR" ColumnName="FOURNISSEUR" />
+          <ScalarProperty Name="MODALITE" ColumnName="MODALITE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FACTURATIONS">
+      <EntityTypeMapping TypeName="TRESORERIEModel.FACTURATIONS">
+        <MappingFragment StoreEntitySet="FACTURATIONS">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="PROJET" ColumnName="PROJET" />
+          <ScalarProperty Name="DATE_ECHEANCE_REGLEMENT" ColumnName="DATE_ECHEANCE_REGLEMENT" />
+          <ScalarProperty Name="TYPE_PIECE" ColumnName="TYPE_PIECE" />
+          <ScalarProperty Name="NUMERO_PIECE" ColumnName="NUMERO_PIECE" />
+          <ScalarProperty Name="LIBELLE" ColumnName="LIBELLE" />
+          <ScalarProperty Name="MONTANT_HT" ColumnName="MONTANT_HT" />
+          <ScalarProperty Name="TVA" ColumnName="TVA" />
+          <ScalarProperty Name="TIMBRE" ColumnName="TIMBRE" />
+          <ScalarProperty Name="RETENUE_SOURCE" ColumnName="RETENUE_SOURCE" />
+          <ScalarProperty Name="GARANTIE" ColumnName="GARANTIE" />
+          <ScalarProperty Name="DATE_REGLEMENT_REEL" ColumnName="DATE_REGLEMENT_REEL" />
+          <ScalarProperty Name="ETAT_FACTURATION" ColumnName="ETAT_FACTURATION" />
+          <ScalarProperty Name="ETAT_REGLEMENT" ColumnName="ETAT_REGLEMENT" />
+          <ScalarProperty Name="SOCIETE" ColumnName="SOCIETE" />
+          <ScalarProperty Name="DATE_FACTURATION" ColumnName="DATE_FACTURATION" />
+          <ScalarProperty Name="FODEC" ColumnName="FODEC" />
+          <ScalarProperty Name="TTC" ColumnName="TTC" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PROJETS">
+      <EntityTypeMapping TypeName="TRESORERIEModel.PROJETS">
+        <MappingFragment StoreEntitySet="PROJETS">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="CODE" ColumnName="CODE" />
+          <ScalarProperty Name="NOM_PROJET" ColumnName="NOM_PROJET" />
+          <ScalarProperty Name="TYPE" ColumnName="TYPE" />
+          <ScalarProperty Name="CLIENT" ColumnName="CLIENT" />
+          <ScalarProperty Name="OWNER" ColumnName="OWNER" />
+          <ScalarProperty Name="DEBUT" ColumnName="DEBUT" />
+          <ScalarProperty Name="FIN" ColumnName="FIN" />
+          <ScalarProperty Name="MONTANT_HT" ColumnName="MONTANT_HT" />
+          <ScalarProperty Name="TVA" ColumnName="TVA" />
+          <ScalarProperty Name="GARANTIE" ColumnName="GARANTIE" />
+          <ScalarProperty Name="TYPE_FACTURATION" ColumnName="TYPE_FACTURATION" />
+          <ScalarProperty Name="MODALITE_FACTURATION" ColumnName="MODALITE_FACTURATION" />
+          <ScalarProperty Name="SOCIETE" ColumnName="SOCIETE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SOCIETES">
+      <EntityTypeMapping TypeName="TRESORERIEModel.SOCIETES">
+        <MappingFragment StoreEntitySet="SOCIETES">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NOM" ColumnName="NOM" />
+          <ScalarProperty Name="CODE_ACCES" ColumnName="CODE_ACCES" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

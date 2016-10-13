@@ -1,0 +1,271 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TRESORERIEModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="TRESORERIEModelStoreContainer">
+    <EntitySet Name="BUDGETS" EntityType="TRESORERIEModel.Store.BUDGETS" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+    <EntitySet Name="CATEGORIES_CENTRES_COUTS" EntityType="TRESORERIEModel.Store.CATEGORIES_CENTRES_COUTS" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+    <EntitySet Name="CENTRES_COUTS" EntityType="TRESORERIEModel.Store.CENTRES_COUTS" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+    <EntitySet Name="DEPENSES" EntityType="TRESORERIEModel.Store.DEPENSES" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+    <EntitySet Name="FACTURATIONS" EntityType="TRESORERIEModel.Store.FACTURATIONS" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+    <EntitySet Name="PROJETS" EntityType="TRESORERIEModel.Store.PROJETS" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+    <EntitySet Name="SOCIETES" EntityType="TRESORERIEModel.Store.SOCIETES" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+    <AssociationSet Name="FK_BUDGETS_CENTRES_COUTS" Association="TRESORERIEModel.Store.FK_BUDGETS_CENTRES_COUTS">
+      <End Role="CENTRES_COUTS" EntitySet="CENTRES_COUTS" />
+      <End Role="BUDGETS" EntitySet="BUDGETS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BUDGETS_PROJETS" Association="TRESORERIEModel.Store.FK_BUDGETS_PROJETS">
+      <End Role="PROJETS" EntitySet="PROJETS" />
+      <End Role="BUDGETS" EntitySet="BUDGETS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BUDGETS_SOCIETES" Association="TRESORERIEModel.Store.FK_BUDGETS_SOCIETES">
+      <End Role="SOCIETES" EntitySet="SOCIETES" />
+      <End Role="BUDGETS" EntitySet="BUDGETS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CENTRES_COUTS_CATEGORIES_CENTRES_COUTS" Association="TRESORERIEModel.Store.FK_CENTRES_COUTS_CATEGORIES_CENTRES_COUTS">
+      <End Role="CATEGORIES_CENTRES_COUTS" EntitySet="CATEGORIES_CENTRES_COUTS" />
+      <End Role="CENTRES_COUTS" EntitySet="CENTRES_COUTS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DEPENSES_CENTRES_COUTS" Association="TRESORERIEModel.Store.FK_DEPENSES_CENTRES_COUTS">
+      <End Role="CENTRES_COUTS" EntitySet="CENTRES_COUTS" />
+      <End Role="DEPENSES" EntitySet="DEPENSES" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DEPENSES_PROJETS" Association="TRESORERIEModel.Store.FK_DEPENSES_PROJETS">
+      <End Role="PROJETS" EntitySet="PROJETS" />
+      <End Role="DEPENSES" EntitySet="DEPENSES" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DEPENSES_SOCIETES" Association="TRESORERIEModel.Store.FK_DEPENSES_SOCIETES">
+      <End Role="SOCIETES" EntitySet="SOCIETES" />
+      <End Role="DEPENSES" EntitySet="DEPENSES" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FACTURATIONS_PROJETS" Association="TRESORERIEModel.Store.FK_FACTURATIONS_PROJETS">
+      <End Role="PROJETS" EntitySet="PROJETS" />
+      <End Role="FACTURATIONS" EntitySet="FACTURATIONS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FACTURATIONS_SOCIETES" Association="TRESORERIEModel.Store.FK_FACTURATIONS_SOCIETES">
+      <End Role="SOCIETES" EntitySet="SOCIETES" />
+      <End Role="FACTURATIONS" EntitySet="FACTURATIONS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PROJETS_SOCIETES" Association="TRESORERIEModel.Store.FK_PROJETS_SOCIETES">
+      <End Role="SOCIETES" EntitySet="SOCIETES" />
+      <End Role="PROJETS" EntitySet="PROJETS" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="BUDGETS">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="MONTANT_HT" Type="numeric" Scale="3" />
+    <Property Name="PROJET" Type="int" />
+    <Property Name="CENTRE_COUT" Type="int" />
+    <Property Name="SOCIETE" Type="int" />
+  </EntityType>
+  <EntityType Name="CATEGORIES_CENTRES_COUTS">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="CODE" Type="nvarchar" MaxLength="50" />
+    <Property Name="LIBELLE" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="CENTRES_COUTS">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="CODE" Type="nvarchar" MaxLength="50" />
+    <Property Name="LIBELLE" Type="nvarchar(max)" />
+    <Property Name="CATEGORIE" Type="int" />
+  </EntityType>
+  <EntityType Name="DEPENSES">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="PROJET" Type="int" />
+    <Property Name="CENTRE_COUT" Type="int" />
+    <Property Name="DATE" Type="datetime" />
+    <Property Name="TYPE_DOCUMENT" Type="nvarchar" MaxLength="50" />
+    <Property Name="NUMERO_DOCUMENT" Type="nvarchar" MaxLength="50" />
+    <Property Name="NUMERO_PIECE_COMPTABLE" Type="nvarchar" MaxLength="50" />
+    <Property Name="LIBELLE" Type="nvarchar(max)" />
+    <Property Name="MONTANT_HT" Type="numeric" Scale="3" />
+    <Property Name="TVA" Type="numeric" Scale="3" />
+    <Property Name="FODEC" Type="numeric" Scale="3" />
+    <Property Name="TIMBRE" Type="numeric" Scale="3" />
+    <Property Name="RETENUE_SOURCE" Type="numeric" Scale="3" />
+    <Property Name="DATE_PAIEMENT" Type="datetime" />
+    <Property Name="SOCIETE" Type="int" />
+    <Property Name="FOURNISSEUR" Type="nvarchar" MaxLength="50" />
+    <Property Name="MODALITE" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="FACTURATIONS">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="PROJET" Type="int" />
+    <Property Name="DATE_ECHEANCE_REGLEMENT" Type="datetime" />
+    <Property Name="TYPE_PIECE" Type="nvarchar" MaxLength="50" />
+    <Property Name="NUMERO_PIECE" Type="nvarchar" MaxLength="50" />
+    <Property Name="LIBELLE" Type="nvarchar(max)" />
+    <Property Name="MONTANT_HT" Type="numeric" Scale="3" />
+    <Property Name="TVA" Type="numeric" Scale="3" />
+    <Property Name="TIMBRE" Type="numeric" Scale="3" />
+    <Property Name="RETENUE_SOURCE" Type="numeric" Scale="3" />
+    <Property Name="GARANTIE" Type="numeric" Scale="3" />
+    <Property Name="DATE_REGLEMENT_REEL" Type="datetime" />
+    <Property Name="ETAT_FACTURATION" Type="bit" />
+    <Property Name="ETAT_REGLEMENT" Type="bit" />
+    <Property Name="SOCIETE" Type="int" />
+    <Property Name="DATE_FACTURATION" Type="datetime" />
+    <Property Name="FODEC" Type="numeric" Scale="3" />
+    <Property Name="TTC" Type="numeric" Scale="3" />
+  </EntityType>
+  <EntityType Name="PROJETS">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="CODE" Type="nvarchar" MaxLength="50" />
+    <Property Name="NOM_PROJET" Type="nvarchar(max)" />
+    <Property Name="TYPE" Type="nvarchar" MaxLength="50" />
+    <Property Name="CLIENT" Type="nvarchar" MaxLength="50" />
+    <Property Name="OWNER" Type="nvarchar" MaxLength="50" />
+    <Property Name="DEBUT" Type="datetime" />
+    <Property Name="FIN" Type="datetime" />
+    <Property Name="MONTANT_HT" Type="numeric" Scale="3" />
+    <Property Name="TVA" Type="numeric" Scale="3" />
+    <Property Name="GARANTIE" Type="numeric" Scale="3" />
+    <Property Name="TYPE_FACTURATION" Type="nvarchar" MaxLength="50" />
+    <Property Name="MODALITE_FACTURATION" Type="nvarchar" MaxLength="50" />
+    <Property Name="SOCIETE" Type="int" />
+  </EntityType>
+  <EntityType Name="SOCIETES">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="NOM" Type="nvarchar" MaxLength="50" />
+    <Property Name="CODE_ACCES" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <Association Name="FK_BUDGETS_CENTRES_COUTS">
+    <End Role="CENTRES_COUTS" Type="TRESORERIEModel.Store.CENTRES_COUTS" Multiplicity="0..1" />
+    <End Role="BUDGETS" Type="TRESORERIEModel.Store.BUDGETS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CENTRES_COUTS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="BUDGETS">
+        <PropertyRef Name="CENTRE_COUT" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BUDGETS_PROJETS">
+    <End Role="PROJETS" Type="TRESORERIEModel.Store.PROJETS" Multiplicity="0..1" />
+    <End Role="BUDGETS" Type="TRESORERIEModel.Store.BUDGETS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PROJETS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="BUDGETS">
+        <PropertyRef Name="PROJET" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BUDGETS_SOCIETES">
+    <End Role="SOCIETES" Type="TRESORERIEModel.Store.SOCIETES" Multiplicity="0..1" />
+    <End Role="BUDGETS" Type="TRESORERIEModel.Store.BUDGETS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SOCIETES">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="BUDGETS">
+        <PropertyRef Name="SOCIETE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CENTRES_COUTS_CATEGORIES_CENTRES_COUTS">
+    <End Role="CATEGORIES_CENTRES_COUTS" Type="TRESORERIEModel.Store.CATEGORIES_CENTRES_COUTS" Multiplicity="0..1" />
+    <End Role="CENTRES_COUTS" Type="TRESORERIEModel.Store.CENTRES_COUTS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CATEGORIES_CENTRES_COUTS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CENTRES_COUTS">
+        <PropertyRef Name="CATEGORIE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DEPENSES_CENTRES_COUTS">
+    <End Role="CENTRES_COUTS" Type="TRESORERIEModel.Store.CENTRES_COUTS" Multiplicity="0..1" />
+    <End Role="DEPENSES" Type="TRESORERIEModel.Store.DEPENSES" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CENTRES_COUTS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DEPENSES">
+        <PropertyRef Name="CENTRE_COUT" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DEPENSES_PROJETS">
+    <End Role="PROJETS" Type="TRESORERIEModel.Store.PROJETS" Multiplicity="0..1" />
+    <End Role="DEPENSES" Type="TRESORERIEModel.Store.DEPENSES" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PROJETS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DEPENSES">
+        <PropertyRef Name="PROJET" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DEPENSES_SOCIETES">
+    <End Role="SOCIETES" Type="TRESORERIEModel.Store.SOCIETES" Multiplicity="0..1" />
+    <End Role="DEPENSES" Type="TRESORERIEModel.Store.DEPENSES" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SOCIETES">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DEPENSES">
+        <PropertyRef Name="SOCIETE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FACTURATIONS_PROJETS">
+    <End Role="PROJETS" Type="TRESORERIEModel.Store.PROJETS" Multiplicity="0..1" />
+    <End Role="FACTURATIONS" Type="TRESORERIEModel.Store.FACTURATIONS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PROJETS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="FACTURATIONS">
+        <PropertyRef Name="PROJET" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FACTURATIONS_SOCIETES">
+    <End Role="SOCIETES" Type="TRESORERIEModel.Store.SOCIETES" Multiplicity="0..1" />
+    <End Role="FACTURATIONS" Type="TRESORERIEModel.Store.FACTURATIONS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SOCIETES">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="FACTURATIONS">
+        <PropertyRef Name="SOCIETE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PROJETS_SOCIETES">
+    <End Role="SOCIETES" Type="TRESORERIEModel.Store.SOCIETES" Multiplicity="0..1" />
+    <End Role="PROJETS" Type="TRESORERIEModel.Store.PROJETS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SOCIETES">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PROJETS">
+        <PropertyRef Name="SOCIETE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

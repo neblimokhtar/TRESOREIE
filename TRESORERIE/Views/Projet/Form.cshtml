@@ -1,0 +1,129 @@
+﻿<link href="~/Content//plugins/select2/css/select2.css" rel="stylesheet">
+<div class="row">
+    <div class="col s12">
+        <div class="page-title">@ViewBag.Titre</div>
+    </div>
+    <div class="col s12 m12 l12">
+        @using (Html.BeginForm("SendForm", "Projet", new { Mode = ViewBag.Mode, Code = ViewBag.Code }, FormMethod.Post, new { role = "form" }))
+        {
+            <div class="row">
+                <div class="card">
+                    <div class="card-content">
+                        @{
+            string Soc = Session["SOCIETE"] != null ? Session["SOCIETE"].ToString() : string.Empty;
+                        }
+                        <h3>SOCIETE : @Soc</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field">
+                    <input id="CODE_PROJET" type="text" class="validate" value="@Model.CODE" name="CODE_PROJET" required>
+                    <label for="CODE_PROJET" class="">CODE</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field">
+                    <input id="NOM_PROJET" type="text" class="validate" value="@Model.NOM_PROJET" name="NOM_PROJET" required>
+                    <label for="NOM_PROJET" class="">NOM</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field">
+                    <input id="TYPE" type="text" class="validate" value="@Model.TYPE" name="TYPE">
+                    <label for="TYPE" class="">TYPE</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field">
+                    <input id="CLIENT" type="text" class="validate" value="@Model.CLIENT" name="CLIENT" required>
+                    <label for="CLIENT" class="">CLIENT</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field">
+                    <input id="OWNER" type="text" class="validate" value="@Model.OWNER" name="OWNER">
+                    <label for="OWNER" class="">OWNER</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field">
+                    <input id="DEBUT" type="text" class="datepicker" value="@ViewBag.Start" name="DEBUT" required>
+                    <label for="DEBUT" class="">DEBUT</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field">
+                    <input id="FIN" type="text" class="datepicker" value="@ViewBag.End" name="FIN" required>
+                    <label for="FIN" class="">FIN</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field">
+                    <input id="MONTANT_HT" type="text" class="validate" value="@Model.MONTANT_HT.ToString()" name="MONTANT_HT" required>
+                    <label for="MONTANT_HT" class="">MONTANT HT</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field">
+                    <input id="TVA" type="text" class="validate" value="@Model.TVA.ToString()" name="TVA" required>
+                    <label for="TVA" class="">TVA</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field">
+                    <input id="GARANTIE" type="text" class="validate" value="@Model.GARANTIE.ToString()" name="GARANTIE">
+                    <label for="GARANTIE" class="">GARANTIE (%)</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field">
+                    <input id="TYPE_FACTURATION" type="text" class="autocomplete" value="@Model.TYPE_FACTURATION" name="TYPE_FACTURATION" required>
+                    <label for="TYPE_FACTURATION" class="">TYPE FACTURATION</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field">
+                    <input id="MODALITE_FACTURATION" type="text" class="autocomplete" value="@Model.MODALITE_FACTURATION" name="MODALITE_FACTURATION" required>
+                    <label for="MODALITE_FACTURATION" class="">MODALITE FACTURATION</label>
+                </div>
+            </div>
+            
+            <div class="right-align">
+                <button class="waves-effect waves-light btn green m-b-xs" type="submit">Valider</button>
+            </div>
+        }
+    </div>
+</div>
+<script src="~/Content//plugins/select2/js/select2.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#li_Projets_work").attr("class", "active");
+
+        $('.datepicker').pickadate({
+            selectMonths: true, // Creates a dropdown to control month
+            selectYears: 15, // Creates a dropdown of 15 years to control year
+            format: 'dd/mm/yyyy',
+        });
+        $('#TYPE_FACTURATION').autocomplete({
+            data: {
+                "Mensuel": null,
+                "Trimestriel": null,
+                "Semestriel": null,
+                "Annuel": null,
+                "Selon avancement": null,
+
+            }
+        });
+        $('#MODALITE_FACTURATION').autocomplete({
+            data: {
+                "Virement": null,
+                "Cheque": null,
+                "Caisse": null,
+                "Prélevement": null,
+
+            }
+        });
+    });
+</script>
+

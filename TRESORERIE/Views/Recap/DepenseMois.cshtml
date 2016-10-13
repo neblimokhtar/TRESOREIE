@@ -1,0 +1,241 @@
+﻿<div class="row">
+    <div class="col s12">
+        <div class="row">
+            <div class="page-title">DEPENSES PAR MOIS</div>
+        </div>
+        <div class="row">
+            @{
+                string Soc = Session["SOCIETE"] != null ? Session["SOCIETE"].ToString() : string.Empty;
+            }
+            <h4>SOCIETE : @Soc</h4>
+        </div>
+    </div>
+    <div class="col s12 m12 l12">
+        <div class="card card-transparent no-m">
+            <div class="card-content invoice-relative-content">
+                <div class="row">
+                    <div class="col s4">
+                        <label>Année d'excercice</label>
+                        <select class="js-states browser-default" id="basic">
+                            <option value="" disabled="" selected="">Choisir une année</option>
+                            @for (int i = 10; i >= 0; i--)
+                            {
+                                <option value="@DateTime.Today.AddYears(-i).Year">@DateTime.Today.AddYears(-i).Year</option> 
+                            }
+                            @for (int i = 1; i < 10; i++)
+                            {
+                                <option value="@DateTime.Today.AddYears(i).Year">@DateTime.Today.AddYears(i).Year</option> 
+                            }
+                        </select>
+                    </div>
+                    <div class="col s2">
+                        <a class="btn-floating btn-large waves-effect waves-light" onclick="Filtrer()" style="margin-top: 20px;"><i class="material-icons">search</i></a>
+                    </div>
+                </div>
+                <div class="divider"></div>
+
+                <div class="row">
+                    <div class="col s12">
+                        <p>
+                            <span class="light-blue-text">ANNEE EXERCICE</span><br>
+                            <b>@ViewBag.ANNEE</b><br>
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s12 m12 l12">
+                        <table class="table responsive-table">
+                            <thead>
+                                <tr>
+                                    <th>CODE</th>
+                                    <th>CENTRE COUT</th>
+                                    <th>JANVIER</th>
+                                    <th>FEVRIER</th>
+                                    <th>MARS</th>
+                                    <th>AVRIL</th>
+                                    <th>MAI</th>
+                                    <th>JUIN</th>
+                                    <th>JUILLET</th>
+                                    <th>AOUT</th>
+                                    <th>SEPTEMBRE</th>
+                                    <th>OCTOBRE</th>
+                                    <th>NOVEMBRE</th>
+                                    <th>DECEMBRE</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@item.CODE</td>
+                                        <td>@item.CENTRE</td>
+                                        <td>@item.JANVIER</td>
+                                        <td>@item.FEVRIER</td>
+                                        <td>@item.MARS</td>
+                                        <td>@item.AVRIL</td>
+                                        <td>@item.MAI</td>
+                                        <td>@item.JUIN</td>
+                                        <td>@item.JUILLET</td>
+                                        <td>@item.AOUT</td>
+                                        <td>@item.SEPTEMBRE</td>
+                                        <td>@item.OCTOBRE</td>
+                                        <td>@item.NOVEMBRE</td>
+                                        <td>@item.DECEMBRE</td>
+                                    </tr>
+                                }
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td><span class="secondary-link">@ViewBag.TOT_JANVIER</span></td>
+                                    <td><span class="secondary-link">@ViewBag.TOT_FEVRIER</span></td>
+                                    <td><span class="secondary-link">@ViewBag.TOT_MARS</span></td>
+                                    <td><span class="secondary-link">@ViewBag.TOT_AVRIL</span></td>
+                                    <td><span class="secondary-link">@ViewBag.TOT_MAI</span></td>
+                                    <td><span class="secondary-link">@ViewBag.TOT_JUIN</span></td>
+                                    <td><span class="secondary-link">@ViewBag.TOT_JUILLET</span></td>
+                                    <td><span class="secondary-link">@ViewBag.TOT_AOUT</span></td>
+                                    <td><span class="secondary-link">@ViewBag.TOT_SEPTEMBRE</span></td>
+                                    <td><span class="secondary-link">@ViewBag.TOT_OCTOBRE</span></td>
+                                    <td><span class="secondary-link">@ViewBag.TOT_NOVEMBRE</span></td>
+                                    <td><span class="secondary-link">@ViewBag.TOT_NOVEMBRE</span></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+                <div id="charts">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#li_Recaps").attr("class", "active");
+
+        //var flot2 = function () {
+        //    var data1 = [[1, 3],
+        //            [2, 345],
+        //            [3, 34],
+        //            [4, 234],
+        //            [5, 435],
+        //            [6, 458],
+        //            [7, 879],
+        //            [8, 779],
+        //            [9, 679],
+        //            [10, 579],
+        //            [11, 479],
+        //            [12, 379]
+        //    ];
+
+        //    var dataset = [{
+        //        data: data1,
+        //        color: "#3366CC"
+        //    }];
+        //    var ticks = [[1, "JANVIER"], [2, "FEVRIER"], [3, "MARS"], [4, "AVRIL"], [5, "MAI"], [6, "JUIN"], [7, "JUILLET"], [8, "AOUT"], [9, "SEPTEMBRE"], [10, "OCTOBRE"], [11, "NOVEMBRE"], [12, "DECEMBRE"]];
+
+        //    var options = {
+        //        series: {
+        //            lines: {
+        //                show: true,
+        //                shadowSize: 0
+        //            }
+        //        },
+        //        xaxis: {
+        //            ticks: ticks,
+        //            tickLength: 0
+        //        },
+        //        legend: {
+        //            show: false
+        //        },
+        //        grid: {
+        //            color: "#AFAFAF",
+        //            hoverable: true,
+        //            borderWidth: 0,
+        //            backgroundColor: '#FFF'
+        //        },
+        //        tooltip: true,
+        //        tooltipOpts: {
+        //            content: "X: %x, Y: %y",
+        //            defaultTheme: false
+        //        }
+        //    };
+        //    $.plot($("#flot2"), dataset, options);
+        //};
+
+        //flot2();
+        var Parampassed = "@ViewBag.ANNEE";
+        if (Parampassed != "") {
+            $.ajax({
+                type: 'POST',
+                url: "/Recap/ChartCategorie?Parampassed=" + Parampassed,
+                success: function (response) {
+                    var it = JSON.parse(response);
+                    $.each(it, function (i, item) {
+                        var ID = item[0].Value.replace(" ", "_");
+                        var div = "<div class='row'> <div class='col s12 m12 l12'> <div class='card'> <div class='card-content'> <span class='card-title' style='font-size: large; '>" + item[0].Value + "<small></small></span> <div id='" + ID + "' style='width: 100%; height: 400px;'></div> </div> </div> </div> </div>"
+                        $("#charts").append(div);
+                        var flot2 = function () {
+                            var data1 = [[1, parseFloat(item[1].Value)],
+                                    [2, parseFloat(item[2].Value)],
+                                    [3, parseFloat(item[3].Value)],
+                                    [4, parseFloat(item[4].Value)],
+                                    [5, parseFloat(item[5].Value)],
+                                    [6, parseFloat(item[6].Value)],
+                                    [7, parseFloat(item[7].Value)],
+                                    [8, parseFloat(item[8].Value)],
+                                    [9, parseFloat(item[9].Value)],
+                                    [10, parseFloat(item[10].Value)],
+                                    [11, parseFloat(item[11].Value)],
+                                    [12, parseFloat(item[12].Value)]
+                            ];
+
+                            var dataset = [{
+                                data: data1,
+                                color: "#3366CC"
+                            }];
+                            var ticks = [[1, "JANVIER"], [2, "FEVRIER"], [3, "MARS"], [4, "AVRIL"], [5, "MAI"], [6, "JUIN"], [7, "JUILLET"], [8, "AOUT"], [9, "SEPTEMBRE"], [10, "OCTOBRE"], [11, "NOVEMBRE"], [12, "DECEMBRE"]];
+
+                            var options = {
+                                series: {
+                                    lines: {
+                                        show: true,
+                                        shadowSize: 0
+                                    }
+                                },
+                                xaxis: {
+                                    ticks: ticks,
+                                    tickLength: 0
+                                },
+                                legend: {
+                                    show: false
+                                },
+                                grid: {
+                                    color: "#AFAFAF",
+                                    hoverable: true,
+                                    borderWidth: 0,
+                                    backgroundColor: '#FFF'
+                                },
+                                tooltip: true,
+                                tooltipOpts: {
+                                    content: "X: %x, Y: %y",
+                                    defaultTheme: false
+                                }
+                            };
+                            $.plot($("#" + ID), dataset, options);
+                        };
+                        flot2();
+
+                    });
+                }
+            });
+        }
+    });
+    function Filtrer() {
+        var Parampassed = $("#basic").val();
+        window.location.href = "/Recap/DepenseMois?Parampassed=" + Parampassed;
+    }
+</script>
