@@ -25,8 +25,8 @@ namespace TRESORERIE.Models
         public string CODE { get; set; }
         public string NOM_PROJET { get; set; }
         public string TYPE { get; set; }
-        public string CLIENT { get; set; }
-        public string OWNER { get; set; }
+        public Nullable<int> CLIENT { get; set; }
+        public Nullable<int> OWNER { get; set; }
         public DateTime DEBUT { get; set; }
         public DateTime FIN { get; set; }
         public decimal MONTANT_HT { get; set; }
@@ -40,5 +40,7 @@ namespace TRESORERIE.Models
         public virtual ICollection<DEPENSES> DEPENSES { get; set; }
         public virtual ICollection<FACTURATIONS> FACTURATIONS { get; set; }
         public virtual SOCIETES SOCIETES { get; set; }
+        public virtual TIERS TIERS { get; set; }
+        public virtual TIERS TIERS1 { get; set; }
     }
 }

@@ -25,11 +25,11 @@ namespace TRESORERIE.Models
         public decimal TIMBRE { get; set; }
         public decimal RETENUE_SOURCE { get; set; }
         public decimal GARANTIE { get; set; }
-        public Nullable<DateTime> DATE_REGLEMENT_REEL { get; set; }
+        public DateTime DATE_REGLEMENT_REEL { get; set; }
         public bool ETAT_FACTURATION { get; set; }
         public bool ETAT_REGLEMENT { get; set; }
         public int SOCIETE { get; set; }
-        public Nullable<DateTime> DATE_FACTURATION { get; set; }
+        public DateTime DATE_FACTURATION { get; set; }
         public decimal FODEC { get; set; }
         public decimal TTC { get; set; }
     

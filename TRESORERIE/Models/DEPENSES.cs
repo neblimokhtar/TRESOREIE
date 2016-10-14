@@ -11,7 +11,6 @@ namespace TRESORERIE.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations.Schema;
     
     public partial class DEPENSES
     {
@@ -30,11 +29,12 @@ namespace TRESORERIE.Models
         public decimal RETENUE_SOURCE { get; set; }
         public Nullable<System.DateTime> DATE_PAIEMENT { get; set; }
         public Nullable<int> SOCIETE { get; set; }
-        public string FOURNISSEUR { get; set; }
+        public Nullable<int> FOURNISSEUR { get; set; }
         public string MODALITE { get; set; }
-
+    
         public virtual CENTRES_COUTS CENTRES_COUTS { get; set; }
         public virtual PROJETS PROJETS { get; set; }
         public virtual SOCIETES SOCIETES { get; set; }
+        public virtual TIERS TIERS { get; set; }
     }
 }

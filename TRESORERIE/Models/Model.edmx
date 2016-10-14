@@ -4,15 +4,16 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="TRESORERIEModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="TRESORERIEModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityContainer Name="TRESORERIEModelStoreContainer">
-          <EntitySet Name="BUDGETS" EntityType="TRESORERIEModel.Store.BUDGETS" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
-          <EntitySet Name="CATEGORIES_CENTRES_COUTS" EntityType="TRESORERIEModel.Store.CATEGORIES_CENTRES_COUTS" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
-          <EntitySet Name="CENTRES_COUTS" EntityType="TRESORERIEModel.Store.CENTRES_COUTS" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
-          <EntitySet Name="DEPENSES" EntityType="TRESORERIEModel.Store.DEPENSES" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
-          <EntitySet Name="FACTURATIONS" EntityType="TRESORERIEModel.Store.FACTURATIONS" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
-          <EntitySet Name="PROJETS" EntityType="TRESORERIEModel.Store.PROJETS" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
-          <EntitySet Name="SOCIETES" EntityType="TRESORERIEModel.Store.SOCIETES" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="BUDGETS" EntityType="TRESORERIEModel.Store.BUDGETS" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="CATEGORIES_CENTRES_COUTS" EntityType="TRESORERIEModel.Store.CATEGORIES_CENTRES_COUTS" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="CENTRES_COUTS" EntityType="TRESORERIEModel.Store.CENTRES_COUTS" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="DEPENSES" EntityType="TRESORERIEModel.Store.DEPENSES" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="FACTURATIONS" EntityType="TRESORERIEModel.Store.FACTURATIONS" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="PROJETS" EntityType="TRESORERIEModel.Store.PROJETS" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="SOCIETES" EntityType="TRESORERIEModel.Store.SOCIETES" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="TIERS" EntityType="TRESORERIEModel.Store.TIERS" store:Type="Tables" Schema="dbo" />
           <AssociationSet Name="FK_BUDGETS_CENTRES_COUTS" Association="TRESORERIEModel.Store.FK_BUDGETS_CENTRES_COUTS">
             <End Role="CENTRES_COUTS" EntitySet="CENTRES_COUTS" />
             <End Role="BUDGETS" EntitySet="BUDGETS" />
@@ -41,6 +42,10 @@
             <End Role="SOCIETES" EntitySet="SOCIETES" />
             <End Role="DEPENSES" EntitySet="DEPENSES" />
           </AssociationSet>
+          <AssociationSet Name="FK_DEPENSES_TIERS" Association="TRESORERIEModel.Store.FK_DEPENSES_TIERS">
+            <End Role="TIERS" EntitySet="TIERS" />
+            <End Role="DEPENSES" EntitySet="DEPENSES" />
+          </AssociationSet>
           <AssociationSet Name="FK_FACTURATIONS_PROJETS" Association="TRESORERIEModel.Store.FK_FACTURATIONS_PROJETS">
             <End Role="PROJETS" EntitySet="PROJETS" />
             <End Role="FACTURATIONS" EntitySet="FACTURATIONS" />
@@ -51,6 +56,14 @@
           </AssociationSet>
           <AssociationSet Name="FK_PROJETS_SOCIETES" Association="TRESORERIEModel.Store.FK_PROJETS_SOCIETES">
             <End Role="SOCIETES" EntitySet="SOCIETES" />
+            <End Role="PROJETS" EntitySet="PROJETS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PROJETS_TIERS" Association="TRESORERIEModel.Store.FK_PROJETS_TIERS">
+            <End Role="TIERS" EntitySet="TIERS" />
+            <End Role="PROJETS" EntitySet="PROJETS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PROJETS_TIERS1" Association="TRESORERIEModel.Store.FK_PROJETS_TIERS1">
+            <End Role="TIERS" EntitySet="TIERS" />
             <End Role="PROJETS" EntitySet="PROJETS" />
           </AssociationSet>
         </EntityContainer>
@@ -100,7 +113,7 @@
           <Property Name="RETENUE_SOURCE" Type="numeric" Scale="3" />
           <Property Name="DATE_PAIEMENT" Type="datetime" />
           <Property Name="SOCIETE" Type="int" />
-          <Property Name="FOURNISSEUR" Type="nvarchar" MaxLength="50" />
+          <Property Name="FOURNISSEUR" Type="int" />
           <Property Name="MODALITE" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="FACTURATIONS">
@@ -134,8 +147,8 @@
           <Property Name="CODE" Type="nvarchar" MaxLength="50" />
           <Property Name="NOM_PROJET" Type="nvarchar(max)" />
           <Property Name="TYPE" Type="nvarchar" MaxLength="50" />
-          <Property Name="CLIENT" Type="nvarchar" MaxLength="50" />
-          <Property Name="OWNER" Type="nvarchar" MaxLength="50" />
+          <Property Name="CLIENT" Type="int" />
+          <Property Name="OWNER" Type="int" />
           <Property Name="DEBUT" Type="datetime" />
           <Property Name="FIN" Type="datetime" />
           <Property Name="MONTANT_HT" Type="numeric" Scale="3" />
@@ -152,6 +165,14 @@
           <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="NOM" Type="nvarchar" MaxLength="50" />
           <Property Name="CODE_ACCES" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="TIERS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="RAISON_SOCIALE" Type="nvarchar" MaxLength="50" />
+          <Property Name="TYPE" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <Association Name="FK_BUDGETS_CENTRES_COUTS">
           <End Role="CENTRES_COUTS" Type="TRESORERIEModel.Store.CENTRES_COUTS" Multiplicity="0..1" />
@@ -237,6 +258,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_DEPENSES_TIERS">
+          <End Role="TIERS" Type="TRESORERIEModel.Store.TIERS" Multiplicity="0..1" />
+          <End Role="DEPENSES" Type="TRESORERIEModel.Store.DEPENSES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TIERS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DEPENSES">
+              <PropertyRef Name="FOURNISSEUR" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_FACTURATIONS_PROJETS">
           <End Role="PROJETS" Type="TRESORERIEModel.Store.PROJETS" Multiplicity="0..1" />
           <End Role="FACTURATIONS" Type="TRESORERIEModel.Store.FACTURATIONS" Multiplicity="*" />
@@ -273,11 +306,35 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_PROJETS_TIERS">
+          <End Role="TIERS" Type="TRESORERIEModel.Store.TIERS" Multiplicity="0..1" />
+          <End Role="PROJETS" Type="TRESORERIEModel.Store.PROJETS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TIERS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PROJETS">
+              <PropertyRef Name="CLIENT" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PROJETS_TIERS1">
+          <End Role="TIERS" Type="TRESORERIEModel.Store.TIERS" Multiplicity="0..1" />
+          <End Role="PROJETS" Type="TRESORERIEModel.Store.PROJETS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TIERS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PROJETS">
+              <PropertyRef Name="OWNER" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="TRESORERIEModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
+      <Schema Namespace="TRESORERIEModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="TresorerieEntities" p1:LazyLoadingEnabled="true">
           <EntitySet Name="BUDGETS" EntityType="TRESORERIEModel.BUDGETS" />
           <EntitySet Name="CATEGORIES_CENTRES_COUTS" EntityType="TRESORERIEModel.CATEGORIES_CENTRES_COUTS" />
@@ -286,6 +343,7 @@
           <EntitySet Name="FACTURATIONS" EntityType="TRESORERIEModel.FACTURATIONS" />
           <EntitySet Name="PROJETS" EntityType="TRESORERIEModel.PROJETS" />
           <EntitySet Name="SOCIETES" EntityType="TRESORERIEModel.SOCIETES" />
+          <EntitySet Name="TIERS" EntityType="TRESORERIEModel.TIERS" />
           <AssociationSet Name="FK_BUDGETS_CENTRES_COUTS" Association="TRESORERIEModel.FK_BUDGETS_CENTRES_COUTS">
             <End Role="CENTRES_COUTS" EntitySet="CENTRES_COUTS" />
             <End Role="BUDGETS" EntitySet="BUDGETS" />
@@ -314,6 +372,10 @@
             <End Role="SOCIETES" EntitySet="SOCIETES" />
             <End Role="DEPENSES" EntitySet="DEPENSES" />
           </AssociationSet>
+          <AssociationSet Name="FK_DEPENSES_TIERS" Association="TRESORERIEModel.FK_DEPENSES_TIERS">
+            <End Role="TIERS" EntitySet="TIERS" />
+            <End Role="DEPENSES" EntitySet="DEPENSES" />
+          </AssociationSet>
           <AssociationSet Name="FK_FACTURATIONS_PROJETS" Association="TRESORERIEModel.FK_FACTURATIONS_PROJETS">
             <End Role="PROJETS" EntitySet="PROJETS" />
             <End Role="FACTURATIONS" EntitySet="FACTURATIONS" />
@@ -324,6 +386,14 @@
           </AssociationSet>
           <AssociationSet Name="FK_PROJETS_SOCIETES" Association="TRESORERIEModel.FK_PROJETS_SOCIETES">
             <End Role="SOCIETES" EntitySet="SOCIETES" />
+            <End Role="PROJETS" EntitySet="PROJETS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PROJETS_TIERS" Association="TRESORERIEModel.FK_PROJETS_TIERS">
+            <End Role="TIERS" EntitySet="TIERS" />
+            <End Role="PROJETS" EntitySet="PROJETS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PROJETS_TIERS1" Association="TRESORERIEModel.FK_PROJETS_TIERS1">
+            <End Role="TIERS" EntitySet="TIERS" />
             <End Role="PROJETS" EntitySet="PROJETS" />
           </AssociationSet>
         </EntityContainer>
@@ -380,11 +450,12 @@
           <Property Name="RETENUE_SOURCE" Type="Decimal" Precision="18" Scale="3" />
           <Property Name="DATE_PAIEMENT" Type="DateTime" Precision="3" />
           <Property Name="SOCIETE" Type="Int32" />
-          <Property Name="FOURNISSEUR" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="FOURNISSEUR" Type="Int32" />
           <Property Name="MODALITE" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="CENTRES_COUTS" Relationship="TRESORERIEModel.FK_DEPENSES_CENTRES_COUTS" FromRole="DEPENSES" ToRole="CENTRES_COUTS" />
           <NavigationProperty Name="PROJETS" Relationship="TRESORERIEModel.FK_DEPENSES_PROJETS" FromRole="DEPENSES" ToRole="PROJETS" />
           <NavigationProperty Name="SOCIETES" Relationship="TRESORERIEModel.FK_DEPENSES_SOCIETES" FromRole="DEPENSES" ToRole="SOCIETES" />
+          <NavigationProperty Name="TIERS" Relationship="TRESORERIEModel.FK_DEPENSES_TIERS" FromRole="DEPENSES" ToRole="TIERS" />
         </EntityType>
         <EntityType Name="FACTURATIONS">
           <Key>
@@ -419,8 +490,8 @@
           <Property Name="CODE" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
           <Property Name="NOM_PROJET" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="TYPE" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
-          <Property Name="CLIENT" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
-          <Property Name="OWNER" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="CLIENT" Type="Int32" />
+          <Property Name="OWNER" Type="Int32" />
           <Property Name="DEBUT" Type="DateTime" Precision="3" />
           <Property Name="FIN" Type="DateTime" Precision="3" />
           <Property Name="MONTANT_HT" Type="Decimal" Precision="18" Scale="3" />
@@ -433,6 +504,8 @@
           <NavigationProperty Name="DEPENSES" Relationship="TRESORERIEModel.FK_DEPENSES_PROJETS" FromRole="PROJETS" ToRole="DEPENSES" />
           <NavigationProperty Name="FACTURATIONS" Relationship="TRESORERIEModel.FK_FACTURATIONS_PROJETS" FromRole="PROJETS" ToRole="FACTURATIONS" />
           <NavigationProperty Name="SOCIETES" Relationship="TRESORERIEModel.FK_PROJETS_SOCIETES" FromRole="PROJETS" ToRole="SOCIETES" />
+          <NavigationProperty Name="TIERS" Relationship="TRESORERIEModel.FK_PROJETS_TIERS" FromRole="PROJETS" ToRole="TIERS" />
+          <NavigationProperty Name="TIERS1" Relationship="TRESORERIEModel.FK_PROJETS_TIERS1" FromRole="PROJETS" ToRole="TIERS" />
         </EntityType>
         <EntityType Name="SOCIETES">
           <Key>
@@ -445,6 +518,17 @@
           <NavigationProperty Name="DEPENSES" Relationship="TRESORERIEModel.FK_DEPENSES_SOCIETES" FromRole="SOCIETES" ToRole="DEPENSES" />
           <NavigationProperty Name="FACTURATIONS" Relationship="TRESORERIEModel.FK_FACTURATIONS_SOCIETES" FromRole="SOCIETES" ToRole="FACTURATIONS" />
           <NavigationProperty Name="PROJETS" Relationship="TRESORERIEModel.FK_PROJETS_SOCIETES" FromRole="SOCIETES" ToRole="PROJETS" />
+        </EntityType>
+        <EntityType Name="TIERS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="RAISON_SOCIALE" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="TYPE" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="DEPENSES" Relationship="TRESORERIEModel.FK_DEPENSES_TIERS" FromRole="TIERS" ToRole="DEPENSES" />
+          <NavigationProperty Name="PROJETS" Relationship="TRESORERIEModel.FK_PROJETS_TIERS" FromRole="TIERS" ToRole="PROJETS" />
+          <NavigationProperty Name="PROJETS1" Relationship="TRESORERIEModel.FK_PROJETS_TIERS1" FromRole="TIERS" ToRole="PROJETS" />
         </EntityType>
         <Association Name="FK_BUDGETS_CENTRES_COUTS">
           <End Role="CENTRES_COUTS" Type="TRESORERIEModel.CENTRES_COUTS" Multiplicity="0..1" />
@@ -530,6 +614,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_DEPENSES_TIERS">
+          <End Role="TIERS" Type="TRESORERIEModel.TIERS" Multiplicity="0..1" />
+          <End Role="DEPENSES" Type="TRESORERIEModel.DEPENSES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TIERS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DEPENSES">
+              <PropertyRef Name="FOURNISSEUR" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_FACTURATIONS_PROJETS">
           <End Role="PROJETS" Type="TRESORERIEModel.PROJETS" Multiplicity="0..1" />
           <End Role="FACTURATIONS" Type="TRESORERIEModel.FACTURATIONS" Multiplicity="*" />
@@ -563,6 +659,30 @@
             </Principal>
             <Dependent Role="PROJETS">
               <PropertyRef Name="SOCIETE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PROJETS_TIERS">
+          <End Role="TIERS" Type="TRESORERIEModel.TIERS" Multiplicity="0..1" />
+          <End Role="PROJETS" Type="TRESORERIEModel.PROJETS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TIERS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PROJETS">
+              <PropertyRef Name="CLIENT" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PROJETS_TIERS1">
+          <End Role="TIERS" Type="TRESORERIEModel.TIERS" Multiplicity="0..1" />
+          <End Role="PROJETS" Type="TRESORERIEModel.PROJETS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TIERS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PROJETS">
+              <PropertyRef Name="OWNER" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -678,6 +798,15 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="TIERS">
+            <EntityTypeMapping TypeName="TRESORERIEModel.TIERS">
+              <MappingFragment StoreEntitySet="TIERS">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="RAISON_SOCIALE" ColumnName="RAISON_SOCIALE" />
+                <ScalarProperty Name="TYPE" ColumnName="TYPE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -698,6 +827,6 @@
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->
-    <Diagrams />
+    <Diagrams></Diagrams>
   </Designer>
 </edmx:Edmx>

@@ -58,6 +58,20 @@ namespace TRESORERIE.Controllers
                 return RedirectToAction("Index", "Home");
             }
         }
+        public JsonResult GetAllClient()
+        {
+            BD.Configuration.ProxyCreationEnabled = false;
+            List<TIERS> Liste = BD.TIERS.Where(Element => Element.TYPE == "CLIENT").ToList();
+            return Json(Liste, JsonRequestBehavior.AllowGet);
+        }
+        public void AddClient(string RAISON_SOCIALE)
+        {
+            TIERS NewElement = new TIERS();
+            NewElement.RAISON_SOCIALE = RAISON_SOCIALE;
+            NewElement.TYPE = "CLIENT";
+            BD.TIERS.Add(NewElement);
+            BD.SaveChanges();
+        }
         [HttpPost]
         public ActionResult SendForm(string Mode, string Code)
         {
@@ -81,8 +95,14 @@ namespace TRESORERIE.Controllers
                 NewElement.CODE = CODE_PROJET;
                 NewElement.NOM_PROJET = NOM_PROJET;
                 NewElement.TYPE = TYPE;
-                NewElement.CLIENT = CLIENT;
-                NewElement.OWNER = OWNER;
+                NewElement.CLIENT = int.Parse(CLIENT);
+                NewElement.OWNER = int.Parse(OWNER);
+                int ClientID = int.Parse(CLIENT);
+                int OWNERID = int.Parse(OWNER);
+                TIERS tiers = BD.TIERS.Find(ClientID);
+                TIERS tiers1 = BD.TIERS.Find(OWNERID);
+                NewElement.TIERS = tiers;
+                NewElement.TIERS1 = tiers1;
                 NewElement.DEBUT = DateTime.Parse(DEBUT);
                 NewElement.FIN = DateTime.Parse(FIN);
                 NewElement.MONTANT_HT = decimal.Parse(MONTANT_HT);
@@ -104,8 +124,14 @@ namespace TRESORERIE.Controllers
                 SelectedElement.CODE = CODE_PROJET;
                 SelectedElement.NOM_PROJET = NOM_PROJET;
                 SelectedElement.TYPE = TYPE;
-                SelectedElement.CLIENT = CLIENT;
-                SelectedElement.OWNER = OWNER;
+                SelectedElement.CLIENT = int.Parse(CLIENT);
+                SelectedElement.OWNER = int.Parse(OWNER);
+                int ClientID = int.Parse(CLIENT);
+                int OWNERID = int.Parse(OWNER);
+                TIERS tiers = BD.TIERS.Find(ClientID);
+                TIERS tiers1 = BD.TIERS.Find(OWNERID);
+                SelectedElement.TIERS = tiers;
+                SelectedElement.TIERS1 = tiers1;
                 SelectedElement.DEBUT = DateTime.Parse(DEBUT);
                 SelectedElement.FIN = DateTime.Parse(FIN);
                 SelectedElement.MONTANT_HT = decimal.Parse(MONTANT_HT);

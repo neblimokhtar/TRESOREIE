@@ -32,5 +32,6 @@ namespace TRESORERIE.Models
         public DbSet<FACTURATIONS> FACTURATIONS { get; set; }
         public DbSet<PROJETS> PROJETS { get; set; }
         public DbSet<SOCIETES> SOCIETES { get; set; }
+        public DbSet<TIERS> TIERS { get; set; }
     }
 }

@@ -79,9 +79,14 @@
                     <input id="RETENUE_SOURCE" type="text" class="validate" value="@Model.RETENUE_SOURCE" name="RETENUE_SOURCE" required>
                     <label for="RETENUE_SOURCE" class="">RETENUE SOURCE (%)</label>
                 </div>
-                <div class="input-field  col s6">
-                    <input id="FOURNISSEUR" type="text" class="validate" name="FOURNISSEUR" value="@Model.FOURNISSEUR" required/>
-                    <label for="FOURNISSEUR" class="">FOURNISSEUR</label>
+                <div class="col s4">
+                    <label>FOURNISSEUR</label>
+                    <select class="js-states browser-default" id="FOURNISSEUR" name="FOURNISSEUR" required>
+                        <option value="" disabled="" selected="">Choisir un fournisseur</option>
+                    </select>
+                </div>
+                <div class="col s2">
+                    <a class="btn-floating btn-large waves-effect waves-light green modal-trigger" onclick="openPop()" href="#modal1"><i class="material-icons">add</i></a>
                 </div>
             </div>     
             <div class="row">
@@ -101,13 +106,26 @@
         }
     </div>
 </div>
+<div id="modal1" class="modal">
+    <div class="modal-content">
+        <div class="modal-content">
+            <div class="input-field col s12">
+                <input id="RAISON_SOCIALE" type="text" class="validate">
+                <label for="RAISON_SOCIALE" class="">RAISON SOCIALE</label>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat" onclick="RemplirListe()">Valider</a>
+    </div>
+</div>
 <script src="~/Content//plugins/select2/js/select2.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         $("#li_Depense").attr("class", "active");
-
         var FilterProjet = "@Model.PROJET";
         var FilterCentreCout = "@Model.CENTRE_COUT";
+        var FilterFournisseur = "@Model.FOURNISSEUR";
         var Mode = "@ViewBag.Mode";
         $.ajax({
             type: 'POST',
@@ -139,9 +157,10 @@
                 });
             }
         });
+
         $('#Projet').select2();
         $('#CentreCout').select2();
-
+        UpdateListe();
         $('.datepicker').pickadate({
             selectMonths: true, // Creates a dropdown to control month
             selectYears: 15, // Creates a dropdown of 15 years to control year
@@ -149,6 +168,40 @@
         });
         Calcul();
     });
+    function openPop() {
+        //$("#modal1").modal();
+    }
+    function RemplirListe() {
+        $.ajax({
+            type: 'POST',
+            url: "/Depense/AddFournisseur?RAISON_SOCIALE=" + $("#RAISON_SOCIALE").val(),
+            success: function (response) {
+                UpdateListe();
+                $("#RAISON_SOCIALE").val("");
+            }
+        });
+    }
+    function UpdateListe() {
+        var FilterFournisseur = "@Model.FOURNISSEUR";
+        var Mode = "@ViewBag.Mode";
+        $("#FOURNISSEUR").empty();
+        $.ajax({
+            type: 'POST',
+            url: "/Depense/GetAllFournisseur",
+            success: function (response) {
+                $.each(response, function (i, item) {
+                    $('#FOURNISSEUR').append($('<option>', {
+                        value: item.ID,
+                        text: item.RAISON_SOCIALE
+                    }));
+                    if (Mode == "Edit") {
+                        $("#FOURNISSEUR").val(FilterFournisseur).trigger("change");
+                    }
+                });
+            }
+        });
+        $('#FOURNISSEUR').select2();
+    }
     function Calcul() {
         var MONTANT_HT = $("#MONTANT_HT").val();
         var TVA = $("#TVA").val();
@@ -156,18 +209,17 @@
         var FODEC = $("#FODEC").val();
         var RETENUE_SOURCE = $("#RETENUE_SOURCE").val();
         var Mode = "@ViewBag.Mode";
-        MONTANT_HT = parseFloat(MONTANT_HT.replace(',', '.'));
-        TVA = parseFloat(TVA.replace(',', '.'));
-        TIMBRE = parseFloat(TIMBRE.replace(',', '.'));
-        FODEC = parseFloat(FODEC.replace(',', '.'));
-        RETENUE_SOURCE = parseFloat(RETENUE_SOURCE.replace(',', '.'));
-        if (Mode == "Edit") {
-            $("#MONTANT_HT").val(MONTANT_HT.toFixed(3));
-            $("#TVA").val(TVA.toFixed(3));
-            $("#TIMBRE").val(TIMBRE.toFixed(3));
-            $("#FODEC").val(FODEC.toFixed(3));
-            $("#RETENUE_SOURCE").val(RETENUE_SOURCE.toFixed(3));
+            MONTANT_HT = parseFloat(MONTANT_HT.replace(',', '.'));
+            TVA = parseFloat(TVA.replace(',', '.'));
+            TIMBRE = parseFloat(TIMBRE.replace(',', '.'));
+            FODEC = parseFloat(FODEC.replace(',', '.'));
+            RETENUE_SOURCE = parseFloat(RETENUE_SOURCE.replace(',', '.'));
+            if (Mode == "Edit") {
+                $("#MONTANT_HT").val(MONTANT_HT.toFixed(3));
+                $("#TVA").val(TVA.toFixed(3));
+                $("#TIMBRE").val(TIMBRE.toFixed(3));
+                $("#FODEC").val(FODEC.toFixed(3));
+                $("#RETENUE_SOURCE").val(RETENUE_SOURCE.toFixed(3));
+            }
         }
-    }
 </script>
-

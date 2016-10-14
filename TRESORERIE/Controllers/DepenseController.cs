@@ -51,6 +51,20 @@ namespace TRESORERIE.Controllers
             List<CENTRES_COUTS> Liste = BD.CENTRES_COUTS.ToList();
             return Json(Liste, JsonRequestBehavior.AllowGet);
         }
+        public JsonResult GetAllFournisseur()
+        {
+            BD.Configuration.ProxyCreationEnabled = false;
+            List<TIERS> Liste = BD.TIERS.Where(Element=>Element.TYPE=="FOURNISSEUR").ToList();
+            return Json(Liste, JsonRequestBehavior.AllowGet);
+        }
+        public void AddFournisseur(string RAISON_SOCIALE)
+        {
+            TIERS NewElement = new TIERS();
+            NewElement.RAISON_SOCIALE = RAISON_SOCIALE;
+            NewElement.TYPE = "FOURNISSEUR";
+            BD.TIERS.Add(NewElement);
+            BD.SaveChanges();
+        }
         public ActionResult Form(string Mode, string Code)
         {
             if (Filter())
@@ -125,7 +139,10 @@ namespace TRESORERIE.Controllers
                     NewElement.TIMBRE = decimal.Parse(TIMBRE, CultureInfo.InvariantCulture);
                     NewElement.FODEC = decimal.Parse(FODEC, CultureInfo.InvariantCulture);
                     NewElement.RETENUE_SOURCE = decimal.Parse(RETENUE_SOURCE, CultureInfo.InvariantCulture);
-                    NewElement.FOURNISSEUR = FOURNISSEUR;
+                    NewElement.FOURNISSEUR = int.Parse(FOURNISSEUR);
+                    int SelectedFournisseur = int.Parse(FOURNISSEUR);
+                    TIERS Tires = BD.TIERS.Find(SelectedFournisseur);
+                    NewElement.TIERS = Tires;
                     DateTime dateValue;
                     if (DateTime.TryParse(DATE_PAIEMENT, out dateValue))
                     {
@@ -161,7 +178,10 @@ namespace TRESORERIE.Controllers
                     SelectedElement.TIMBRE = decimal.Parse(TIMBRE, CultureInfo.InvariantCulture);
                     SelectedElement.FODEC = decimal.Parse(FODEC, CultureInfo.InvariantCulture);
                     SelectedElement.RETENUE_SOURCE = decimal.Parse(RETENUE_SOURCE, CultureInfo.InvariantCulture);
-                    SelectedElement.FOURNISSEUR = FOURNISSEUR;
+                    SelectedElement.FOURNISSEUR = int.Parse(FOURNISSEUR);
+                    int SelectedFournisseur = int.Parse(FOURNISSEUR);
+                    TIERS Tires = BD.TIERS.Find(SelectedFournisseur);
+                    SelectedElement.TIERS = Tires;
                     DateTime dateValue;
                     if (DateTime.TryParse(DATE_PAIEMENT, out dateValue))
                     {
