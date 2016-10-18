@@ -96,14 +96,14 @@ namespace TRESORERIE.Controllers
                 foreach (DEPENSES depense in listedepense)
                 {
                     if (depense.CENTRES_COUTS.CATEGORIES_CENTRES_COUTS.ID == SelectedCategorie)
-                        NewElement.depense += depense.MONTANT_HT;
+                        NewElement.depense += (decimal)depense.MONTANT_HT;
                 }
                 NewElement.budget = 0;
                 List<BUDGETS> listebudget = BD.BUDGETS.Where(Dep => Dep.PROJETS.ID == Element.ID).ToList();
                 foreach (BUDGETS budget in listebudget)
                 {
                     if(budget.CENTRES_COUTS.CATEGORIES_CENTRES_COUTS.ID==SelectedCategorie)
-                    NewElement.budget += budget.MONTANT_HT;
+                    NewElement.budget += (decimal)budget.MONTANT_HT;
                 }
                 Liste.Add(NewElement);
             }

@@ -1,5 +1,7 @@
-﻿using System;
+﻿using CrystalDecisions.CrystalReports.Engine;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -37,7 +39,7 @@ namespace TRESORERIE.Controllers
                     decimal TOTAL = 0;
                     foreach (FACTURATIONS Element in Liste)
                     {
-                        TOTAL += Element.MONTANT_HT;
+                        TOTAL += (decimal)Element.MONTANT_HT;
                     }
                     ViewBag.TOTAL = TOTAL;
                     int Rapport = 0;
@@ -140,7 +142,7 @@ namespace TRESORERIE.Controllers
             }
             foreach (DEPENSES Element in Liste)
             {
-                if (Element.DATE.Month == mois && Element.DATE.Year == year) Result += Element.MONTANT_HT;
+                if (Element.DATE.Month == mois && Element.DATE.Year == year) Result += (decimal)Element.MONTANT_HT;
             }
             return Result;
         }
@@ -179,7 +181,7 @@ namespace TRESORERIE.Controllers
             foreach (DEPENSES Element in Liste)
             {
                 CENTRES_COUTS SelectedCentreCout = BD.CENTRES_COUTS.Find(Element.CENTRE_COUT);
-                if (Element.DATE.Month == mois && Element.DATE.Year == year && SelectedCentreCout.CATEGORIES_CENTRES_COUTS.ID == param) Result += Element.MONTANT_HT;
+                if (Element.DATE.Month == mois && Element.DATE.Year == year && SelectedCentreCout.CATEGORIES_CENTRES_COUTS.ID == param) Result += (decimal)Element.MONTANT_HT;
             }
             return Result;
         }
@@ -239,7 +241,7 @@ namespace TRESORERIE.Controllers
                 List<DEPENSES> liste = BD.DEPENSES.Where(Element => Element.PROJETS.ID == PROJET && Element.CENTRES_COUTS.ID == centre).ToList();
                 foreach (DEPENSES Element in liste)
                 {
-                    Result += Element.MONTANT_HT;
+                    Result += (decimal)Element.MONTANT_HT;
                 }
             }
             else
@@ -247,7 +249,7 @@ namespace TRESORERIE.Controllers
                 List<DEPENSES> liste = BD.DEPENSES.Where(Element => Element.PROJETS.ID == PROJET).ToList();
                 foreach (DEPENSES Element in liste)
                 {
-                    Result += Element.MONTANT_HT;
+                    Result += (decimal)Element.MONTANT_HT;
                 }
             }
             return Result;
@@ -261,7 +263,7 @@ namespace TRESORERIE.Controllers
                 List<BUDGETS> liste = BD.BUDGETS.Where(Element => Element.PROJETS.ID == PROJET && Element.CENTRES_COUTS.ID == centre).ToList();
                 foreach (BUDGETS Element in liste)
                 {
-                    Result += Element.MONTANT_HT;
+                    Result += (decimal)Element.MONTANT_HT;
                 }
             }
             else
@@ -269,12 +271,355 @@ namespace TRESORERIE.Controllers
                 List<BUDGETS> liste = BD.BUDGETS.Where(Element => Element.PROJETS.ID == PROJET).ToList();
                 foreach (BUDGETS Element in liste)
                 {
-                    Result += Element.MONTANT_HT;
+                    Result += (decimal)Element.MONTANT_HT;
                 }
             }
             return Result;
         }
+        public ActionResult PlanFinancementPrevisionel(string Parampassed, string Filterstring)
+        {
+            if (Filter())
+            {
+                int SelectedSociete = int.Parse(Session["Filter"].ToString());
+                List<CENTRES_COUTS> Liste = BD.CENTRES_COUTS.ToList();
+                if ((!string.IsNullOrEmpty(Parampassed) && Parampassed != "null") && (!string.IsNullOrEmpty(Filterstring) && Filterstring != "null"))
+                {
+                    dynamic Variable = (from Element in Liste
+                                        select new
+                                        {
+                                            CODE = Element.CODE,
+                                            CENTRE = Element.LIBELLE,
+                                            PRECEDENTA = CalculPrevisionAchatPrecedent(Parampassed, Filterstring, Element.ID).ToString("F2"),
+                                            PRECEDENTF = 0.ToString("F2"),
+                                            JANVIERA = CalculPrevisionAchatParMois(1, Parampassed, Filterstring, Element.ID).ToString("F2"),
+                                            JANVIERF = 0.ToString("F2"),
+                                            FEVRIERA = CalculPrevisionAchatParMois(2, Parampassed, Filterstring, Element.ID).ToString("F2"),
+                                            FEVRIERF = 0.ToString("F2"),
+                                            MARSA = CalculPrevisionAchatParMois(3, Parampassed, Filterstring, Element.ID).ToString("F2"),
+                                            MARSF = 0.ToString("F2"),
+                                            AVRILA = CalculPrevisionAchatParMois(4, Parampassed, Filterstring, Element.ID).ToString("F2"),
+                                            AVRILF = 0.ToString("F2"),
+                                            MAIA = CalculPrevisionAchatParMois(5, Parampassed, Filterstring, Element.ID).ToString("F2"),
+                                            MAIF = 0.ToString("F2"),
+                                            JUINA = CalculPrevisionAchatParMois(6, Parampassed, Filterstring, Element.ID).ToString("F2"),
+                                            JUINF = 0.ToString("F2"),
+                                            JUILLETA = CalculPrevisionAchatParMois(7, Parampassed, Filterstring, Element.ID).ToString("F2"),
+                                            JUILLETF = 0.ToString("F2"),
+                                            AOUTA = CalculPrevisionAchatParMois(8, Parampassed, Filterstring, Element.ID).ToString("F2"),
+                                            AOUTF = 0.ToString("F2"),
+                                            SEPTEMBREA = CalculPrevisionAchatParMois(9, Parampassed, Filterstring, Element.ID).ToString("F2"),
+                                            SEPTEMBREF = 0.ToString("F2"),
+                                            OCTOBREA = CalculPrevisionAchatParMois(10, Parampassed, Filterstring, Element.ID).ToString("F2"),
+                                            OCTOBREF = 0.ToString("F2"),
+                                            NOVEMBREA = CalculPrevisionAchatParMois(11, Parampassed, Filterstring, Element.ID).ToString("F2"),
+                                            NOVEMBREF = 0.ToString("F2"),
+                                            DECEMBREA = CalculPrevisionAchatParMois(12, Parampassed, Filterstring, Element.ID).ToString("F2"),
+                                            DECEMBREF = 0.ToString("F2"),
 
+                                        }).AsEnumerable().Select(c => c.ToExpando());
+                    ViewBag.ANNEE = Parampassed;
+                    int SelectedProjet = int.Parse(Filterstring);
+                    ViewBag.CODE = BD.PROJETS.Find(SelectedProjet).CODE;
+                    ViewBag.NOM_PROJET = BD.PROJETS.Find(SelectedProjet).NOM_PROJET;
+                    ViewBag.CLIENT = BD.PROJETS.Find(SelectedProjet).CLIENT;
+                    ViewBag.DEBUT = BD.PROJETS.Find(SelectedProjet).DEBUT.ToShortDateString();
+                    ViewBag.FIN = BD.PROJETS.Find(SelectedProjet).FIN.ToShortDateString();
+                    ViewBag.MONTANT_HT = BD.PROJETS.Find(SelectedProjet).MONTANT_HT;
+
+                    ViewBag.TOT_ACHAT_PRECEDENT = CalculPrevisionAchatPrecedent(Parampassed, Filterstring, 0).ToString("F2");
+                    ViewBag.TOT_FACT_PRECEDENT = CalculPrevisionFactPrecedent(Parampassed, Filterstring).ToString("F2");
+
+                    ViewBag.TOT_ACHAT_JANVIER = CalculPrevisionAchatParMois(1, Parampassed, Filterstring, 0).ToString("F2");
+                    ViewBag.TOT_FACT_JANVIER = CalculPrevisionFactParMois(1, Parampassed, Filterstring).ToString("F2");
+
+                    ViewBag.TOT_ACHAT_FEVRIER = CalculPrevisionAchatParMois(2, Parampassed, Filterstring, 0).ToString("F2");
+                    ViewBag.TOT_FACT_FEVRIER = CalculPrevisionFactParMois(2, Parampassed, Filterstring).ToString("F2");
+
+                    ViewBag.TOT_ACHAT_MARS = CalculPrevisionAchatParMois(3, Parampassed, Filterstring, 0).ToString("F2");
+                    ViewBag.TOT_FACT_MARS = CalculPrevisionFactParMois(3, Parampassed, Filterstring).ToString("F2");
+
+                    ViewBag.TOT_ACHAT_AVRIL = CalculPrevisionAchatParMois(4, Parampassed, Filterstring, 0).ToString("F2");
+                    ViewBag.TOT_FACT_AVRIL = CalculPrevisionFactParMois(4, Parampassed, Filterstring).ToString("F2");
+
+                    ViewBag.TOT_ACHAT_MAI = CalculPrevisionAchatParMois(5, Parampassed, Filterstring, 0).ToString("F2");
+                    ViewBag.TOT_FACT_MAI = CalculPrevisionFactParMois(5, Parampassed, Filterstring).ToString("F2");
+
+                    ViewBag.TOT_ACHAT_JUIN = CalculPrevisionAchatParMois(6, Parampassed, Filterstring, 0).ToString("F2");
+                    ViewBag.TOT_FACT_JUIN = CalculPrevisionFactParMois(6, Parampassed, Filterstring).ToString("F2");
+
+                    ViewBag.TOT_ACHAT_JUILLET = CalculPrevisionAchatParMois(7, Parampassed, Filterstring, 0).ToString("F2");
+                    ViewBag.TOT_FACT_JUILLET = CalculPrevisionFactParMois(7, Parampassed, Filterstring).ToString("F2");
+
+                    ViewBag.TOT_ACHAT_AOUT = CalculPrevisionAchatParMois(8, Parampassed, Filterstring, 0).ToString("F2");
+                    ViewBag.TOT_FACT_AOUT = CalculPrevisionFactParMois(8, Parampassed, Filterstring).ToString("F2");
+
+                    ViewBag.TOT_ACHAT_SEPTEMBRE = CalculPrevisionAchatParMois(9, Parampassed, Filterstring, 0).ToString("F2");
+                    ViewBag.TOT_FACT_SEPTEMBRE = CalculPrevisionFactParMois(9, Parampassed, Filterstring).ToString("F2");
+
+                    ViewBag.TOT_ACHAT_OCTOBRE = CalculPrevisionAchatParMois(10, Parampassed, Filterstring, 0).ToString("F2");
+                    ViewBag.TOT_FACT_OCTOBRE = CalculPrevisionFactParMois(10, Parampassed, Filterstring).ToString("F2");
+
+                    ViewBag.TOT_ACHAT_NOVEMBRE = CalculPrevisionAchatParMois(11, Parampassed, Filterstring, 0).ToString("F2");
+                    ViewBag.TOT_FACT_NOVEMBRE = CalculPrevisionFactParMois(11, Parampassed, Filterstring).ToString("F2");
+
+                    ViewBag.TOT_ACHAT_DECEMBRE = CalculPrevisionAchatParMois(12, Parampassed, Filterstring, 0).ToString("F2");
+                    ViewBag.TOT_FACT_DECEMBRE = CalculPrevisionFactParMois(12, Parampassed, Filterstring).ToString("F2");
+
+                    return View(Variable);
+                }
+                else
+                {
+                    dynamic Variable = (from Element in Liste
+                                        select new
+                                        {
+                                            CODE = Element.CODE,
+                                            CENTRE = Element.LIBELLE,
+                                            PRECEDENTA = 0.ToString("F2"),
+                                            PRECEDENTF = 0.ToString("F2"),
+                                            JANVIERA = 0.ToString("F2"),
+                                            JANVIERF = 0.ToString("F2"),
+                                            FEVRIERA = 0.ToString("F2"),
+                                            FEVRIERF = 0.ToString("F2"),
+                                            MARSA = 0.ToString("F2"),
+                                            MARSF = 0.ToString("F2"),
+                                            AVRILA = 0.ToString("F2"),
+                                            AVRILF = 0.ToString("F2"),
+                                            MAIA = 0.ToString("F2"),
+                                            MAIF = 0.ToString("F2"),
+                                            JUINA = 0.ToString("F2"),
+                                            JUINF = 0.ToString("F2"),
+                                            JUILLETA = 0.ToString("F2"),
+                                            JUILLETF = 0.ToString("F2"),
+                                            AOUTA = 0.ToString("F2"),
+                                            AOUTF = 0.ToString("F2"),
+                                            SEPTEMBREA = 0.ToString("F2"),
+                                            SEPTEMBREF = 0.ToString("F2"),
+                                            OCTOBREA = 0.ToString("F2"),
+                                            OCTOBREF = 0.ToString("F2"),
+                                            NOVEMBREA = 0.ToString("F2"),
+                                            NOVEMBREF = 0.ToString("F2"),
+                                            DECEMBREA = 0.ToString("F2"),
+                                            DECEMBREF = 0.ToString("F2"),
+                                        }).AsEnumerable().Select(c => c.ToExpando());
+                    ViewBag.TOT_ACHAT_PRECEDENT = 0.ToString("F2");
+                    ViewBag.TOT_FACT_PRECEDENT = 0.ToString("F2");
+
+                    ViewBag.TOT_ACHAT_JANVIER = 0.ToString("F2");
+                    ViewBag.TOT_FACT_JANVIER = 0.ToString("F2");
+
+                    ViewBag.TOT_ACHAT_FEVRIER = 0.ToString("F2");
+                    ViewBag.TOT_FACT_FEVRIER = 0.ToString("F2");
+
+                    ViewBag.TOT_ACHAT_MARS = 0.ToString("F2");
+                    ViewBag.TOT_FACT_MARS = 0.ToString("F2");
+
+                    ViewBag.TOT_ACHAT_AVRIL = 0.ToString("F2");
+                    ViewBag.TOT_FACT_AVRIL = 0.ToString("F2");
+
+                    ViewBag.TOT_ACHAT_MAI = 0.ToString("F2");
+                    ViewBag.TOT_FACT_MAI = 0.ToString("F2");
+
+                    ViewBag.TOT_ACHAT_JUIN = 0.ToString("F2");
+                    ViewBag.TOT_FACT_JUIN = 0.ToString("F2");
+
+                    ViewBag.TOT_ACHAT_JUILLET = 0.ToString("F2");
+                    ViewBag.TOT_FACT_JUILLET = 0.ToString("F2");
+
+                    ViewBag.TOT_ACHAT_AOUT = 0.ToString("F2");
+                    ViewBag.TOT_FACT_AOUT = 0.ToString("F2");
+
+                    ViewBag.TOT_ACHAT_SEPTEMBRE = 0.ToString("F2");
+                    ViewBag.TOT_FACT_SEPTEMBRE = 0.ToString("F2");
+
+                    ViewBag.TOT_ACHAT_OCTOBRE = 0.ToString("F2");
+                    ViewBag.TOT_FACT_OCTOBRE = 0.ToString("F2");
+
+                    ViewBag.TOT_ACHAT_NOVEMBRE = 0.ToString("F2");
+                    ViewBag.TOT_FACT_NOVEMBRE = 0.ToString("F2");
+
+                    ViewBag.TOT_ACHAT_DECEMBRE = 0.ToString("F2");
+                    ViewBag.TOT_FACT_DECEMBRE = 0.ToString("F2");
+                    return View(Variable);
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
+        public decimal CalculPrevisionAchatParMois(int mois, string annee, string projet, int param)
+        {
+            decimal Result = 0;
+            int year = int.Parse(annee);
+            int SelectedSociete = int.Parse(Session["Filter"].ToString());
+            int SelectedProjet = int.Parse(projet);
+            List<ACHATS_PREVISIONNELS> Liste = BD.ACHATS_PREVISIONNELS.Where(Element => Element.SOCIETES.ID == SelectedSociete && Element.PROJETS.ID == SelectedProjet).ToList();
+            if (param != 0)
+            {
+                Liste = Liste.Where(Element => Element.CENTRES_COUTS.ID == param).ToList();
+            }
+            foreach (ACHATS_PREVISIONNELS Element in Liste)
+            {
+                if (Element.DATE.Month == mois && Element.DATE.Year == year) Result += (decimal)Element.MONTANT_HT;
+            }
+            return Result;
+        }
+        public decimal CalculPrevisionAchatPrecedent(string annee, string projet, int param)
+        {
+            decimal Result = 0;
+            int year = int.Parse(annee);
+            int SelectedSociete = int.Parse(Session["Filter"].ToString());
+            int SelectedProjet = int.Parse(projet);
+            List<ACHATS_PREVISIONNELS> Liste = BD.ACHATS_PREVISIONNELS.Where(Element => Element.SOCIETES.ID == SelectedSociete && Element.PROJETS.ID == SelectedProjet).ToList();
+            if (param != 0)
+            {
+                Liste = Liste.Where(Element => Element.CENTRES_COUTS.ID == param).ToList();
+            }
+            foreach (ACHATS_PREVISIONNELS Element in Liste)
+            {
+                if (Element.DATE.Year == year - 1) Result += (decimal)Element.MONTANT_HT;
+            }
+            return Result;
+        }
+        public decimal CalculPrevisionFactParMois(int mois, string annee, string projet)
+        {
+            decimal Result = 0;
+            int year = int.Parse(annee);
+            int SelectedSociete = int.Parse(Session["Filter"].ToString());
+            int SelectedProjet = int.Parse(projet);
+            List<FACTURATIONS_PREVISIONNELS> Liste = BD.FACTURATIONS_PREVISIONNELS.Where(Element => Element.SOCIETES.ID == SelectedSociete && Element.PROJETS.ID == SelectedProjet).ToList();
+            foreach (FACTURATIONS_PREVISIONNELS Element in Liste)
+            {
+                if (Element.DATE.Month == mois && Element.DATE.Year == year) Result += (decimal)Element.MONTANT_HT;
+            }
+            return Result;
+        }
+        public decimal CalculPrevisionFactPrecedent(string annee, string projet)
+        {
+            decimal Result = 0;
+            int year = int.Parse(annee);
+            int SelectedSociete = int.Parse(Session["Filter"].ToString());
+            int SelectedProjet = int.Parse(projet);
+            List<FACTURATIONS_PREVISIONNELS> Liste = BD.FACTURATIONS_PREVISIONNELS.Where(Element => Element.SOCIETES.ID == SelectedSociete && Element.PROJETS.ID == SelectedProjet).ToList();
+            foreach (FACTURATIONS_PREVISIONNELS Element in Liste)
+            {
+                if (Element.DATE.Year == year - 1) Result += (decimal)Element.MONTANT_HT;
+            }
+            return Result;
+        }
+        public ActionResult Print(string Parampassed, string Filterstring)
+        {
+
+            if (Filter())
+            {
+                int SelectedSociete = int.Parse(Session["Filter"].ToString());
+                List<CENTRES_COUTS> Liste = BD.CENTRES_COUTS.ToList();
+                if ((!string.IsNullOrEmpty(Parampassed) && Parampassed != "null") && (!string.IsNullOrEmpty(Filterstring) && Filterstring != "null"))
+                {
+                    int SelectedProjet = int.Parse(Filterstring);
+                    dynamic dt = from Element in Liste
+                                 select new
+                                 {
+                                     CODE_PROJET = BD.PROJETS.Find(SelectedProjet).CODE,
+                                     DESCRIPTION_PROJET = BD.PROJETS.Find(SelectedProjet).NOM_PROJET,
+                                     CLIENT = BD.PROJETS.Find(SelectedProjet).TIERS.RAISON_SOCIALE,
+                                     DU = BD.PROJETS.Find(SelectedProjet).DEBUT.ToShortDateString(),
+                                     AU = BD.PROJETS.Find(SelectedProjet).FIN.ToShortDateString(),
+                                     MONTANT_HT = BD.PROJETS.Find(SelectedProjet).MONTANT_HT,
+                                     ANNEE = Parampassed,
+                                     CODE_CENTRE = Element.CODE,
+                                     LIBELLE_CENTRE = Element.LIBELLE,
+                                     PRECEDENT_ACHAT = CalculPrevisionAchatPrecedent(Parampassed, Filterstring, Element.ID),
+                                     PRECEDENT_FACT = CalculPrevisionFactPrecedent(Parampassed, Filterstring),
+                                     JANVIER_ACHAT = CalculPrevisionAchatParMois(1, Parampassed, Filterstring, Element.ID),
+                                     JANVIER_FACT = CalculPrevisionFactParMois(1, Parampassed, Filterstring),
+                                     FEVRIER_ACHAT = CalculPrevisionAchatParMois(2, Parampassed, Filterstring, Element.ID),
+                                     FEVRIER_FACT = CalculPrevisionFactParMois(2, Parampassed, Filterstring),
+                                     MARS_ACHAT = CalculPrevisionAchatParMois(3, Parampassed, Filterstring, Element.ID),
+                                     MARS_FACT = CalculPrevisionFactParMois(3, Parampassed, Filterstring),
+                                     AVRIL_ACHAT = CalculPrevisionAchatParMois(4, Parampassed, Filterstring, Element.ID),
+                                     AVRIL_FACT = CalculPrevisionFactParMois(4, Parampassed, Filterstring),
+                                     MAI_ACHAT = CalculPrevisionAchatParMois(5, Parampassed, Filterstring, Element.ID),
+                                     MAI_FACT = CalculPrevisionFactParMois(5, Parampassed, Filterstring),
+                                     JUIN_ACHAT = CalculPrevisionAchatParMois(6, Parampassed, Filterstring, Element.ID),
+                                     JUIN_FACT = CalculPrevisionFactParMois(6, Parampassed, Filterstring),
+                                     JUILLET_ACHAT = CalculPrevisionAchatParMois(7, Parampassed, Filterstring, Element.ID),
+                                     JUILLET_FACT = CalculPrevisionFactParMois(7, Parampassed, Filterstring),
+                                     AOUT_ACHAT = CalculPrevisionAchatParMois(8, Parampassed, Filterstring, Element.ID),
+                                     AOUT_FACT = CalculPrevisionFactParMois(8, Parampassed, Filterstring),
+                                     SEPTEMBRE_ACHAT = CalculPrevisionAchatParMois(9, Parampassed, Filterstring, Element.ID),
+                                     SEPTEMBRE_FACT = CalculPrevisionFactParMois(9, Parampassed, Filterstring),
+                                     OCTOBRE_ACHAT = CalculPrevisionAchatParMois(10, Parampassed, Filterstring, Element.ID),
+                                     OCTOBRE_FACT = CalculPrevisionFactParMois(10, Parampassed, Filterstring),
+                                     NOVEMBRE_ACHAT = CalculPrevisionAchatParMois(11, Parampassed, Filterstring, Element.ID),
+                                     NOVEMBRE_FACT = CalculPrevisionFactParMois(11, Parampassed, Filterstring),
+                                     DECEMBRE_ACHAT = CalculPrevisionAchatParMois(12, Parampassed, Filterstring, Element.ID),
+                                     DECEMBRE_FACT = CalculPrevisionFactParMois(12, Parampassed, Filterstring),
+
+                                 };
+                    ReportDocument rptH = new ReportDocument();
+                    string FileName = Server.MapPath("/Reports/PlanFinancement.rpt");
+                    rptH.Load(FileName);
+                    rptH.SetDataSource(dt);
+                    Stream stream = rptH.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
+                    return File(stream, "application/pdf");
+                }
+                else
+                {
+                    dynamic dt = from Element in Liste
+                                 select new
+                                 {
+                                     CODE_PROJET = "",
+                                     DESCRIPTION_PROJET = "",
+                                     CLIENT = "",
+                                     DU = "",
+                                     AU = "",
+                                     MONTANT_HT = "",
+                                     ANNEE = "",
+                                     CODE_CENTRE = Element.CODE,
+                                     LIBELLE_CENTRE = Element.LIBELLE,
+                                     PRECEDENT_ACHAT = 0,
+                                     PRECEDENT_FACT = 0,
+                                     JANVIER_ACHAT = 0,
+                                     JANVIER_FACT = 0,
+                                     FEVRIER_ACHAT = 0,
+                                     FEVRIER_FACT = 0,
+                                     MARS_ACHAT = 0,
+                                     MARS_FACT = 0,
+                                     AVRIL_ACHAT = 0,
+                                     AVRIL_FACT = 0,
+                                     MAI_ACHAT = 0,
+                                     MAI_FACT = 0,
+                                     JUIN_ACHAT = 0,
+                                     JUIN_FACT = 0,
+                                     JUILLET_ACHAT = 0,
+                                     JUILLET_FACT = 0,
+                                     AOUT_ACHAT = 0,
+                                     AOUT_FACT = 0,
+                                     SEPTEMBRE_ACHAT = 0,
+                                     SEPTEMBRE_FACT = 0,
+                                     OCTOBRE_ACHAT = 0,
+                                     OCTOBRE_FACT = 0,
+                                     NOVEMBRE_ACHAT = 0,
+                                     NOVEMBRE_FACT = 0,
+                                     DECEMBRE_ACHAT = 0,
+                                     DECEMBRE_FACT = 0,
+
+                                 };
+                    ReportDocument rptH = new ReportDocument();
+                    string FileName = Server.MapPath("/Reports/PlanFinancement.rpt");
+                    rptH.Load(FileName);
+                    rptH.SetDataSource(dt);
+                    Stream stream = rptH.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
+                    return File(stream, "application/pdf");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+        }
     }
 
 }

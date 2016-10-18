@@ -16,9 +16,11 @@ namespace TRESORERIE.Models
     {
         public PROJETS()
         {
+            this.ACHATS_PREVISIONNELS = new HashSet<ACHATS_PREVISIONNELS>();
             this.BUDGETS = new HashSet<BUDGETS>();
             this.DEPENSES = new HashSet<DEPENSES>();
             this.FACTURATIONS = new HashSet<FACTURATIONS>();
+            this.FACTURATIONS_PREVISIONNELS = new HashSet<FACTURATIONS_PREVISIONNELS>();
         }
     
         public int ID { get; set; }
@@ -27,8 +29,8 @@ namespace TRESORERIE.Models
         public string TYPE { get; set; }
         public Nullable<int> CLIENT { get; set; }
         public Nullable<int> OWNER { get; set; }
-        public DateTime DEBUT { get; set; }
-        public DateTime FIN { get; set; }
+        public System.DateTime DEBUT { get; set; }
+        public System.DateTime FIN { get; set; }
         public decimal MONTANT_HT { get; set; }
         public decimal TVA { get; set; }
         public decimal GARANTIE { get; set; }
@@ -36,9 +38,11 @@ namespace TRESORERIE.Models
         public string MODALITE_FACTURATION { get; set; }
         public Nullable<int> SOCIETE { get; set; }
     
+        public virtual ICollection<ACHATS_PREVISIONNELS> ACHATS_PREVISIONNELS { get; set; }
         public virtual ICollection<BUDGETS> BUDGETS { get; set; }
         public virtual ICollection<DEPENSES> DEPENSES { get; set; }
         public virtual ICollection<FACTURATIONS> FACTURATIONS { get; set; }
+        public virtual ICollection<FACTURATIONS_PREVISIONNELS> FACTURATIONS_PREVISIONNELS { get; set; }
         public virtual SOCIETES SOCIETES { get; set; }
         public virtual TIERS TIERS { get; set; }
         public virtual TIERS TIERS1 { get; set; }

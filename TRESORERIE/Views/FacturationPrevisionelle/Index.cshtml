@@ -4,7 +4,7 @@
 <div class="row">
     <div class="col s12">
         <div class="row">
-            <div class="page-title">Liste des dépenses projets</div>
+            <div class="page-title">Liste des facturations prévisionnelles</div>
         </div>
         <div class="row">
             @{
@@ -43,20 +43,8 @@
                         <tr>
                             <th></th>
                             <th>PROJET</th>
-                            <th>CENTRE.COUT</th>
                             <th>DATE</th>
-                            <th>TYPE.DOC</th>
-                            <th>NUM.DOC</th>
-                            <th>NUM.PIECE.COMP</th>
-                            <th>LIBELLE</th>
                             <th>MONTANT HT</th>
-                            <th>TVA</th>
-                            <th>TIMBRE</th>
-                            <th>FODEC</th>
-                            <th>R.S</th>
-                            <th>FOURNISSEUR</th>
-                            <th>D.PAIE</th>
-                            <th>MODALITE</th>
 
                         </tr>
                     </thead>
@@ -67,37 +55,8 @@
                                 <td></td>
                                 <td>@item.PROJETS.CODE</td>
 
-                                <td>(@item.CENTRES_COUTS.CODE) @item.CENTRES_COUTS.LIBELLE</td>
-
                                 <td>@item.DATE.ToShortDateString()</td>
-                                <td>@item.TYPE_DOCUMENT</td>
-
-                                <td>@item.NUMERO_DOCUMENT</td>
-                                <td>@item.NUMERO_PIECE_COMPTABLE</td>
-
-                                <td>@item.LIBELLE</td>
-
                                 <td>@item.MONTANT_HT.ToString("F3")</td>
-                                <td>@item.TVA.ToString("F3")</td>
-
-                                <td>@item.TIMBRE.ToString("F3")</td>
-                                <td>@item.FODEC.ToString("F3")</td>
-
-                                <td>@item.RETENUE_SOURCE.ToString("F3")</td>
-                                <td>@item.TIERS.RAISON_SOCIALE</td>
-
-                                <td>
-                                    @if (item.DATE_PAIEMENT != null)
-                                    {
-                                        @item.DATE_PAIEMENT.ToShortDateString();
-                                    }
-                                </td>
-
-                                <td>@if (item.MODALITE != null)
-                                    {
-                                    @item.MODALITE
-                                    }
-                                </td>
                             </tr>
                         }
                     </tbody>
@@ -111,7 +70,7 @@
 <script src="~/Content//plugins/select2/js/select2.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#li_Depense").attr("class", "active");
+        $("#li_Budget").attr("class", "active");
 
         window.Table = $('#example').DataTable({
             language: [{
@@ -139,7 +98,7 @@
         $('.dataTables_length select').addClass('browser-default');
         $.ajax({
             type: 'POST',
-            url: "/Depense/GetAllProject",
+            url: "/FacturationPrevisionelle/GetAllProject",
             success: function (response) {
                 $.each(response, function (i, item) {
                     $('#basic').append($('<option>', {
@@ -153,15 +112,15 @@
     });
     function Filtrer() {
         var Parampassed = $("#basic").val();
-        window.location.href = "/Depense/Index?Parampassed=" + Parampassed;
+        window.location.href = "/FacturationPrevisionelle/Index?Parampassed=" + Parampassed;
     }
     function Add_Element() {
-        window.location.href = "/Depense/Form?Code=-1&Mode=Create";
+        window.location.href = "/FacturationPrevisionelle/Form?Code=-1&Mode=Create";
     }
     function Edit_Element() {
         var element = $("#example tbody tr").filter(".selected").attr("id");
         if (typeof element !== "undefined") {
-            window.location.href = "/Depense/Form?Code=" + element + "&Mode=Edit";
+            window.location.href = "/FacturationPrevisionelle/Form?Code=" + element + "&Mode=Edit";
         }
     }
     function Delete_Element() {
@@ -169,7 +128,7 @@
         if (typeof element !== "undefined") {
             var r = confirm("Voulez vous vraiment supprimer cette ligne ?");
             if (r == true) {
-                window.location.href = "/Depense/Delete?Code=" + element;
+                window.location.href = "/FacturationPrevisionelle/Delete?Code=" + element;
             }
         }
     }

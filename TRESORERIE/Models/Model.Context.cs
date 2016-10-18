@@ -25,11 +25,13 @@ namespace TRESORERIE.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public DbSet<ACHATS_PREVISIONNELS> ACHATS_PREVISIONNELS { get; set; }
         public DbSet<BUDGETS> BUDGETS { get; set; }
         public DbSet<CATEGORIES_CENTRES_COUTS> CATEGORIES_CENTRES_COUTS { get; set; }
         public DbSet<CENTRES_COUTS> CENTRES_COUTS { get; set; }
         public DbSet<DEPENSES> DEPENSES { get; set; }
         public DbSet<FACTURATIONS> FACTURATIONS { get; set; }
+        public DbSet<FACTURATIONS_PREVISIONNELS> FACTURATIONS_PREVISIONNELS { get; set; }
         public DbSet<PROJETS> PROJETS { get; set; }
         public DbSet<SOCIETES> SOCIETES { get; set; }
         public DbSet<TIERS> TIERS { get; set; }

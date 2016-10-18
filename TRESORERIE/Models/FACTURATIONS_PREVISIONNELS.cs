@@ -12,15 +12,14 @@ namespace TRESORERIE.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class BUDGETS
+    public partial class FACTURATIONS_PREVISIONNELS
     {
         public int ID { get; set; }
-        public Nullable<decimal> MONTANT_HT { get; set; }
-        public Nullable<int> PROJET { get; set; }
-        public Nullable<int> CENTRE_COUT { get; set; }
+        public decimal MONTANT_HT { get; set; }
+        public System.DateTime DATE { get; set; }
         public Nullable<int> SOCIETE { get; set; }
+        public Nullable<int> PROJET { get; set; }
     
-        public virtual CENTRES_COUTS CENTRES_COUTS { get; set; }
         public virtual PROJETS PROJETS { get; set; }
         public virtual SOCIETES SOCIETES { get; set; }
     }

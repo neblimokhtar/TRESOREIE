@@ -16,9 +16,11 @@ namespace TRESORERIE.Models
     {
         public SOCIETES()
         {
+            this.ACHATS_PREVISIONNELS = new HashSet<ACHATS_PREVISIONNELS>();
             this.BUDGETS = new HashSet<BUDGETS>();
             this.DEPENSES = new HashSet<DEPENSES>();
             this.FACTURATIONS = new HashSet<FACTURATIONS>();
+            this.FACTURATIONS_PREVISIONNELS = new HashSet<FACTURATIONS_PREVISIONNELS>();
             this.PROJETS = new HashSet<PROJETS>();
         }
     
@@ -26,9 +28,11 @@ namespace TRESORERIE.Models
         public string NOM { get; set; }
         public string CODE_ACCES { get; set; }
     
+        public virtual ICollection<ACHATS_PREVISIONNELS> ACHATS_PREVISIONNELS { get; set; }
         public virtual ICollection<BUDGETS> BUDGETS { get; set; }
         public virtual ICollection<DEPENSES> DEPENSES { get; set; }
         public virtual ICollection<FACTURATIONS> FACTURATIONS { get; set; }
+        public virtual ICollection<FACTURATIONS_PREVISIONNELS> FACTURATIONS_PREVISIONNELS { get; set; }
         public virtual ICollection<PROJETS> PROJETS { get; set; }
     }
 }

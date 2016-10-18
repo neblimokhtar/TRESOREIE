@@ -35,15 +35,25 @@
                 </div>
             </div>
             <div class="row">
-                <div class="input-field">
-                    <input id="CLIENT" type="text" class="validate" value="@Model.CLIENT" name="CLIENT" required>
-                    <label for="CLIENT" class="">CLIENT</label>
+                <div class="col s10">
+                    <label>CLIENT</label>
+                    <select class="js-states browser-default" id="CLIENT" name="CLIENT" required>
+                        <option value="" disabled="" selected="">Choisir un client</option>
+                    </select>
+                </div>
+                <div class="col s2">
+                    <a class="btn-floating btn-large waves-effect waves-light green modal-trigger" onclick="openPop(CLIENT)" href="#modal1"><i class="material-icons">add</i></a>
                 </div>
             </div>
             <div class="row">
-                <div class="input-field">
-                    <input id="OWNER" type="text" class="validate" value="@Model.OWNER" name="OWNER">
-                    <label for="OWNER" class="">OWNER</label>
+                <div class="col s10">
+                    <label>OWNER</label>
+                    <select class="js-states browser-default" id="OWNER" name="OWNER" required>
+                        <option value="" disabled="" selected="">Choisir un owner</option>
+                    </select>
+                </div>
+                <div class="col s2">
+                    <a class="btn-floating btn-large waves-effect waves-light green modal-trigger" onclick="openPop(OWNER)" href="#modal1"><i class="material-icons">add</i></a>
                 </div>
             </div>
             <div class="row">
@@ -95,11 +105,25 @@
         }
     </div>
 </div>
+<div id="modal1" class="modal">
+    <div class="modal-content">
+        <div class="modal-content">
+            <div class="input-field col s12">
+                <input id="RAISON_SOCIALE" type="text" class="validate">
+                <label for="RAISON_SOCIALE" class="">RAISON SOCIALE</label>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat" onclick="RemplirListe()">Valider</a>
+    </div>
+</div>
 <script src="~/Content//plugins/select2/js/select2.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         $("#li_Projets_work").attr("class", "active");
-
+        UpdateListe1();
+        UpdateListe2();
         $('.datepicker').pickadate({
             selectMonths: true, // Creates a dropdown to control month
             selectYears: 15, // Creates a dropdown of 15 years to control year
@@ -125,5 +149,69 @@
             }
         });
     });
+    function openPop(PARAM) {
+        window.PARAM = PARAM;
+    }
+    function UpdateListe1() {
+        var Filterclient = "@Model.CLIENT";
+        var Mode = "@ViewBag.Mode";
+        $("#CLIENT").empty();
+        $.ajax({
+            type: 'POST',
+            url: "/Projet/GetAllClient",
+            success: function (response) {
+                $.each(response, function (i, item) {
+                    $('#CLIENT').append($('<option>', {
+                        value: item.ID,
+                        text: item.RAISON_SOCIALE
+                    }));
+                    if (Mode == "Edit") {
+                        $("#CLIENT").val(Filterclient).trigger("change");
+                    }
+                });
+            }
+        });
+        $('#CLIENT').select2();
+    }
+    function UpdateListe2() {
+        var Filterowner = "@Model.OWNER";
+        var Mode = "@ViewBag.Mode";
+        $("#OWNER").empty();
+        $.ajax({
+            type: 'POST',
+            url: "/Projet/GetAllClient",
+            success: function (response) {
+                $.each(response, function (i, item) {
+                    $('#OWNER').append($('<option>', {
+                        value: item.ID,
+                        text: item.RAISON_SOCIALE
+                    }));
+                    if (Mode == "Edit") {
+                        $("#OWNER").val(Filterowner).trigger("change");
+                    }
+                });
+            }
+        });
+        $('#OWNER').select2();
+    }
+    function RemplirListe() {
+        $.ajax({
+            type: 'POST',
+            url: "/Projet/AddClient?RAISON_SOCIALE=" + $("#RAISON_SOCIALE").val(),
+            success: function (response) {
+                if (window.PARAM.name == "CLIENT") {
+                    UpdateListe1();
+                    if ($('#OWNER option:selected').text() == "") UpdateListe2();
+
+                }
+                if (window.PARAM.name == "OWNER")
+                {
+                    UpdateListe2();
+                    if ($('#CLIENT option:selected').text() == "") UpdateListe1();
+                }
+                $("#RAISON_SOCIALE").val("");
+            }
+        });
+    }
 </script>
 

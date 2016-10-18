@@ -17,16 +17,16 @@ namespace TRESORERIE.Models
         public int ID { get; set; }
         public Nullable<int> PROJET { get; set; }
         public Nullable<int> CENTRE_COUT { get; set; }
-        public DateTime DATE { get; set; }
+        public System.DateTime DATE { get; set; }
         public string TYPE_DOCUMENT { get; set; }
         public string NUMERO_DOCUMENT { get; set; }
         public string NUMERO_PIECE_COMPTABLE { get; set; }
         public string LIBELLE { get; set; }
-        public decimal MONTANT_HT { get; set; }
-        public decimal TVA { get; set; }
-        public decimal FODEC { get; set; }
-        public decimal TIMBRE { get; set; }
-        public decimal RETENUE_SOURCE { get; set; }
+        public Nullable<decimal> MONTANT_HT { get; set; }
+        public Nullable<decimal> TVA { get; set; }
+        public Nullable<decimal> FODEC { get; set; }
+        public Nullable<decimal> TIMBRE { get; set; }
+        public Nullable<decimal> RETENUE_SOURCE { get; set; }
         public Nullable<System.DateTime> DATE_PAIEMENT { get; set; }
         public Nullable<int> SOCIETE { get; set; }
         public Nullable<int> FOURNISSEUR { get; set; }

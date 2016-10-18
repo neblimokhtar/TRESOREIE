@@ -16,22 +16,22 @@ namespace TRESORERIE.Models
     {
         public int ID { get; set; }
         public Nullable<int> PROJET { get; set; }
-        public DateTime DATE_ECHEANCE_REGLEMENT { get; set; }
+        public System.DateTime DATE_ECHEANCE_REGLEMENT { get; set; }
         public string TYPE_PIECE { get; set; }
         public string NUMERO_PIECE { get; set; }
         public string LIBELLE { get; set; }
-        public decimal MONTANT_HT { get; set; }
-        public decimal TVA { get; set; }
-        public decimal TIMBRE { get; set; }
-        public decimal RETENUE_SOURCE { get; set; }
-        public decimal GARANTIE { get; set; }
-        public DateTime DATE_REGLEMENT_REEL { get; set; }
-        public bool ETAT_FACTURATION { get; set; }
-        public bool ETAT_REGLEMENT { get; set; }
-        public int SOCIETE { get; set; }
-        public DateTime DATE_FACTURATION { get; set; }
-        public decimal FODEC { get; set; }
-        public decimal TTC { get; set; }
+        public Nullable<decimal> MONTANT_HT { get; set; }
+        public Nullable<decimal> TVA { get; set; }
+        public Nullable<decimal> TIMBRE { get; set; }
+        public Nullable<decimal> RETENUE_SOURCE { get; set; }
+        public Nullable<decimal> GARANTIE { get; set; }
+        public Nullable<System.DateTime> DATE_REGLEMENT_REEL { get; set; }
+        public Nullable<bool> ETAT_FACTURATION { get; set; }
+        public Nullable<bool> ETAT_REGLEMENT { get; set; }
+        public Nullable<int> SOCIETE { get; set; }
+        public Nullable<System.DateTime> DATE_FACTURATION { get; set; }
+        public Nullable<decimal> FODEC { get; set; }
+        public Nullable<decimal> TTC { get; set; }
     
         public virtual PROJETS PROJETS { get; set; }
         public virtual SOCIETES SOCIETES { get; set; }

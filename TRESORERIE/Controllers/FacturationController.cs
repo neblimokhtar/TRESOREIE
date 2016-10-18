@@ -63,7 +63,7 @@ namespace TRESORERIE.Controllers
                     int CodeInt = int.Parse(Code);
                     Element = BD.FACTURATIONS.Find(CodeInt);
                     ViewBag.Titre = "Modifier une facturation projet";
-                    ViewBag.DATE_FACTURATION = Element.DATE_FACTURATION.ToShortDateString();
+                    ViewBag.DATE_FACTURATION =((DateTime)Element.DATE_FACTURATION).ToShortDateString();
                     ViewBag.DATE_ECHEANCE_REGLEMENT = Element.DATE_ECHEANCE_REGLEMENT.ToShortDateString();
                     ViewBag.DATE_REGLEMENT_REEL = Element.DATE_REGLEMENT_REEL!=null ? ((DateTime)Element.DATE_REGLEMENT_REEL).ToShortDateString():string.Empty;
                 }

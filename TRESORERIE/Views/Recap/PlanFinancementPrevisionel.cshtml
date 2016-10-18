@@ -1,0 +1,277 @@
+﻿<link href="~/Content//plugins/select2/css/select2.css" rel="stylesheet">
+<style type="text/css">
+    table tbody tr td {
+        border: 1px solid #00acc1;
+    }
+
+    table thead tr th {
+        border: 1px solid #00acc1;
+    }
+
+    table tfoot tr td {
+        border: 1px solid #00acc1;
+    }
+</style>
+<div class="row">
+    <div class="col s12" style="padding-left: 0px;">
+        <div class="row">
+            <div class="page-title">FACTURATION PAR PROJET</div>
+        </div>
+        <div class="row">
+            @{
+                string Soc = Session["SOCIETE"] != null ? Session["SOCIETE"].ToString() : string.Empty;
+            }
+            <h4>SOCIETE : @Soc</h4>
+        </div>
+    </div>
+    <div class="col s12 m12 l12" style="padding-left: 0px;">
+        <div class="card card-transparent no-m">
+            <div class="card-content invoice-relative-content" style="padding-left: 0px;">
+                <div class="row">
+                    <div class="col s4">
+                        <label>Liste des projets</label>
+                        <select class="js-states browser-default" id="projet">
+                            <option value="" disabled="" selected="">Choisir un projet</option>
+                        </select>
+                    </div>
+                    <div class="col s4">
+                        <label>Année d'excercice</label>
+                        <select class="js-states browser-default" id="annee">
+                            <option value="" disabled="" selected="">Choisir une année</option>
+                            @for (int i = 10; i >= 0; i--)
+                            {
+                                <option value="@DateTime.Today.AddYears(-i).Year">@DateTime.Today.AddYears(-i).Year</option> 
+                            }
+                            @for (int i = 1; i < 10; i++)
+                            {
+                                <option value="@DateTime.Today.AddYears(i).Year">@DateTime.Today.AddYears(i).Year</option> 
+                            }
+                        </select>
+                    </div>
+                    <div class="col s2">
+                        <a class="btn-floating btn-large waves-effect waves-light" onclick="Filtrer()" style="margin-top: 20px;"><i class="material-icons">search</i></a>
+                        <a class="btn-floating btn-large waves-effect waves-light orange" onclick="Imprimer()" style="margin-top: 20px;"><i class="material-icons">print</i></a>
+
+                    </div>
+                </div>
+                <div class="divider"></div>
+
+                <div class="row">
+                    <div class="col s2">
+                        <p>
+                            <span class="light-blue-text">CODE PROJET</span><br>
+                            <b>@ViewBag.CODE</b><br>
+                        </p>
+                    </div>
+                    <div class="col s2">
+                        <p>
+                            <span class="light-blue-text">DESCRIPTION PROJET</span><br>
+                            <b>@ViewBag.NOM_PROJET</b><br>
+                        </p>
+                    </div>
+                    <div class="col s2">
+                        <p>
+                            <span class="light-blue-text">CLIENT</span><br>
+                            <b>@ViewBag.CLIENT</b><br>
+                        </p>
+                    </div>
+                    <div class="col s2">
+                        <p>
+                            <span class="light-blue-text">DU</span><br>
+                            <b>@ViewBag.DEBUT</b><br>
+                        </p>
+                    </div>
+                    <div class="col s2">
+                        <p>
+                            <span class="light-blue-text">AU</span><br>
+                            <b>@ViewBag.FIN </b>
+                            <br>
+                        </p>
+                    </div>
+                    <div class="col s2">
+                        <p>
+                            <span class="light-blue-text">MONTANT HT</span><br>
+                            <b>@ViewBag.MONTANT_HT</b><br>
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s12">
+                        <p>
+                            <span class="light-blue-text">ANNEE EXERCICE</span><br>
+                            <b>@ViewBag.ANNEE</b><br>
+                        </p>
+                    </div>
+                </div>
+                <div class="row" style="overflow-x: scroll;">
+                    <div class="col s12 m12 l12">
+                        <table class="table responsive-table">
+                            <thead>
+                                <tr>
+                                    <th colspan="2">CENTRE COUT</th>
+                                    <th colspan="2">ANNEE -1</th>
+                                    <th colspan="2">JAN</th>
+                                    <th colspan="2">FEV</th>
+                                    <th colspan="2">MARS</th>
+                                    <th colspan="2">AVRIL</th>
+                                    <th colspan="2">MAI</th>
+                                    <th colspan="2">JUIN</th>
+                                    <th colspan="2">JUIL</th>
+                                    <th colspan="2">AOUT</th>
+                                    <th colspan="2">SEPT</th>
+                                    <th colspan="2">OCT</th>
+                                    <th colspan="2">NOV</th>
+                                    <th colspan="2">DEC</th>
+                                </tr>
+                                <tr>
+                                    <th>CODE</th>
+                                    <th>LIBELLE</th>
+                                    <th>A</th>
+                                    <th>F</th>
+                                    <th>A</th>
+                                    <th>F</th>
+                                    <th>A</th>
+                                    <th>F</th>
+                                    <th>A</th>
+                                    <th>F</th>
+                                    <th>A</th>
+                                    <th>F</th>
+                                    <th>A</th>
+                                    <th>F</th>
+                                    <th>A</th>
+                                    <th>F</th>
+                                    <th>A</th>
+                                    <th>F</th>
+                                    <th>A</th>
+                                    <th>F</th>
+                                    <th>A</th>
+                                    <th>F</th>
+                                    <th>A</th>
+                                    <th>F</th>
+                                    <th>A</th>
+                                    <th>F</th>
+                                    <th>A</th>
+                                    <th>F</th>
+
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@item.CODE</td>
+                                        <td>@item.CENTRE</td>
+                                        <td class="right-align">@item.PRECEDENTA</td>
+                                        <td class="right-align">@item.PRECEDENTF</td>
+                                        <td class="right-align">@item.JANVIERA</td>
+                                        <td class="right-align">@item.JANVIERF</td>
+                                        <td class="right-align">@item.FEVRIERA</td>
+                                        <td class="right-align">@item.FEVRIERF</td>
+                                        <td class="right-align">@item.MARSA</td>
+                                        <td class="right-align">@item.MARSF</td>
+                                        <td class="right-align">@item.AVRILA</td>
+                                        <td class="right-align">@item.AVRILF</td>
+                                        <td class="right-align">@item.MAIA</td>
+                                        <td class="right-align">@item.MAIF</td>
+                                        <td class="right-align">@item.JUINA</td>
+                                        <td class="right-align">@item.JUINF</td>
+                                        <td class="right-align">@item.JUILLETA</td>
+                                        <td class="right-align">@item.JUILLETF</td>
+                                        <td class="right-align">@item.AOUTA</td>
+                                        <td class="right-align">@item.AOUTF</td>
+                                        <td class="right-align">@item.SEPTEMBREA</td>
+                                        <td class="right-align">@item.SEPTEMBREF</td>
+                                        <td class="right-align">@item.OCTOBREA</td>
+                                        <td class="right-align">@item.OCTOBREF</td>
+                                        <td class="right-align">@item.NOVEMBREA</td>
+                                        <td class="right-align">@item.NOVEMBREF</td>
+                                        <td class="right-align">@item.DECEMBREA</td>
+                                        <td class="right-align">@item.DECEMBREF</td>
+                                    </tr>
+                                }
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="2"><span class="secondary-link"></span></td>
+                                    <td class="right-align"><span class="secondary-link">@ViewBag.TOT_ACHAT_PRECEDENT</span></td>
+                                    <td class="right-align"><span class="secondary-link">@ViewBag.TOT_FACT_PRECEDENT</span></td>
+                                    <td class="right-align"><span class="secondary-link">@ViewBag.TOT_ACHAT_JANVIER</span></td>
+                                    <td class="right-align"><span class="secondary-link">@ViewBag.TOT_FACT_JANVIER</span></td>
+                                    <td class="right-align"><span class="secondary-link">@ViewBag.TOT_ACHAT_FEVRIER</span></td>
+                                    <td class="right-align"><span class="secondary-link">@ViewBag.TOT_FACT_FEVRIER</span></td>
+                                    <td class="right-align"><span class="secondary-link">@ViewBag.TOT_ACHAT_MARS</span></td>
+                                    <td class="right-align"><span class="secondary-link">@ViewBag.TOT_FACT_MARS</span></td>
+                                    <td class="right-align"><span class="secondary-link">@ViewBag.TOT_ACHAT_AVRIL</span></td>
+                                    <td class="right-align"><span class="secondary-link">@ViewBag.TOT_FACT_AVRIL</span></td>
+                                    <td class="right-align"><span class="secondary-link">@ViewBag.TOT_ACHAT_MAI</span></td>
+                                    <td class="right-align"><span class="secondary-link">@ViewBag.TOT_FACT_MAI</span></td>
+                                    <td class="right-align"><span class="secondary-link">@ViewBag.TOT_ACHAT_JUIN</span></td>
+                                    <td class="right-align"><span class="secondary-link">@ViewBag.TOT_FACT_JUIN</span></td>
+                                    <td class="right-align"><span class="secondary-link">@ViewBag.TOT_ACHAT_JUILLET</span></td>
+                                    <td class="right-align"><span class="secondary-link">@ViewBag.TOT_FACT_JUILLET</span></td>
+                                    <td class="right-align"><span class="secondary-link">@ViewBag.TOT_ACHAT_AOUT</span></td>
+                                    <td class="right-align"><span class="secondary-link">@ViewBag.TOT_FACT_AOUT</span></td>
+                                    <td class="right-align"><span class="secondary-link">@ViewBag.TOT_ACHAT_SEPTEMBRE</span></td>
+                                    <td class="right-align"><span class="secondary-link">@ViewBag.TOT_FACT_SEPTEMBRE</span></td>
+                                    <td class="right-align"><span class="secondary-link">@ViewBag.TOT_ACHAT_OCTOBRE</span></td>
+                                    <td class="right-align"><span class="secondary-link">@ViewBag.TOT_FACT_OCTOBRE</span></td>
+                                    <td class="right-align"><span class="secondary-link">@ViewBag.TOT_ACHAT_NOVEMBRE</span></td>
+                                    <td class="right-align"><span class="secondary-link">@ViewBag.TOT_FACT_NOVEMBRE</span></td>
+                                    <td class="right-align"><span class="secondary-link">@ViewBag.TOT_ACHAT_DECEMBRE</span></td>
+                                    <td class="right-align"><span class="secondary-link">@ViewBag.TOT_FACT_DECEMBRE</span></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><span class="secondary-link"></span></td>
+                                    <td class="right-align" colspan="2"><span class="secondary-link" style="font-size: 18px; color: #a05000;">@(decimal.Parse(ViewBag.TOT_FACT_PRECEDENT) - decimal.Parse(ViewBag.TOT_ACHAT_PRECEDENT))</span></td>
+                                    <td class="right-align" colspan="2"><span class="secondary-link" style="font-size: 18px; color: #a05000;">@(decimal.Parse(ViewBag.TOT_FACT_JANVIER) - decimal.Parse(ViewBag.TOT_ACHAT_JANVIER))</span></td>
+                                    <td class="right-align" colspan="2"><span class="secondary-link" style="font-size: 18px; color: #a05000;">@(decimal.Parse(ViewBag.TOT_FACT_FEVRIER) - decimal.Parse(ViewBag.TOT_ACHAT_FEVRIER))</span></td>
+                                    <td class="right-align" colspan="2"><span class="secondary-link" style="font-size: 18px; color: #a05000;">@(decimal.Parse(ViewBag.TOT_FACT_MARS) - decimal.Parse(ViewBag.TOT_ACHAT_MARS))</span></td>
+                                    <td class="right-align" colspan="2"><span class="secondary-link" style="font-size: 18px; color: #a05000;">@(decimal.Parse(ViewBag.TOT_FACT_AVRIL) - decimal.Parse(ViewBag.TOT_ACHAT_AVRIL))</span></td>
+                                    <td class="right-align" colspan="2"><span class="secondary-link" style="font-size: 18px; color: #a05000;">@(decimal.Parse(ViewBag.TOT_FACT_MAI) - decimal.Parse(ViewBag.TOT_ACHAT_MAI))</span></td>
+                                    <td class="right-align" colspan="2"><span class="secondary-link" style="font-size: 18px; color: #a05000;">@(decimal.Parse(ViewBag.TOT_FACT_JUIN) - decimal.Parse(ViewBag.TOT_ACHAT_JUIN))</span></td>
+                                    <td class="right-align" colspan="2"><span class="secondary-link" style="font-size: 18px; color: #a05000;">@(decimal.Parse(ViewBag.TOT_FACT_JUILLET) - decimal.Parse(ViewBag.TOT_ACHAT_JUILLET))</span></td>
+                                    <td class="right-align" colspan="2"><span class="secondary-link" style="font-size: 18px; color: #a05000;">@(decimal.Parse(ViewBag.TOT_FACT_AOUT) - decimal.Parse(ViewBag.TOT_ACHAT_AOUT))</span></td>
+                                    <td class="right-align" colspan="2"><span class="secondary-link" style="font-size: 18px; color: #a05000;">@(decimal.Parse(ViewBag.TOT_FACT_SEPTEMBRE) - decimal.Parse(ViewBag.TOT_ACHAT_SEPTEMBRE))</span></td>
+                                    <td class="right-align" colspan="2"><span class="secondary-link" style="font-size: 18px; color: #a05000;">@(decimal.Parse(ViewBag.TOT_FACT_OCTOBRE) - decimal.Parse(ViewBag.TOT_ACHAT_OCTOBRE))</span></td>
+                                    <td class="right-align" colspan="2"><span class="secondary-link" style="font-size: 18px; color: #a05000;">@(decimal.Parse(ViewBag.TOT_FACT_NOVEMBRE) - decimal.Parse(ViewBag.TOT_ACHAT_NOVEMBRE))</span></td>
+                                    <td class="right-align" colspan="2"><span class="secondary-link" style="font-size: 18px; color: #a05000;">@(decimal.Parse(ViewBag.TOT_FACT_DECEMBRE) - decimal.Parse(ViewBag.TOT_ACHAT_DECEMBRE))</span></td>
+
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/Content//plugins/select2/js/select2.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#li_Recaps").attr("class", "active");
+        $.ajax({
+            type: 'POST',
+            url: "/Depense/GetAllProject",
+            success: function (response) {
+                $.each(response, function (i, item) {
+                    $('#projet').append($('<option>', {
+                        value: item.ID,
+                        text: item.CODE + " - " + item.NOM_PROJET
+                    }));
+                });
+            }
+        });
+        $('#projet').select2();
+    });
+    function Filtrer() {
+        var Parampassed = $("#annee").val();
+        var Filterstring = $("#projet").val();
+        window.location.href = "/Recap/PlanFinancementPrevisionel?Parampassed=" + Parampassed + "&Filterstring=" + Filterstring;
+    }
+    function Imprimer() {
+        var Parampassed = $("#annee").val();
+        var Filterstring = $("#projet").val();
+        window.open("/Recap/Print?Parampassed=" + Parampassed + "&Filterstring=" + Filterstring, '_blank');
+    }
+</script>
