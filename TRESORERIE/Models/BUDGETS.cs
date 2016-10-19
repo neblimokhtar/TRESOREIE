@@ -15,7 +15,7 @@ namespace TRESORERIE.Models
     public partial class BUDGETS
     {
         public int ID { get; set; }
-        public Nullable<decimal> MONTANT_HT { get; set; }
+        public decimal MONTANT_HT { get; set; }
         public Nullable<int> PROJET { get; set; }
         public Nullable<int> CENTRE_COUT { get; set; }
         public Nullable<int> SOCIETE { get; set; }

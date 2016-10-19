@@ -110,7 +110,7 @@
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
-    <Property Name="MONTANT_HT" Type="Decimal" Precision="18" Scale="3" />
+    <Property Name="MONTANT_HT" Type="Decimal" Precision="18" Scale="3" Nullable="false" />
     <Property Name="PROJET" Type="Int32" />
     <Property Name="CENTRE_COUT" Type="Int32" />
     <Property Name="SOCIETE" Type="Int32" />
@@ -215,9 +215,9 @@
     <Property Name="OWNER" Type="Int32" />
     <Property Name="DEBUT" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="FIN" Type="DateTime" Nullable="false" Precision="3" />
-    <Property Name="MONTANT_HT" Type="Decimal" Precision="18" Scale="3" />
-    <Property Name="TVA" Type="Decimal" Precision="18" Scale="3" />
-    <Property Name="GARANTIE" Type="Decimal" Precision="18" Scale="3" />
+    <Property Name="MONTANT_HT" Type="Decimal" Precision="18" Scale="3" Nullable="false" />
+    <Property Name="TVA" Type="Decimal" Precision="18" Scale="3" Nullable="false" />
+    <Property Name="GARANTIE" Type="Decimal" Precision="18" Scale="3" Nullable="false" />
     <Property Name="TYPE_FACTURATION" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
     <Property Name="MODALITE_FACTURATION" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
     <Property Name="SOCIETE" Type="Int32" />

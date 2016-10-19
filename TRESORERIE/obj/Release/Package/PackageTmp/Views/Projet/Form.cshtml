@@ -156,6 +156,7 @@
         var Filterclient = "@Model.CLIENT";
         var Mode = "@ViewBag.Mode";
         $("#CLIENT").empty();
+        $('#CLIENT').append(" <option value='' disabled='' selected=''>Choisir un client</option>");
         $.ajax({
             type: 'POST',
             url: "/Projet/GetAllClient",
@@ -177,6 +178,7 @@
         var Filterowner = "@Model.OWNER";
         var Mode = "@ViewBag.Mode";
         $("#OWNER").empty();
+        $('#OWNER').append("<option value='' disabled='' selected=''>Choisir un owner</option>");
         $.ajax({
             type: 'POST',
             url: "/Projet/GetAllClient",
@@ -204,8 +206,7 @@
                     if ($('#OWNER option:selected').text() == "") UpdateListe2();
 
                 }
-                if (window.PARAM.name == "OWNER")
-                {
+                if (window.PARAM.name == "OWNER") {
                     UpdateListe2();
                     if ($('#CLIENT option:selected').text() == "") UpdateListe1();
                 }

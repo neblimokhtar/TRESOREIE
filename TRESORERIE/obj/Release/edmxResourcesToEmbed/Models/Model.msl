@@ -1,6 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="TRESORERIEModelStoreContainer" CdmEntityContainer="TresorerieEntities">
+    <EntitySetMapping Name="ACHATS_PREVISIONNELS">
+      <EntityTypeMapping TypeName="TRESORERIEModel.ACHATS_PREVISIONNELS">
+        <MappingFragment StoreEntitySet="ACHATS_PREVISIONNELS">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="CENTRE_COUT" ColumnName="CENTRE_COUT" />
+          <ScalarProperty Name="DATE" ColumnName="DATE" />
+          <ScalarProperty Name="MONTANT_HT" ColumnName="MONTANT_HT" />
+          <ScalarProperty Name="PROJET" ColumnName="PROJET" />
+          <ScalarProperty Name="SOCIETE" ColumnName="SOCIETE" />
+          <ScalarProperty Name="MODALITE" ColumnName="MODALITE" />
+          <ScalarProperty Name="FOURNISSEUR" ColumnName="FOURNISSEUR" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="BUDGETS">
       <EntityTypeMapping TypeName="TRESORERIEModel.BUDGETS">
         <MappingFragment StoreEntitySet="BUDGETS">
@@ -75,6 +89,17 @@
           <ScalarProperty Name="DATE_FACTURATION" ColumnName="DATE_FACTURATION" />
           <ScalarProperty Name="FODEC" ColumnName="FODEC" />
           <ScalarProperty Name="TTC" ColumnName="TTC" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FACTURATIONS_PREVISIONNELS">
+      <EntityTypeMapping TypeName="TRESORERIEModel.FACTURATIONS_PREVISIONNELS">
+        <MappingFragment StoreEntitySet="FACTURATIONS_PREVISIONNELS">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="MONTANT_HT" ColumnName="MONTANT_HT" />
+          <ScalarProperty Name="DATE" ColumnName="DATE" />
+          <ScalarProperty Name="SOCIETE" ColumnName="SOCIETE" />
+          <ScalarProperty Name="PROJET" ColumnName="PROJET" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

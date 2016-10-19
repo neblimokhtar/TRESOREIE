@@ -30,6 +30,7 @@
         .select-item {
             display: none;
         }
+
     </style>
 </head>
 <body>
@@ -123,7 +124,16 @@
                         </div>
                     </li>
                     <li class="no-padding" id="li_Facturation"><a class="waves-effect waves-grey active" href="/Facturation"><i class="material-icons">payment</i>Facturation</a></li>
-                    <li class="no-padding" id="li_Budget"><a class="waves-effect waves-grey active" href="/Budget"><i class="material-icons">equalizer</i>Budget</a></li>
+                    <li class="no-padding" id="li_Budget">
+                        <a class="collapsible-header waves-effect waves-grey"><i class="material-icons">assessment</i>Finance prévisionnel<i class="nav-drop-icon material-icons">keyboard_arrow_right</i></a>
+                        <div class="collapsible-body">
+                            <ul>
+                                <li><a href="/Budget">Budget commercial</a></li>
+                                <li><a href="/AchatPrevisionnel/">Achat prévisionnel</a></li>
+                                <li><a href="/FacturationPrevisionelle/">Facturation prévisionnel</a></li>
+                            </ul>
+                        </div>
+                    </li>
                     <li class="no-padding" id="li_Depense"><a class="waves-effect waves-grey active" href="/Depense"><i class="material-icons">shopping_cart</i>Depense</a></li>
                     <li class="no-padding" id="li_Recaps">
                         <a class="collapsible-header waves-effect waves-grey"><i class="material-icons">trending_up</i>Recaps<i class="nav-drop-icon material-icons">keyboard_arrow_right</i></a>
@@ -132,6 +142,8 @@
                                 <li><a href="/Recap/FacturationProjet">Facturation par projet</a></li>
                                 <li><a href="/Recap/DepenseMois">Dépense par mois</a></li>
                                 <li><a href="/Recap/DepenseBudgetProjet">Dépense/Budget par projet</a></li>
+                                <li><a href="/Recap/PlanFinancementPrevisionel">Plan finance prévisionnel</a></li>
+
                             </ul>
                         </div>
                     </li>

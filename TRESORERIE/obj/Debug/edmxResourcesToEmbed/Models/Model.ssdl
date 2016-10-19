@@ -106,7 +106,7 @@
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="MONTANT_HT" Type="numeric" Scale="3" />
+    <Property Name="MONTANT_HT" Type="numeric" Nullable="false" Scale="3" />
     <Property Name="PROJET" Type="int" />
     <Property Name="CENTRE_COUT" Type="int" />
     <Property Name="SOCIETE" Type="int" />
@@ -195,9 +195,9 @@
     <Property Name="OWNER" Type="int" />
     <Property Name="DEBUT" Type="datetime" Nullable="false" />
     <Property Name="FIN" Type="datetime" Nullable="false" />
-    <Property Name="MONTANT_HT" Type="numeric" Scale="3" />
-    <Property Name="TVA" Type="numeric" Scale="3" />
-    <Property Name="GARANTIE" Type="numeric" Scale="3" />
+    <Property Name="MONTANT_HT" Type="numeric" Nullable="false" Scale="3" />
+    <Property Name="TVA" Type="numeric" Nullable="false" Scale="3" />
+    <Property Name="GARANTIE" Type="numeric" Nullable="false" Scale="3" />
     <Property Name="TYPE_FACTURATION" Type="nvarchar" MaxLength="50" />
     <Property Name="MODALITE_FACTURATION" Type="nvarchar" MaxLength="50" />
     <Property Name="SOCIETE" Type="int" />

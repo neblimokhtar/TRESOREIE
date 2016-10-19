@@ -1,14 +1,32 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="TRESORERIEModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
   <EntityContainer Name="TresorerieEntities" p1:LazyLoadingEnabled="true">
+    <EntitySet Name="ACHATS_PREVISIONNELS" EntityType="TRESORERIEModel.ACHATS_PREVISIONNELS" />
     <EntitySet Name="BUDGETS" EntityType="TRESORERIEModel.BUDGETS" />
     <EntitySet Name="CATEGORIES_CENTRES_COUTS" EntityType="TRESORERIEModel.CATEGORIES_CENTRES_COUTS" />
     <EntitySet Name="CENTRES_COUTS" EntityType="TRESORERIEModel.CENTRES_COUTS" />
     <EntitySet Name="DEPENSES" EntityType="TRESORERIEModel.DEPENSES" />
     <EntitySet Name="FACTURATIONS" EntityType="TRESORERIEModel.FACTURATIONS" />
+    <EntitySet Name="FACTURATIONS_PREVISIONNELS" EntityType="TRESORERIEModel.FACTURATIONS_PREVISIONNELS" />
     <EntitySet Name="PROJETS" EntityType="TRESORERIEModel.PROJETS" />
     <EntitySet Name="SOCIETES" EntityType="TRESORERIEModel.SOCIETES" />
     <EntitySet Name="TIERS" EntityType="TRESORERIEModel.TIERS" />
+    <AssociationSet Name="FK_ACHATS_PREVISIONNELS_CENTRES_COUTS" Association="TRESORERIEModel.FK_ACHATS_PREVISIONNELS_CENTRES_COUTS">
+      <End Role="CENTRES_COUTS" EntitySet="CENTRES_COUTS" />
+      <End Role="ACHATS_PREVISIONNELS" EntitySet="ACHATS_PREVISIONNELS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ACHATS_PREVISIONNELS_PROJETS" Association="TRESORERIEModel.FK_ACHATS_PREVISIONNELS_PROJETS">
+      <End Role="PROJETS" EntitySet="PROJETS" />
+      <End Role="ACHATS_PREVISIONNELS" EntitySet="ACHATS_PREVISIONNELS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ACHATS_PREVISIONNELS_SOCIETES" Association="TRESORERIEModel.FK_ACHATS_PREVISIONNELS_SOCIETES">
+      <End Role="SOCIETES" EntitySet="SOCIETES" />
+      <End Role="ACHATS_PREVISIONNELS" EntitySet="ACHATS_PREVISIONNELS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ACHATS_PREVISIONNELS_TIERS" Association="TRESORERIEModel.FK_ACHATS_PREVISIONNELS_TIERS">
+      <End Role="TIERS" EntitySet="TIERS" />
+      <End Role="ACHATS_PREVISIONNELS" EntitySet="ACHATS_PREVISIONNELS" />
+    </AssociationSet>
     <AssociationSet Name="FK_BUDGETS_CENTRES_COUTS" Association="TRESORERIEModel.FK_BUDGETS_CENTRES_COUTS">
       <End Role="CENTRES_COUTS" EntitySet="CENTRES_COUTS" />
       <End Role="BUDGETS" EntitySet="BUDGETS" />
@@ -49,6 +67,14 @@
       <End Role="SOCIETES" EntitySet="SOCIETES" />
       <End Role="FACTURATIONS" EntitySet="FACTURATIONS" />
     </AssociationSet>
+    <AssociationSet Name="FK_FACTURATIONS_PREVISIONNELS_PROJETS" Association="TRESORERIEModel.FK_FACTURATIONS_PREVISIONNELS_PROJETS">
+      <End Role="PROJETS" EntitySet="PROJETS" />
+      <End Role="FACTURATIONS_PREVISIONNELS" EntitySet="FACTURATIONS_PREVISIONNELS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FACTURATIONS_PREVISIONNELS_SOCIETES" Association="TRESORERIEModel.FK_FACTURATIONS_PREVISIONNELS_SOCIETES">
+      <End Role="SOCIETES" EntitySet="SOCIETES" />
+      <End Role="FACTURATIONS_PREVISIONNELS" EntitySet="FACTURATIONS_PREVISIONNELS" />
+    </AssociationSet>
     <AssociationSet Name="FK_PROJETS_SOCIETES" Association="TRESORERIEModel.FK_PROJETS_SOCIETES">
       <End Role="SOCIETES" EntitySet="SOCIETES" />
       <End Role="PROJETS" EntitySet="PROJETS" />
@@ -62,12 +88,29 @@
       <End Role="PROJETS" EntitySet="PROJETS" />
     </AssociationSet>
   </EntityContainer>
+  <EntityType Name="ACHATS_PREVISIONNELS">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="CENTRE_COUT" Type="Int32" />
+    <Property Name="DATE" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="MONTANT_HT" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
+    <Property Name="PROJET" Type="Int32" />
+    <Property Name="SOCIETE" Type="Int32" />
+    <Property Name="MODALITE" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="FOURNISSEUR" Type="Int32" />
+    <NavigationProperty Name="CENTRES_COUTS" Relationship="TRESORERIEModel.FK_ACHATS_PREVISIONNELS_CENTRES_COUTS" FromRole="ACHATS_PREVISIONNELS" ToRole="CENTRES_COUTS" />
+    <NavigationProperty Name="PROJETS" Relationship="TRESORERIEModel.FK_ACHATS_PREVISIONNELS_PROJETS" FromRole="ACHATS_PREVISIONNELS" ToRole="PROJETS" />
+    <NavigationProperty Name="SOCIETES" Relationship="TRESORERIEModel.FK_ACHATS_PREVISIONNELS_SOCIETES" FromRole="ACHATS_PREVISIONNELS" ToRole="SOCIETES" />
+    <NavigationProperty Name="TIERS" Relationship="TRESORERIEModel.FK_ACHATS_PREVISIONNELS_TIERS" FromRole="ACHATS_PREVISIONNELS" ToRole="TIERS" />
+  </EntityType>
   <EntityType Name="BUDGETS">
     <Key>
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
-    <Property Name="MONTANT_HT" Type="Decimal" Precision="18" Scale="3" />
+    <Property Name="MONTANT_HT" Type="Decimal" Precision="18" Scale="3" Nullable="false" />
     <Property Name="PROJET" Type="Int32" />
     <Property Name="CENTRE_COUT" Type="Int32" />
     <Property Name="SOCIETE" Type="Int32" />
@@ -92,6 +135,7 @@
     <Property Name="CODE" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
     <Property Name="LIBELLE" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
     <Property Name="CATEGORIE" Type="Int32" />
+    <NavigationProperty Name="ACHATS_PREVISIONNELS" Relationship="TRESORERIEModel.FK_ACHATS_PREVISIONNELS_CENTRES_COUTS" FromRole="CENTRES_COUTS" ToRole="ACHATS_PREVISIONNELS" />
     <NavigationProperty Name="BUDGETS" Relationship="TRESORERIEModel.FK_BUDGETS_CENTRES_COUTS" FromRole="CENTRES_COUTS" ToRole="BUDGETS" />
     <NavigationProperty Name="CATEGORIES_CENTRES_COUTS" Relationship="TRESORERIEModel.FK_CENTRES_COUTS_CATEGORIES_CENTRES_COUTS" FromRole="CENTRES_COUTS" ToRole="CATEGORIES_CENTRES_COUTS" />
     <NavigationProperty Name="DEPENSES" Relationship="TRESORERIEModel.FK_DEPENSES_CENTRES_COUTS" FromRole="CENTRES_COUTS" ToRole="DEPENSES" />
@@ -103,7 +147,7 @@
     <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
     <Property Name="PROJET" Type="Int32" />
     <Property Name="CENTRE_COUT" Type="Int32" />
-    <Property Name="DATE" Type="DateTime" Precision="3" />
+    <Property Name="DATE" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="TYPE_DOCUMENT" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
     <Property Name="NUMERO_DOCUMENT" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
     <Property Name="NUMERO_PIECE_COMPTABLE" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
@@ -128,7 +172,7 @@
     </Key>
     <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
     <Property Name="PROJET" Type="Int32" />
-    <Property Name="DATE_ECHEANCE_REGLEMENT" Type="DateTime" Precision="3" />
+    <Property Name="DATE_ECHEANCE_REGLEMENT" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="TYPE_PIECE" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
     <Property Name="NUMERO_PIECE" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
     <Property Name="LIBELLE" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
@@ -147,6 +191,18 @@
     <NavigationProperty Name="PROJETS" Relationship="TRESORERIEModel.FK_FACTURATIONS_PROJETS" FromRole="FACTURATIONS" ToRole="PROJETS" />
     <NavigationProperty Name="SOCIETES" Relationship="TRESORERIEModel.FK_FACTURATIONS_SOCIETES" FromRole="FACTURATIONS" ToRole="SOCIETES" />
   </EntityType>
+  <EntityType Name="FACTURATIONS_PREVISIONNELS">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="MONTANT_HT" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
+    <Property Name="DATE" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="SOCIETE" Type="Int32" />
+    <Property Name="PROJET" Type="Int32" />
+    <NavigationProperty Name="PROJETS" Relationship="TRESORERIEModel.FK_FACTURATIONS_PREVISIONNELS_PROJETS" FromRole="FACTURATIONS_PREVISIONNELS" ToRole="PROJETS" />
+    <NavigationProperty Name="SOCIETES" Relationship="TRESORERIEModel.FK_FACTURATIONS_PREVISIONNELS_SOCIETES" FromRole="FACTURATIONS_PREVISIONNELS" ToRole="SOCIETES" />
+  </EntityType>
   <EntityType Name="PROJETS">
     <Key>
       <PropertyRef Name="ID" />
@@ -157,17 +213,19 @@
     <Property Name="TYPE" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
     <Property Name="CLIENT" Type="Int32" />
     <Property Name="OWNER" Type="Int32" />
-    <Property Name="DEBUT" Type="DateTime" Precision="3" />
-    <Property Name="FIN" Type="DateTime" Precision="3" />
-    <Property Name="MONTANT_HT" Type="Decimal" Precision="18" Scale="3" />
-    <Property Name="TVA" Type="Decimal" Precision="18" Scale="3" />
-    <Property Name="GARANTIE" Type="Decimal" Precision="18" Scale="3" />
+    <Property Name="DEBUT" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="FIN" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="MONTANT_HT" Type="Decimal" Precision="18" Scale="3" Nullable="false" />
+    <Property Name="TVA" Type="Decimal" Precision="18" Scale="3" Nullable="false" />
+    <Property Name="GARANTIE" Type="Decimal" Precision="18" Scale="3" Nullable="false" />
     <Property Name="TYPE_FACTURATION" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
     <Property Name="MODALITE_FACTURATION" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
     <Property Name="SOCIETE" Type="Int32" />
+    <NavigationProperty Name="ACHATS_PREVISIONNELS" Relationship="TRESORERIEModel.FK_ACHATS_PREVISIONNELS_PROJETS" FromRole="PROJETS" ToRole="ACHATS_PREVISIONNELS" />
     <NavigationProperty Name="BUDGETS" Relationship="TRESORERIEModel.FK_BUDGETS_PROJETS" FromRole="PROJETS" ToRole="BUDGETS" />
     <NavigationProperty Name="DEPENSES" Relationship="TRESORERIEModel.FK_DEPENSES_PROJETS" FromRole="PROJETS" ToRole="DEPENSES" />
     <NavigationProperty Name="FACTURATIONS" Relationship="TRESORERIEModel.FK_FACTURATIONS_PROJETS" FromRole="PROJETS" ToRole="FACTURATIONS" />
+    <NavigationProperty Name="FACTURATIONS_PREVISIONNELS" Relationship="TRESORERIEModel.FK_FACTURATIONS_PREVISIONNELS_PROJETS" FromRole="PROJETS" ToRole="FACTURATIONS_PREVISIONNELS" />
     <NavigationProperty Name="SOCIETES" Relationship="TRESORERIEModel.FK_PROJETS_SOCIETES" FromRole="PROJETS" ToRole="SOCIETES" />
     <NavigationProperty Name="TIERS" Relationship="TRESORERIEModel.FK_PROJETS_TIERS" FromRole="PROJETS" ToRole="TIERS" />
     <NavigationProperty Name="TIERS1" Relationship="TRESORERIEModel.FK_PROJETS_TIERS1" FromRole="PROJETS" ToRole="TIERS" />
@@ -179,9 +237,11 @@
     <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
     <Property Name="NOM" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
     <Property Name="CODE_ACCES" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="ACHATS_PREVISIONNELS" Relationship="TRESORERIEModel.FK_ACHATS_PREVISIONNELS_SOCIETES" FromRole="SOCIETES" ToRole="ACHATS_PREVISIONNELS" />
     <NavigationProperty Name="BUDGETS" Relationship="TRESORERIEModel.FK_BUDGETS_SOCIETES" FromRole="SOCIETES" ToRole="BUDGETS" />
     <NavigationProperty Name="DEPENSES" Relationship="TRESORERIEModel.FK_DEPENSES_SOCIETES" FromRole="SOCIETES" ToRole="DEPENSES" />
     <NavigationProperty Name="FACTURATIONS" Relationship="TRESORERIEModel.FK_FACTURATIONS_SOCIETES" FromRole="SOCIETES" ToRole="FACTURATIONS" />
+    <NavigationProperty Name="FACTURATIONS_PREVISIONNELS" Relationship="TRESORERIEModel.FK_FACTURATIONS_PREVISIONNELS_SOCIETES" FromRole="SOCIETES" ToRole="FACTURATIONS_PREVISIONNELS" />
     <NavigationProperty Name="PROJETS" Relationship="TRESORERIEModel.FK_PROJETS_SOCIETES" FromRole="SOCIETES" ToRole="PROJETS" />
   </EntityType>
   <EntityType Name="TIERS">
@@ -191,10 +251,59 @@
     <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
     <Property Name="RAISON_SOCIALE" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
     <Property Name="TYPE" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="ACHATS_PREVISIONNELS" Relationship="TRESORERIEModel.FK_ACHATS_PREVISIONNELS_TIERS" FromRole="TIERS" ToRole="ACHATS_PREVISIONNELS" />
     <NavigationProperty Name="DEPENSES" Relationship="TRESORERIEModel.FK_DEPENSES_TIERS" FromRole="TIERS" ToRole="DEPENSES" />
     <NavigationProperty Name="PROJETS" Relationship="TRESORERIEModel.FK_PROJETS_TIERS" FromRole="TIERS" ToRole="PROJETS" />
     <NavigationProperty Name="PROJETS1" Relationship="TRESORERIEModel.FK_PROJETS_TIERS1" FromRole="TIERS" ToRole="PROJETS" />
   </EntityType>
+  <Association Name="FK_ACHATS_PREVISIONNELS_CENTRES_COUTS">
+    <End Role="CENTRES_COUTS" Type="TRESORERIEModel.CENTRES_COUTS" Multiplicity="0..1" />
+    <End Role="ACHATS_PREVISIONNELS" Type="TRESORERIEModel.ACHATS_PREVISIONNELS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CENTRES_COUTS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ACHATS_PREVISIONNELS">
+        <PropertyRef Name="CENTRE_COUT" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ACHATS_PREVISIONNELS_PROJETS">
+    <End Role="PROJETS" Type="TRESORERIEModel.PROJETS" Multiplicity="0..1" />
+    <End Role="ACHATS_PREVISIONNELS" Type="TRESORERIEModel.ACHATS_PREVISIONNELS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PROJETS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ACHATS_PREVISIONNELS">
+        <PropertyRef Name="PROJET" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ACHATS_PREVISIONNELS_SOCIETES">
+    <End Role="SOCIETES" Type="TRESORERIEModel.SOCIETES" Multiplicity="0..1" />
+    <End Role="ACHATS_PREVISIONNELS" Type="TRESORERIEModel.ACHATS_PREVISIONNELS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SOCIETES">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ACHATS_PREVISIONNELS">
+        <PropertyRef Name="SOCIETE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ACHATS_PREVISIONNELS_TIERS">
+    <End Role="TIERS" Type="TRESORERIEModel.TIERS" Multiplicity="0..1" />
+    <End Role="ACHATS_PREVISIONNELS" Type="TRESORERIEModel.ACHATS_PREVISIONNELS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TIERS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ACHATS_PREVISIONNELS">
+        <PropertyRef Name="FOURNISSEUR" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_BUDGETS_CENTRES_COUTS">
     <End Role="CENTRES_COUTS" Type="TRESORERIEModel.CENTRES_COUTS" Multiplicity="0..1" />
     <End Role="BUDGETS" Type="TRESORERIEModel.BUDGETS" Multiplicity="*" />
@@ -311,6 +420,30 @@
         <PropertyRef Name="ID" />
       </Principal>
       <Dependent Role="FACTURATIONS">
+        <PropertyRef Name="SOCIETE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FACTURATIONS_PREVISIONNELS_PROJETS">
+    <End Role="PROJETS" Type="TRESORERIEModel.PROJETS" Multiplicity="0..1" />
+    <End Role="FACTURATIONS_PREVISIONNELS" Type="TRESORERIEModel.FACTURATIONS_PREVISIONNELS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PROJETS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="FACTURATIONS_PREVISIONNELS">
+        <PropertyRef Name="PROJET" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FACTURATIONS_PREVISIONNELS_SOCIETES">
+    <End Role="SOCIETES" Type="TRESORERIEModel.SOCIETES" Multiplicity="0..1" />
+    <End Role="FACTURATIONS_PREVISIONNELS" Type="TRESORERIEModel.FACTURATIONS_PREVISIONNELS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SOCIETES">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="FACTURATIONS_PREVISIONNELS">
         <PropertyRef Name="SOCIETE" />
       </Dependent>
     </ReferentialConstraint>

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="TRESORERIEModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="TRESORERIEModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityContainer Name="TRESORERIEModelStoreContainer">
           <EntitySet Name="ACHATS_PREVISIONNELS" EntityType="TRESORERIEModel.Store.ACHATS_PREVISIONNELS" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="BUDGETS" EntityType="TRESORERIEModel.Store.BUDGETS" store:Type="Tables" Schema="dbo" />
@@ -111,7 +111,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="MONTANT_HT" Type="numeric" Scale="3" />
+          <Property Name="MONTANT_HT" Type="numeric" Nullable="false" Scale="3" />
           <Property Name="PROJET" Type="int" />
           <Property Name="CENTRE_COUT" Type="int" />
           <Property Name="SOCIETE" Type="int" />
@@ -200,9 +200,9 @@
           <Property Name="OWNER" Type="int" />
           <Property Name="DEBUT" Type="datetime" Nullable="false" />
           <Property Name="FIN" Type="datetime" Nullable="false" />
-          <Property Name="MONTANT_HT" Type="numeric" Scale="3" />
-          <Property Name="TVA" Type="numeric" Scale="3" />
-          <Property Name="GARANTIE" Type="numeric" Scale="3" />
+          <Property Name="MONTANT_HT" Type="numeric" Nullable="false" Scale="3" />
+          <Property Name="TVA" Type="numeric" Nullable="false" Scale="3" />
+          <Property Name="GARANTIE" Type="numeric" Nullable="false" Scale="3" />
           <Property Name="TYPE_FACTURATION" Type="nvarchar" MaxLength="50" />
           <Property Name="MODALITE_FACTURATION" Type="nvarchar" MaxLength="50" />
           <Property Name="SOCIETE" Type="int" />
@@ -451,8 +451,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="TRESORERIEModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -566,7 +565,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
-          <Property Name="MONTANT_HT" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="MONTANT_HT" Type="Decimal" Precision="18" Scale="3" Nullable="false" />
           <Property Name="PROJET" Type="Int32" />
           <Property Name="CENTRE_COUT" Type="Int32" />
           <Property Name="SOCIETE" Type="Int32" />
@@ -671,9 +670,9 @@
           <Property Name="OWNER" Type="Int32" />
           <Property Name="DEBUT" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="FIN" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="MONTANT_HT" Type="Decimal" Precision="18" Scale="3" />
-          <Property Name="TVA" Type="Decimal" Precision="18" Scale="3" />
-          <Property Name="GARANTIE" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="MONTANT_HT" Type="Decimal" Precision="18" Scale="3" Nullable="false" />
+          <Property Name="TVA" Type="Decimal" Precision="18" Scale="3" Nullable="false" />
+          <Property Name="GARANTIE" Type="Decimal" Precision="18" Scale="3" Nullable="false" />
           <Property Name="TYPE_FACTURATION" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
           <Property Name="MODALITE_FACTURATION" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
           <Property Name="SOCIETE" Type="Int32" />

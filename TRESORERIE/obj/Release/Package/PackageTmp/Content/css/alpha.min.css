@@ -1180,7 +1180,7 @@ li.active .nav-drop-icon {
 }
 .side-nav ul li a i.material-icons {
     line-height: inherit;
-    margin: 0 20px 0 0;
+    margin: 0 5px 0 0;
     width: auto
 }
 .side-nav .collapsible-header {
