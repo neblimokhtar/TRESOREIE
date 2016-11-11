@@ -63,9 +63,9 @@ namespace TRESORERIE.Controllers
                     int CodeInt = int.Parse(Code);
                     Element = BD.FACTURATIONS.Find(CodeInt);
                     ViewBag.Titre = "Modifier une facturation projet";
-                    ViewBag.DATE_FACTURATION =((DateTime)Element.DATE_FACTURATION).ToShortDateString();
+                    ViewBag.DATE_FACTURATION = ((DateTime)Element.DATE_FACTURATION).ToShortDateString();
                     ViewBag.DATE_ECHEANCE_REGLEMENT = Element.DATE_ECHEANCE_REGLEMENT.ToShortDateString();
-                    ViewBag.DATE_REGLEMENT_REEL = Element.DATE_REGLEMENT_REEL!=null ? ((DateTime)Element.DATE_REGLEMENT_REEL).ToShortDateString():string.Empty;
+                    ViewBag.DATE_REGLEMENT_REEL = Element.DATE_REGLEMENT_REEL != null ? ((DateTime)Element.DATE_REGLEMENT_REEL).ToShortDateString() : string.Empty;
                 }
                 ViewBag.Mode = Mode;
                 ViewBag.Code = Code;
@@ -97,6 +97,14 @@ namespace TRESORERIE.Controllers
                 string DATE_REGLEMENT_REEL = Request.Params["DATE_REGLEMENT_REEL"] != null ? Request.Params["DATE_REGLEMENT_REEL"].ToString() : string.Empty;
                 string ETAT_FACTURATION = Request.Params["ETAT_FACTURATION"] != null ? Request.Params["ETAT_FACTURATION"].ToString() : string.Empty;
                 string ETAT_REGLEMENT = Request.Params["ETAT_REGLEMENT"] != null ? Request.Params["ETAT_REGLEMENT"].ToString() : "";
+                MONTANT_HT = MONTANT_HT.Replace(",", ".");
+                TVA = TVA.Replace(",", ".");
+                TIMBRE = TIMBRE.Replace(",", ".");
+                FODEC = FODEC.Replace(",", ".");
+                RETENUE_SOURCE = RETENUE_SOURCE.Replace(",", ".");
+                TTC = TTC.Replace(",", ".");
+                GARANTIE = GARANTIE.Replace(",", ".");
+
                 if (Mode == "Create")
                 {
                     FACTURATIONS NewElement = new FACTURATIONS();
@@ -158,7 +166,7 @@ namespace TRESORERIE.Controllers
                     if (DateTime.TryParse(DATE_REGLEMENT_REEL, out dateValue))
                     {
                         SelectedElement.DATE_REGLEMENT_REEL = DateTime.Parse(DATE_REGLEMENT_REEL);
-                    } 
+                    }
                     SelectedElement.ETAT_FACTURATION = (ETAT_FACTURATION.ToUpper() == "TRUE" || ETAT_FACTURATION.ToUpper() == "ON") ? true : false;
                     SelectedElement.ETAT_REGLEMENT = (ETAT_REGLEMENT.ToUpper() == "TRUE" || ETAT_REGLEMENT.ToUpper() == "ON") ? true : false;
                     BD.SaveChanges();

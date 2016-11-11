@@ -80,7 +80,7 @@
             <End Role="SOCIETES" EntitySet="SOCIETES" />
             <End Role="FACTURATIONS" EntitySet="FACTURATIONS" />
           </AssociationSet>
-          <AssociationSet Name="FK_PROJETS_SOCIETES" Association="TRESORERIEModel.Store.FK_PROJETS_SOCIETES">
+          <AssociationSet Name="FK_PROJETS_SOCIETES1" Association="TRESORERIEModel.Store.FK_PROJETS_SOCIETES1">
             <End Role="SOCIETES" EntitySet="SOCIETES" />
             <End Role="PROJETS" EntitySet="PROJETS" />
           </AssociationSet>
@@ -201,10 +201,11 @@
           <Property Name="DEBUT" Type="datetime" Nullable="false" />
           <Property Name="FIN" Type="datetime" Nullable="false" />
           <Property Name="MONTANT_HT" Type="numeric" Nullable="false" Scale="3" />
-          <Property Name="TVA" Type="numeric" Nullable="false" Scale="3" />
+          <Property Name="TVA" Type="int" Nullable="false" />
           <Property Name="GARANTIE" Type="numeric" Nullable="false" Scale="3" />
           <Property Name="TYPE_FACTURATION" Type="nvarchar" MaxLength="50" />
           <Property Name="MODALITE_FACTURATION" Type="nvarchar" MaxLength="50" />
+          <Property Name="REFERENCE" Type="nvarchar" MaxLength="50" />
           <Property Name="SOCIETE" Type="int" />
         </EntityType>
         <EntityType Name="SOCIETES">
@@ -415,7 +416,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PROJETS_SOCIETES">
+        <Association Name="FK_PROJETS_SOCIETES1">
           <End Role="SOCIETES" Type="TRESORERIEModel.Store.SOCIETES" Multiplicity="0..1" />
           <End Role="PROJETS" Type="TRESORERIEModel.Store.PROJETS" Multiplicity="*" />
           <ReferentialConstraint>
@@ -530,7 +531,7 @@
             <End Role="SOCIETES" EntitySet="SOCIETES" />
             <End Role="FACTURATIONS_PREVISIONNELS" EntitySet="FACTURATIONS_PREVISIONNELS" />
           </AssociationSet>
-          <AssociationSet Name="FK_PROJETS_SOCIETES" Association="TRESORERIEModel.FK_PROJETS_SOCIETES">
+          <AssociationSet Name="FK_PROJETS_SOCIETES1" Association="TRESORERIEModel.FK_PROJETS_SOCIETES1">
             <End Role="SOCIETES" EntitySet="SOCIETES" />
             <End Role="PROJETS" EntitySet="PROJETS" />
           </AssociationSet>
@@ -565,7 +566,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
-          <Property Name="MONTANT_HT" Type="Decimal" Precision="18" Scale="3" Nullable="false" />
+          <Property Name="MONTANT_HT" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
           <Property Name="PROJET" Type="Int32" />
           <Property Name="CENTRE_COUT" Type="Int32" />
           <Property Name="SOCIETE" Type="Int32" />
@@ -670,18 +671,19 @@
           <Property Name="OWNER" Type="Int32" />
           <Property Name="DEBUT" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="FIN" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="MONTANT_HT" Type="Decimal" Precision="18" Scale="3" Nullable="false" />
-          <Property Name="TVA" Type="Decimal" Precision="18" Scale="3" Nullable="false" />
-          <Property Name="GARANTIE" Type="Decimal" Precision="18" Scale="3" Nullable="false" />
+          <Property Name="MONTANT_HT" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
+          <Property Name="TVA" Type="Int32" Nullable="false" />
+          <Property Name="GARANTIE" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
           <Property Name="TYPE_FACTURATION" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
           <Property Name="MODALITE_FACTURATION" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="REFERENCE" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
           <Property Name="SOCIETE" Type="Int32" />
           <NavigationProperty Name="ACHATS_PREVISIONNELS" Relationship="TRESORERIEModel.FK_ACHATS_PREVISIONNELS_PROJETS" FromRole="PROJETS" ToRole="ACHATS_PREVISIONNELS" />
           <NavigationProperty Name="BUDGETS" Relationship="TRESORERIEModel.FK_BUDGETS_PROJETS" FromRole="PROJETS" ToRole="BUDGETS" />
           <NavigationProperty Name="DEPENSES" Relationship="TRESORERIEModel.FK_DEPENSES_PROJETS" FromRole="PROJETS" ToRole="DEPENSES" />
           <NavigationProperty Name="FACTURATIONS" Relationship="TRESORERIEModel.FK_FACTURATIONS_PROJETS" FromRole="PROJETS" ToRole="FACTURATIONS" />
           <NavigationProperty Name="FACTURATIONS_PREVISIONNELS" Relationship="TRESORERIEModel.FK_FACTURATIONS_PREVISIONNELS_PROJETS" FromRole="PROJETS" ToRole="FACTURATIONS_PREVISIONNELS" />
-          <NavigationProperty Name="SOCIETES" Relationship="TRESORERIEModel.FK_PROJETS_SOCIETES" FromRole="PROJETS" ToRole="SOCIETES" />
+          <NavigationProperty Name="SOCIETES" Relationship="TRESORERIEModel.FK_PROJETS_SOCIETES1" FromRole="PROJETS" ToRole="SOCIETES" />
           <NavigationProperty Name="TIERS" Relationship="TRESORERIEModel.FK_PROJETS_TIERS" FromRole="PROJETS" ToRole="TIERS" />
           <NavigationProperty Name="TIERS1" Relationship="TRESORERIEModel.FK_PROJETS_TIERS1" FromRole="PROJETS" ToRole="TIERS" />
         </EntityType>
@@ -697,7 +699,7 @@
           <NavigationProperty Name="DEPENSES" Relationship="TRESORERIEModel.FK_DEPENSES_SOCIETES" FromRole="SOCIETES" ToRole="DEPENSES" />
           <NavigationProperty Name="FACTURATIONS" Relationship="TRESORERIEModel.FK_FACTURATIONS_SOCIETES" FromRole="SOCIETES" ToRole="FACTURATIONS" />
           <NavigationProperty Name="FACTURATIONS_PREVISIONNELS" Relationship="TRESORERIEModel.FK_FACTURATIONS_PREVISIONNELS_SOCIETES" FromRole="SOCIETES" ToRole="FACTURATIONS_PREVISIONNELS" />
-          <NavigationProperty Name="PROJETS" Relationship="TRESORERIEModel.FK_PROJETS_SOCIETES" FromRole="SOCIETES" ToRole="PROJETS" />
+          <NavigationProperty Name="PROJETS" Relationship="TRESORERIEModel.FK_PROJETS_SOCIETES1" FromRole="SOCIETES" ToRole="PROJETS" />
         </EntityType>
         <EntityType Name="TIERS">
           <Key>
@@ -903,7 +905,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PROJETS_SOCIETES">
+        <Association Name="FK_PROJETS_SOCIETES1">
           <End Role="SOCIETES" Type="TRESORERIEModel.SOCIETES" Multiplicity="0..1" />
           <End Role="PROJETS" Type="TRESORERIEModel.PROJETS" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1063,6 +1065,7 @@
                 <ScalarProperty Name="GARANTIE" ColumnName="GARANTIE" />
                 <ScalarProperty Name="TYPE_FACTURATION" ColumnName="TYPE_FACTURATION" />
                 <ScalarProperty Name="MODALITE_FACTURATION" ColumnName="MODALITE_FACTURATION" />
+                <ScalarProperty Name="REFERENCE" ColumnName="REFERENCE" />
                 <ScalarProperty Name="SOCIETE" ColumnName="SOCIETE" />
               </MappingFragment>
             </EntityTypeMapping>

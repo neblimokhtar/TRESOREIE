@@ -27,7 +27,8 @@
                     <thead>
                         <tr>
                             <th></th>
-                            <th>CODE</th>
+                            <th>CODE-C</th>
+                            <th>CODE-T</th>
                             <th>NOM</th>
                             <th>TYPE</th>
                             <th>CLIENT</th>
@@ -47,6 +48,7 @@
                             <tr id="@item.ID">
                                 <td></td>
                                 <td>@item.CODE</td>
+                                <td>@item.REFERENCE</td>
                                 <td>@item.NOM_PROJET</td>
                                 <td>@item.TYPE</td>
                                 <td>@item.TIERS.RAISON_SOCIALE</td>
@@ -54,8 +56,8 @@
                                 <td>@item.DEBUT.ToShortDateString()</td>
                                 <td>@item.FIN.ToShortDateString()</td>
                                 <td>@item.MONTANT_HT.ToString("F3")</td>
-                                <td>@item.TVA.ToString("F3")</td>
-                                <td>@item.GARANTIE.ToString("F3")</td>
+                                <td>@item.TVA %</td>
+                                <td>@item.GARANTIE.ToString("F0") %</td>
                                 <td>@item.TYPE_FACTURATION</td>
                                 <td>@item.MODALITE_FACTURATION</td>
                             </tr>
@@ -109,7 +111,7 @@
     function Delete_Element() {
         var element = $("#example tbody tr").filter(".selected").attr("id");
         if (typeof element !== "undefined") {
-            var r = confirm("Voulez vous vraiment supprimer cette ligne ?");
+            var r = confirm("Vous riquez de perdre des données (Facturation, Achat, ...) ?");
             if (r == true) {
                 window.location.href = "/Projet/Delete?Code=" + element;
             }

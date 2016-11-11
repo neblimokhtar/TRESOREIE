@@ -32,10 +32,11 @@ namespace TRESORERIE.Models
         public System.DateTime DEBUT { get; set; }
         public System.DateTime FIN { get; set; }
         public decimal MONTANT_HT { get; set; }
-        public decimal TVA { get; set; }
+        public int TVA { get; set; }
         public decimal GARANTIE { get; set; }
         public string TYPE_FACTURATION { get; set; }
         public string MODALITE_FACTURATION { get; set; }
+        public string REFERENCE { get; set; }
         public Nullable<int> SOCIETE { get; set; }
     
         public virtual ICollection<ACHATS_PREVISIONNELS> ACHATS_PREVISIONNELS { get; set; }

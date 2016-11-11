@@ -30,10 +30,9 @@
         .select-item {
             display: none;
         }
-
     </style>
 </head>
-<body>
+<body class="loaded background--blur">
     <div class="loader-bg"></div>
     <div class="loader">
         <div class="preloader-wrapper big active">
@@ -83,7 +82,7 @@
             </div>
         </div>
     </div>
-    <div class="mn-content fixed-sidebar">
+    <div class="mn-content fixed-sidebar fixed-sidebar-on-hidden">
         <header class="mn-header navbar-fixed">
             <nav class="cyan darken-1">
                 <div class="nav-wrapper row">
@@ -109,7 +108,7 @@
                 </div>
             </nav>
         </header>
-        <aside id="slide-out" class="side-nav white fixed">
+        <aside id="slide-out" class="side-nav white fixed" style="display: none;">
             <div class="side-nav-wrapper">
                 <ul class="sidebar-menu collapsible collapsible-accordion" data-collapsible="accordion">
                     <li class="no-padding" id="li_dashboard"><a class="waves-effect waves-grey active" href="/Home/Dashboard"><i class="material-icons">dashboard</i>Tableau de bord</a></li>
@@ -150,7 +149,7 @@
                 </ul>
             </div>
         </aside>
-        <div class="mn-inner inner-active-sidebar">
+        <div class="mn-inner inner-active-sidebar hidden-fixed-sidebar">
             @RenderBody()
         </div>
         <div class="page-footer">
@@ -216,6 +215,8 @@
                 DrawSparkline();
             }, 300);
         });
+        $('#slide-out').sideNav('hide');
+
     });
     </script>
 @RenderSection("scripts", required: false)

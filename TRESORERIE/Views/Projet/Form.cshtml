@@ -19,7 +19,13 @@
             <div class="row">
                 <div class="input-field">
                     <input id="CODE_PROJET" type="text" class="validate" value="@Model.CODE" name="CODE_PROJET" required>
-                    <label for="CODE_PROJET" class="">CODE</label>
+                    <label for="CODE_PROJET" class="">CODE-C</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field">
+                    <input id="REFERENCE" type="text" class="validate" value="@Model.REFERENCE" name="REFERENCE" required>
+                    <label for="REFERENCE" class="">CODE-T</label>
                 </div>
             </div>
             <div class="row">
@@ -70,19 +76,28 @@
             </div>
             <div class="row">
                 <div class="input-field">
-                    <input id="MONTANT_HT" type="text" class="validate" value="@Model.MONTANT_HT.ToString()" name="MONTANT_HT" required>
+                    <input id="MONTANT_HT" type="text" class="validate" value="@Model.MONTANT_HT" name="MONTANT_HT" required>
                     <label for="MONTANT_HT" class="">MONTANT HT</label>
                 </div>
             </div>
             <div class="row">
+                <label for="TVA" class="">TVA</label>
+                <select name="TVA" id="TVA" class="form-control">
+                    <option value="0" id="option0">0%</option>
+                    <option value="6" id="option6">6%</option>
+                    <option value="12" id="option12">12%</option>
+                    <option value="18" id="option18">18%</option>
+                </select>
+            </div>
+            <div class="row">
                 <div class="input-field">
-                    <input id="TVA" type="text" class="validate" value="@Model.TVA.ToString()" name="TVA" required>
-                    <label for="TVA" class="">TVA</label>
+                    <input id="TTC" type="text" class="validate" value="@ViewBag.TTC" name="TTC" readonly>
+                    <label for="TTC" class="">TTC</label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field">
-                    <input id="GARANTIE" type="text" class="validate" value="@Model.GARANTIE.ToString()" name="GARANTIE">
+                    <input id="GARANTIE" type="text" class="validate" value='@Model.GARANTIE.ToString("F0")' name="GARANTIE" required>
                     <label for="GARANTIE" class="">GARANTIE (%)</label>
                 </div>
             </div>
@@ -121,6 +136,11 @@
 <script src="~/Content//plugins/select2/js/select2.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
+        var Mode = "@ViewBag.Mode";
+        var TVA = "@Model.TVA";
+        if (Mode == "Edit") {
+            $(".select-dropdown").val(TVA + "%");
+        }
         $("#li_Projets_work").attr("class", "active");
         UpdateListe1();
         UpdateListe2();
@@ -148,6 +168,30 @@
 
             }
         });
+    });
+    $(document).on("change", "#TVA", function (e) {
+        var TVA = $("#TVA").val();
+        TVA = parseInt(TVA);
+        var HT = $("#MONTANT_HT").val();
+        HT = parseFloat(HT);
+        var TTC = HT + ((TVA * HT) / 100);
+        $("#TTC").val(TTC.toFixed(3));
+    });
+    $(document).on("keydown", "#MONTANT_HT", function (e) {
+        var TVA = $("#TVA").val();
+        TVA = parseInt(TVA);
+        var HT = $("#MONTANT_HT").val();
+        HT = parseFloat(HT);
+        var TTC = HT + ((TVA * HT) / 100);
+        $("#TTC").val(TTC.toFixed(3));
+    });
+    $(document).on("keyup", "#MONTANT_HT", function (e) {
+        var TVA = $("#TVA").val();
+        TVA = parseInt(TVA);
+        var HT = $("#MONTANT_HT").val();
+        HT = parseFloat(HT);
+        var TTC = HT + ((TVA * HT) / 100);
+        $("#TTC").val(TTC.toFixed(3));
     });
     function openPop(PARAM) {
         window.PARAM = PARAM;

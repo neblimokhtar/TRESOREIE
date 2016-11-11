@@ -32,23 +32,33 @@ namespace TRESORERIE.Controllers
                     Liste = Liste.Where(Element => Element.PROJETS.ID == SelectedProject).ToList();
                     ViewBag.CODE = BD.PROJETS.Find(SelectedProject).CODE;
                     ViewBag.NOM_PROJET = BD.PROJETS.Find(SelectedProject).NOM_PROJET;
-                    ViewBag.CLIENT = BD.PROJETS.Find(SelectedProject).CLIENT;
+                    ViewBag.CLIENT = BD.PROJETS.Find(SelectedProject).TIERS.RAISON_SOCIALE;
                     ViewBag.DEBUT = BD.PROJETS.Find(SelectedProject).DEBUT.ToShortDateString();
                     ViewBag.FIN = BD.PROJETS.Find(SelectedProject).FIN.ToShortDateString();
                     ViewBag.MONTANT_HT = BD.PROJETS.Find(SelectedProject).MONTANT_HT;
-                    decimal TOTAL = 0;
+                    decimal TOTALF = 0;
+                    decimal TOTALR = 0;
+
                     foreach (FACTURATIONS Element in Liste)
                     {
-                        TOTAL += (decimal)Element.MONTANT_HT;
+                        if((Boolean)Element.ETAT_FACTURATION)
+                            TOTALF += (decimal)Element.MONTANT_HT;
+                        if ((Boolean)Element.ETAT_REGLEMENT)
+                            TOTALR += (decimal)Element.MONTANT_HT;
                     }
-                    ViewBag.TOTAL = TOTAL;
-                    int Rapport = 0;
+                    ViewBag.TOTALF = TOTALF;
+                    ViewBag.TOTALR = TOTALR;
+                    int RapportF = 0;
+                    int RapportR = 0;
+
                     decimal MONTANT_HT = (decimal)BD.PROJETS.Find(SelectedProject).MONTANT_HT;
                     if (MONTANT_HT != 0)
                     {
-                        Rapport = (int)((TOTAL * 100) / MONTANT_HT);
+                        RapportF = (int)((TOTALF * 100) / MONTANT_HT);
+                        RapportR = (int)((TOTALR * 100) / MONTANT_HT);
                     }
-                    ViewBag.Rapport = Rapport;
+                    ViewBag.RapportF = RapportF;
+                    ViewBag.RapportR = RapportR;
 
                 }
 
@@ -290,31 +300,31 @@ namespace TRESORERIE.Controllers
                                             CODE = Element.CODE,
                                             CENTRE = Element.LIBELLE,
                                             PRECEDENTA = CalculPrevisionAchatPrecedent(Parampassed, Filterstring, Element.ID).ToString("F2"),
-                                            PRECEDENTF = 0.ToString("F2"),
+                                            PRECEDENTF = string.Empty,
                                             JANVIERA = CalculPrevisionAchatParMois(1, Parampassed, Filterstring, Element.ID).ToString("F2"),
-                                            JANVIERF = 0.ToString("F2"),
+                                            JANVIERF = string.Empty,
                                             FEVRIERA = CalculPrevisionAchatParMois(2, Parampassed, Filterstring, Element.ID).ToString("F2"),
-                                            FEVRIERF = 0.ToString("F2"),
+                                            FEVRIERF = string.Empty,
                                             MARSA = CalculPrevisionAchatParMois(3, Parampassed, Filterstring, Element.ID).ToString("F2"),
-                                            MARSF = 0.ToString("F2"),
+                                            MARSF = string.Empty,
                                             AVRILA = CalculPrevisionAchatParMois(4, Parampassed, Filterstring, Element.ID).ToString("F2"),
-                                            AVRILF = 0.ToString("F2"),
+                                            AVRILF = string.Empty,
                                             MAIA = CalculPrevisionAchatParMois(5, Parampassed, Filterstring, Element.ID).ToString("F2"),
-                                            MAIF = 0.ToString("F2"),
+                                            MAIF = string.Empty,
                                             JUINA = CalculPrevisionAchatParMois(6, Parampassed, Filterstring, Element.ID).ToString("F2"),
-                                            JUINF = 0.ToString("F2"),
+                                            JUINF = string.Empty,
                                             JUILLETA = CalculPrevisionAchatParMois(7, Parampassed, Filterstring, Element.ID).ToString("F2"),
-                                            JUILLETF = 0.ToString("F2"),
+                                            JUILLETF = string.Empty,
                                             AOUTA = CalculPrevisionAchatParMois(8, Parampassed, Filterstring, Element.ID).ToString("F2"),
-                                            AOUTF = 0.ToString("F2"),
+                                            AOUTF = string.Empty,
                                             SEPTEMBREA = CalculPrevisionAchatParMois(9, Parampassed, Filterstring, Element.ID).ToString("F2"),
-                                            SEPTEMBREF = 0.ToString("F2"),
+                                            SEPTEMBREF = string.Empty,
                                             OCTOBREA = CalculPrevisionAchatParMois(10, Parampassed, Filterstring, Element.ID).ToString("F2"),
-                                            OCTOBREF = 0.ToString("F2"),
+                                            OCTOBREF = string.Empty,
                                             NOVEMBREA = CalculPrevisionAchatParMois(11, Parampassed, Filterstring, Element.ID).ToString("F2"),
-                                            NOVEMBREF = 0.ToString("F2"),
+                                            NOVEMBREF = string.Empty,
                                             DECEMBREA = CalculPrevisionAchatParMois(12, Parampassed, Filterstring, Element.ID).ToString("F2"),
-                                            DECEMBREF = 0.ToString("F2"),
+                                            DECEMBREF = string.Empty,
 
                                         }).AsEnumerable().Select(c => c.ToExpando());
                     ViewBag.ANNEE = Parampassed;
@@ -375,31 +385,31 @@ namespace TRESORERIE.Controllers
                                             CODE = Element.CODE,
                                             CENTRE = Element.LIBELLE,
                                             PRECEDENTA = 0.ToString("F2"),
-                                            PRECEDENTF = 0.ToString("F2"),
+                                            PRECEDENTF = string.Empty,
                                             JANVIERA = 0.ToString("F2"),
-                                            JANVIERF = 0.ToString("F2"),
+                                            JANVIERF = string.Empty,
                                             FEVRIERA = 0.ToString("F2"),
-                                            FEVRIERF = 0.ToString("F2"),
+                                            FEVRIERF = string.Empty,
                                             MARSA = 0.ToString("F2"),
-                                            MARSF = 0.ToString("F2"),
+                                            MARSF = string.Empty,
                                             AVRILA = 0.ToString("F2"),
-                                            AVRILF = 0.ToString("F2"),
+                                            AVRILF = string.Empty,
                                             MAIA = 0.ToString("F2"),
-                                            MAIF = 0.ToString("F2"),
+                                            MAIF = string.Empty,
                                             JUINA = 0.ToString("F2"),
-                                            JUINF = 0.ToString("F2"),
+                                            JUINF = string.Empty,
                                             JUILLETA = 0.ToString("F2"),
-                                            JUILLETF = 0.ToString("F2"),
+                                            JUILLETF = string.Empty,
                                             AOUTA = 0.ToString("F2"),
-                                            AOUTF = 0.ToString("F2"),
+                                            AOUTF = string.Empty,
                                             SEPTEMBREA = 0.ToString("F2"),
-                                            SEPTEMBREF = 0.ToString("F2"),
+                                            SEPTEMBREF = string.Empty,
                                             OCTOBREA = 0.ToString("F2"),
-                                            OCTOBREF = 0.ToString("F2"),
+                                            OCTOBREF = string.Empty,
                                             NOVEMBREA = 0.ToString("F2"),
-                                            NOVEMBREF = 0.ToString("F2"),
+                                            NOVEMBREF = string.Empty,
                                             DECEMBREA = 0.ToString("F2"),
-                                            DECEMBREF = 0.ToString("F2"),
+                                            DECEMBREF = string.Empty,
                                         }).AsEnumerable().Select(c => c.ToExpando());
                     ViewBag.TOT_ACHAT_PRECEDENT = 0.ToString("F2");
                     ViewBag.TOT_FACT_PRECEDENT = 0.ToString("F2");

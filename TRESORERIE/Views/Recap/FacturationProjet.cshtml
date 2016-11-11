@@ -105,22 +105,42 @@
                 </div>
                 <div class="row">
                     <div class="col s12 m6 l8">
-                        <h6 class="m-t-md text-success light-blue-text"><b>Etat avancement</b></h6>
+                        <h6 class="m-t-md text-success light-blue-text"><b>Etat Facturation</b></h6>
                         <h4 class="text-success">
-                            @ViewBag.Rapport %</h4>
+                            @ViewBag.RapportF %</h4>
                     </div>
                     <div class="col s12 m6 l4 right-align">
                         <div class="text-right">
                             <div class="divider"></div>
                             <h6 class="m-t-md text-success light-blue-text"><b>Total</b></h6>
                             <h4 class="text-success">
-                                @ViewBag.TOTAL</h4>
+                                @ViewBag.TOTALF</h4>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="progress" style="height: 30px">
-                        <div class="determinate" style="width: @ViewBag.Rapport%"></div>
+                        <div class="determinate" style="width: @ViewBag.RapportF%"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s12 m6 l8">
+                        <h6 class="m-t-md text-success light-blue-text"><b>Etat Reglement</b></h6>
+                        <h4 class="text-success">
+                            @ViewBag.RapportR %</h4>
+                    </div>
+                    <div class="col s12 m6 l4 right-align">
+                        <div class="text-right">
+                            <div class="divider"></div>
+                            <h6 class="m-t-md text-success light-blue-text"><b>Total</b></h6>
+                            <h4 class="text-success">
+                                @ViewBag.TOTALR</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="progress" style="height: 30px">
+                        <div class="determinate" style="width: @ViewBag.RapportR%"></div>
                     </div>
                 </div>
             </div>
